@@ -643,8 +643,8 @@ export default {
           this.paginationData = res.data
           this.lenderPostIndex = res.data.data
           this.lenderPostIndex.forEach(x => {
-            if (x.created_at) x.created_at = moment(x.created_at).format('YYYY-MM-DD')
-            if (x.updated_at) x.updated_at = moment(x.updated_at).format('YYYY-MM-DD')
+            if (x.created_at) x.created_at = moment(x.created_at).format('YYYY.MM.DD')
+            if (x.updated_at) x.updated_at = moment(x.updated_at).format('YYYY.MM.DD')
             const postImages = []
             if (x.post_img_1) postImages.push(x.post_img_1)
             if (x.post_img_2) postImages.push(x.post_img_2)
@@ -663,6 +663,7 @@ export default {
     /* 船が所属する都道府県の貸渡船一覧取得
     /*-------------------------------------------*/
     async fetchBoatIndex() {
+      console.log(this.boatDetail.lender.prefecture.id)
       await boatRepository
         .viewerIndex(1, 'id', 'asc', 'hokkaido', 'all', 'all')
         .then(res => {

@@ -16828,8 +16828,8 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                   _this3.lenderPostIndex = res.data.data;
 
                   _this3.lenderPostIndex.forEach(function (x) {
-                    if (x.created_at) x.created_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(x.created_at).format('YYYY-MM-DD');
-                    if (x.updated_at) x.updated_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(x.updated_at).format('YYYY-MM-DD');
+                    if (x.created_at) x.created_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(x.created_at).format('YYYY.MM.DD');
+                    if (x.updated_at) x.updated_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(x.updated_at).format('YYYY.MM.DD');
                     var postImages = [];
                     if (x.post_img_1) postImages.push(x.post_img_1);
                     if (x.post_img_2) postImages.push(x.post_img_2);
@@ -16864,7 +16864,8 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _context5.next = 2;
+                console.log(_this4.boatDetail.lender.prefecture.id);
+                _context5.next = 3;
                 return boatRepository.viewerIndex(1, 'id', 'asc', 'hokkaido', 'all', 'all').then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__["default"].OK) {
                     _this4.$toast.errorToast();
@@ -16888,7 +16889,7 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                   _this4.$toast.errorToast();
                 });
 
-              case 2:
+              case 3:
               case "end":
                 return _context5.stop();
             }
@@ -93047,8 +93048,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Work\laravel+vue\yugyosen_220822\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\Work\laravel+vue\yugyosen_220822\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Work\laravel+vue\Laravel-VueJS-yugyosen-\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Work\laravel+vue\Laravel-VueJS-yugyosen-\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
