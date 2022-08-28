@@ -551,7 +551,7 @@ export default {
     await this.fetchBoatShowViewer(this.boatId)
     await this.fetchCityListByPrefecture(this.boatDetail.lender.prefecture.id)
     await this.fetchLenderPostIndex()
-    await this.fetchBoatIndex()
+    await this.fetchBoatIndex(this.boatDetail.lender.prefecture.url_param)
     this.hideLoader()
   },
 
@@ -662,10 +662,9 @@ export default {
     /*-------------------------------------------*/
     /* 船が所属する都道府県の貸渡船一覧取得
     /*-------------------------------------------*/
-    async fetchBoatIndex() {
-      console.log(this.boatDetail.lender.prefecture.id)
+    async fetchBoatIndex(prefectureUrlParam) {
       await boatRepository
-        .viewerIndex(1, 'id', 'asc', 'hokkaido', 'all', 'all')
+        .viewerIndex(1, 'id', 'asc', prefectureUrlParam, 'all', 'all')
         .then(res => {
           if (res.status !== HTTP_STATUS.OK) {
             this.$toast.errorToast()

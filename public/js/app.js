@@ -16684,7 +16684,7 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
 
             case 7:
               _context.next = 9;
-              return _this.fetchBoatIndex();
+              return _this.fetchBoatIndex(_this.boatDetail.lender.prefecture.url_param);
 
             case 9:
               _this.hideLoader();
@@ -16856,7 +16856,7 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
 
     /* 船が所属する都道府県の貸渡船一覧取得
     /*-------------------------------------------*/
-    fetchBoatIndex: function fetchBoatIndex() {
+    fetchBoatIndex: function fetchBoatIndex(prefectureUrlParam) {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
@@ -16864,9 +16864,8 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                console.log(_this4.boatDetail.lender.prefecture.id);
-                _context5.next = 3;
-                return boatRepository.viewerIndex(1, 'id', 'asc', 'hokkaido', 'all', 'all').then(function (res) {
+                _context5.next = 2;
+                return boatRepository.viewerIndex(1, 'id', 'asc', prefectureUrlParam, 'all', 'all').then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__["default"].OK) {
                     _this4.$toast.errorToast();
 
@@ -16889,7 +16888,7 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                   _this4.$toast.errorToast();
                 });
 
-              case 3:
+              case 2:
               case "end":
                 return _context5.stop();
             }
@@ -17492,8 +17491,8 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                   }
 
                   _this5.paginationData = res.data;
+                  console.log(_this5.paginationData);
                   _this5.boatIndexData = res.data.data;
-                  console.log(_this5.boatIndexData);
 
                   _this5.boatIndexData.forEach(function (x) {
                     if (x.created_at) x.created_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(x.created_at).format('YYYY-MM-DD');
