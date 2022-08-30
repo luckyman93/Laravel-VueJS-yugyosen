@@ -91,6 +91,7 @@ class BoatRepository
     public function fetchDetailById(int $id): object
     {
         $query = $this->model
+                    ->with('facilities')
                     ->with('fishingOptions')
                     ->with('operations')
                     ->with('targets')
@@ -100,11 +101,11 @@ class BoatRepository
                     ->find($id);
         $query -> all_facilities = DB::table('facilities')->get();
         $fittedFacilitiesIds = array();
-        $fittedFacilities = $this->model->with('facilities')->get();
+        $fittedFacilities = $query -> facilities;
         foreach( $fittedFacilities as $facility){
             array_push($fittedFacilitiesIds, $facility -> id);
         }
-        $query -> fittedFacilitiesIds = $fittedFacilitiesIds;
+        $query -> fitted_facilities_ids = $fittedFacilitiesIds;
         return $query;
     }
 

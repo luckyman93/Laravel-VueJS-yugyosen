@@ -36,7 +36,7 @@ class LenderRequest extends FormRequest
             'prefecture_id' => 'required|integer',
             'city_id' => 'required|integer',
             'address' => 'nullable|string|max:32',
-            'port_id' => 'nullable|integer',
+            'port_id' => 'required|integer',
             'map_url' => 'nullable|string',
             'access_example' => 'nullable|string|max:255',
             'phone' => ['nullable','regex:/^0[0-9]{1,4}-[0-9]{1,4}-[0-9]{3,4}\z/'],

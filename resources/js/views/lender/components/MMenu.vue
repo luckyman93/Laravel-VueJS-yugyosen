@@ -29,7 +29,7 @@
       </li>
       <li class="ex-menu-item ex-ranking">
         <!-- <a href="#" class="ex-ranking"><span>電話数ランキング</span></a> -->
-        <router-link class="ex-menu-item__link ex-ranking" :to="ROUTE.LENDER.BASIC_INFO"
+        <router-link class="ex-menu-item__link ex-ranking" :to="ROUTE.LENDER.CALL_RANKING"
           ><span>電話数ランキング</span></router-link
         >
       </li>

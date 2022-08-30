@@ -121,5 +121,9 @@ export default {
         name: `${LENDER_PREFIX}PostDetail`,
       },
     },
+    CALL_RANKING: {
+      path: `/${LENDER_PREFIX}/CallRanking`,
+      name: `${LENDER_PREFIX}CallRanking`,
+    },
   },
 }

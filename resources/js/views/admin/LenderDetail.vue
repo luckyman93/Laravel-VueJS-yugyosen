@@ -107,7 +107,7 @@
 
               <div class="main-form-element">
                 <AInputForm
-                  id="boat_name"
+                  id="boat_name_kana"
                   v-model="form.boats[0].boat_name_kana"
                   :required="false"
                   label="船名（かな）"
@@ -200,7 +200,7 @@
                     v-model="form.port_id"
                     item-name="港名"
                     :options="portList"
-                    :required="false"
+                    :required="true"
                     :disabled="!isNew && !isEditing"
                     :searchable="true"
                     label="port_name"
@@ -642,7 +642,7 @@
       </template>
     </MBaseDetail>
     <MDeleteModal
-      :target-name="form.user.name"
+      :target-name="form.user.name === null ? 'この加入者' : form.user.name"
       @onCancel="onCloseModal('delete-modal')"
       @onDelete="deleteLenderWithRelatedData"
     />
@@ -720,18 +720,30 @@ export default {
     isNew: false,
     isEditing: false,
     form: {
-      user: {},
+      user: {
+        name: null,
+        name_kana: null,
+      },
       city_id: null,
       port_id: null,
       phone: '',
       boats: [
         {
           boat_name: '',
+          boat_name_kana: null,
+          fishing_area: null,
+          capacity: null,
+          departure: null,
           fishing_point: null,
           tackle: null,
           length: null,
           weight: null,
           caption_comment: null,
+          boat_img_1: null,
+          boat_img_2: null,
+          boat_img_3: null,
+          boat_img_4: null,
+          boat_img_5: null,
         },
       ],
     },
@@ -955,6 +967,7 @@ export default {
       if (this.isNew) {
         this.form.user.role_id = ROLE.TYPE.LENDER
         this.form.created_user_id = this.adminUser.id
+        console.log('x-----', this.form)
         this.storeLenderWithRelatedData()
       } else {
         this.form.updated_user_id = this.adminUser.id

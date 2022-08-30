@@ -13,7 +13,7 @@
       </div>
       <div class="ex-recommend-item-information ex-line">
         <div class="ex-recommend-item-information-image">
-          <img :src="item.boat_img_1" alt="貸船" />
+          <img v-if="item.boat_img_1 !== null" :src="item.boat_img_1" alt="貸船" />
         </div>
         <div class="ex-recommend-item-information-items container-fluid">
           <dl class="ex-recommend-item-information-item row">
@@ -42,7 +42,7 @@
             「遊漁船サーチをみた」とお伝えください
           </dt>
         </dl>
-        <div v-if="item.phone.length !== 0" class="ex-recommend-item-information-call">
+        <div v-if="item.phone !== null" class="ex-recommend-item-information-call">
           <a :href="'tel:' + item.phone"
             ><img src="/images/boatList/icon_call.svg" alt="電話をかける"
           /></a>

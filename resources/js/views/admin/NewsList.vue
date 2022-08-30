@@ -10,7 +10,7 @@
                 <th scope="col" class="sort-header">ID</th>
                 <th scope="col" class="sort-header">投稿日</th>
                 <th scope="col" class="sort-header">ニュース内容</th>
-                <th scope="col" class="sort-header action_area_width">アクション</th>
+                <th scope="col" class="sort-header action-area-width">アクション</th>
               </tr>
             </thead>
             <tbody>
@@ -21,7 +21,7 @@
                 <td class="align-middle py-1 pointer">
                   {{ news.updated_at }}
                 </td>
-                <td class="align-middle py-1 pointer">
+                <td class="align-middle py-1 pointer news-content-width">
                   {{ news.news_content }}
                 </td>
                 <td class="d-flex align-middle py-1">
@@ -175,8 +175,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.action_area_width {
+.action-area-width {
   width: 400px;
   padding-left: 20px;
+}
+
+.news-content-width {
+  max-width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>

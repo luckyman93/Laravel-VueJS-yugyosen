@@ -84,7 +84,7 @@
                   :src="facility.icon_img"
                   :alt="facility.facility_name"
                   :style="[
-                    boatDetail.fittedFacilitiesIds.indexOf(facility.id) !== -1
+                    boatDetail.fitted_facilities_ids.indexOf(facility.id) !== -1
                       ? {}
                       : { filter: 'grayscale(1)' },
                   ]"
@@ -425,7 +425,6 @@
 
       <section class="ex-recommend">
         <h3 class="ex-recommend-headline"><span>その他オススメ遊漁船一覧</span></h3>
-
         <MRecommend :paid-members-data="boatIndexData" />
       </section>
 
