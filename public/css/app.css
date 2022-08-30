@@ -5773,6 +5773,7 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
 }
 #Wrapper.callRanking .main .main-table .main-table-content {
   margin-top: 1.3333333333vw;
+  width: 100%;
 }
 #Wrapper.callRanking .main .main-table .main-table-content .main-table-content-thead {
   font-size: 3.4666666667vw;
@@ -5850,23 +5851,6 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
   border-left: 1px solid #666767;
   border-right: 1px solid #666767;
   border-bottom: 1px solid #666767;
-}
-#Wrapper.callRanking .main .main-table .main-more-title {
-  align-items: center;
-  height: 12vw;
-  display: flex;
-  border-bottom: 1px solid #666767;
-}
-#Wrapper.callRanking .main .main-table .main-more-title > span {
-  width: 100%;
-}
-#Wrapper.callRanking .main .main-table .main-more-title:after {
-  background: url(/images/lender/icon_menu_arrow.svg) center no-repeat;
-  background-size: contain;
-  content: "";
-  height: 7.2vw;
-  min-width: 7.2vw;
-  width: 7.2vw;
 }
 #Wrapper.callRanking .main .main-lineup {
   margin-bottom: 6.9333333333vw;
@@ -5957,6 +5941,79 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
 }
 #Wrapper.callRanking .main .main-lineup .main-lineup-items .main-lineup-item .main-lineup-item-banner > a > span {
   margin: 0 1.3333333333vw;
+}
+#Wrapper.callRanking .main .ex-collapses {
+  margin-bottom: 4vw;
+}
+#Wrapper.callRanking .main .main-more-table {
+  margin-bottom: 4vw;
+  cursor: pointer;
+}
+#Wrapper.callRanking .main .main-more-table.ex-separate::before {
+  border-top: 1px solid #000000;
+  content: "";
+  display: block;
+  height: 4vw;
+  margin: 0 -2.6666666667vw;
+}
+#Wrapper.callRanking .main .main-more-table.ex-collapse {
+  margin-bottom: 0vw;
+}
+#Wrapper.callRanking .main .main-more-table.ex-flex {
+  align-items: flex-start;
+  display: flex;
+}
+#Wrapper.callRanking .main .main-more-table.ex-flex > dt {
+  line-height: 1;
+  margin-right: 3.2vw;
+}
+#Wrapper.callRanking .main .main-more-table label {
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 1.8666666667vw !important;
+  padding: 0;
+  position: relative;
+}
+#Wrapper.callRanking .main .main-more-table label.ex-collapse {
+  border-bottom: 1px solid #cbcbcb;
+  border-top: 1px solid #cbcbcb;
+  line-height: 11.8666666667vw;
+  margin-bottom: -1px;
+}
+#Wrapper.callRanking .main .main-more-table label.ex-collapse::before {
+  content: "";
+  position: absolute;
+  border: 1.6vw solid transparent;
+  border-top: 1.6vw solid #979698;
+  top: 50%;
+  transform: translate(0, -25%) rotate(0deg);
+  transform-origin: 50% 25%;
+  transition-duration: 0.2s;
+  right: 2.6666666667vw;
+  z-index: 1;
+}
+#Wrapper.callRanking .main .main-more-table label.ex-collapse.collapsed::before {
+  transform: translate(0, -25%) rotate(-90deg);
+}
+#Wrapper.callRanking .main .main-more-table > div {
+  margin: 0;
+}
+#Wrapper.callRanking .main .main-more-table > div.ex-chink {
+  margin-top: 4vw;
+}
+#Wrapper.callRanking .main .main-more-table > div.ex-change {
+  display: table;
+  margin: auto;
+  padding: 6vw 0 9.3333333333vw 0;
+  text-align: center;
+}
+#Wrapper.callRanking .main .main-more-table > div .ex-collapse-inner {
+  padding: 5.3333333333vw 4vw 1.3333333333vw 4vw;
+}
+#Wrapper.callRanking .main .main-ranking-intro {
+  padding-top: 10.6666666667vw;
+  padding-bottom: 13.3333333333vw;
+  line-height: 6.6666666667vw;
 }
 @media screen and (min-width: 750px) {
   /*-------------------------------------------*/
@@ -6051,14 +6108,6 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
 #Wrapper.callRanking .main .main-table .main-table-content .main-tbody-row .main-tbody-bottom-second {
     font-size: 24px;
 }
-#Wrapper.callRanking .main .main-table .main-more-title {
-    height: 90px;
-}
-#Wrapper.callRanking .main .main-table .main-more-title:after {
-    height: 54px;
-    min-width: 54px;
-    width: 54px;
-}
 #Wrapper.callRanking .main .main-lineup {
     margin-bottom: 52px;
 }
@@ -6107,6 +6156,51 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
 }
 #Wrapper.callRanking .main .main-lineup .main-lineup-items .main-lineup-item .main-lineup-item-banner > a > span {
     margin: 0 10px;
+}
+#Wrapper.callRanking .main .ex-collapses {
+    margin-bottom: 30px;
+}
+#Wrapper.callRanking .main .main-more-table {
+    margin-bottom: 30px;
+}
+#Wrapper.callRanking .main .main-more-table.ex-separate::before {
+    height: 30px;
+    margin: 0 -20px;
+}
+#Wrapper.callRanking .main .main-more-table.ex-collapse {
+    margin-bottom: 0px;
+}
+#Wrapper.callRanking .main .main-more-table.ex-flex > dt {
+    margin-right: 24px;
+}
+#Wrapper.callRanking .main .main-more-table label {
+    margin-bottom: 14px !important;
+}
+#Wrapper.callRanking .main .main-more-table label.ex-collapse {
+    line-height: 89px;
+}
+#Wrapper.callRanking .main .main-more-table label.ex-collapse::before {
+    border: 12px solid transparent;
+    border-top: 12px solid #979698;
+    transform: translate(0, -25%) rotate(0deg);
+    right: 20px;
+}
+#Wrapper.callRanking .main .main-more-table label.ex-collapse.collapsed::before {
+    transform: translate(0, -25%) rotate(-90deg);
+}
+#Wrapper.callRanking .main .main-more-table > div.ex-chink {
+    margin-top: 30px;
+}
+#Wrapper.callRanking .main .main-more-table > div.ex-change {
+    padding: 45px 0 70px 0;
+}
+#Wrapper.callRanking .main .main-more-table > div .ex-collapse-inner {
+    padding: 40px 30px 10px 30px;
+}
+#Wrapper.callRanking .main .main-ranking-intro {
+    padding-top: 80px;
+    padding-bottom: 100px;
+    line-height: 50px;
 }
 }@charset "UTF-8";
 /*-------------------------------------------*/

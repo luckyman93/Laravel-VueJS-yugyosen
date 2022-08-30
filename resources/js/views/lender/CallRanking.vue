@@ -19,7 +19,7 @@
               <span>電話数ランキング（22.01.01〜2022.02.01)</span>
             </div>
           </div>
-          <table class="main-table-content" style="width: 100%">
+          <table class="main-table-content">
             <colgroup>
               <col span="1" style="width: 60%;" />
               <col span="1" style="width: 20%;" />
@@ -64,8 +64,43 @@
               </tr>
             </tbody>
           </table>
-          <div class="main-more-title">
-            <span style="width:100%">11〜50位を見る</span>
+          <div class="ex-collapses">
+            <MCollapse id="Method" label="11〜50位を見る" class-name="main-more-table">
+              <table class="main-table-content" style="width: 100%">
+                <colgroup>
+                  <col span="1" style="width: 60%;" />
+                  <col span="1" style="width: 20%;" />
+                  <col span="1" style="width: 20%;" />
+                </colgroup>
+                <tbody>
+                  <tr v-for="(item, index) in rankingList" :key="index" class="main-tbody-row">
+                    <td class="main-tbody-bottom-first">
+                      <div style="display:flex;">
+                        <span class="main-tbody-row-letter1">{{ index + 1 }}</span>
+                        <span class="main-tbody-row-letter2">
+                          {{ item.cityName }}
+                          <br />
+                          {{ item.boatName }}
+                        </span>
+                      </div>
+                    </td>
+                    <td class="main-tbody-bottom-second">
+                      {{ item.callRanking }}
+                    </td>
+                    <td class="main-tbody-bottom-first">
+                      <img class="main-tbody-mark" src="/images/lender/icon_mark.svg" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </MCollapse>
+          </div>
+          <div class="main-ranking-intro">
+            利用者様が、業者様へ『電話をかけた回数』を
+            <br />
+            ランキング化しています。
+            <br />
+            ※一端末で1日1回までのカウント
           </div>
         </div>
         <MITPart />
@@ -81,6 +116,7 @@ import { mapState } from 'vuex'
 import MHeader from '@/views/lender/components/MHeader.vue'
 import MFooter from '@/views/lender/components/MFooter.vue'
 import MITPart from '@/views/lender/components/MITPart.vue'
+import MCollapse from '@/views/components/MCollapse.vue'
 
 // const
 import HTTP_STATUS from '@/consts/httpStatus'
@@ -96,6 +132,7 @@ export default {
     MHeader,
     MFooter,
     MITPart,
+    MCollapse,
   },
 
   data: () => ({

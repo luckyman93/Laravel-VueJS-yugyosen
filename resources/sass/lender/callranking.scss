@@ -82,6 +82,7 @@
 
             .main-table-content {
                 margin-top: getVW(10);
+                width: 100%;
 
                 .main-table-content-thead{
                     font-size: getVW(26);
@@ -180,27 +181,8 @@
                     }
                 }
             }
-            
-            .main-more-title {
-                align-items: center;
-                height: getVW(90);
-                display: flex;
-                border-bottom: 1px solid #666767;
-
-                > span {
-                    width: 100%;
-                }
-
-                &:after {
-                    background: url(/images/lender/icon_menu_arrow.svg) center no-repeat;
-                    background-size: contain;
-                    content: "";
-                    height: getVW(54);
-                    min-width: getVW(54);
-                    width: getVW(54);
-                }
-            }
         }
+
         .main-lineup {
             margin-bottom: getVW(52);
 
@@ -325,6 +307,99 @@
                     }
                 }
             }
+        }
+
+        .ex-collapses {
+            margin-bottom: getVW(30);
+        }
+
+        .main-more-table {
+            margin-bottom: getVW(30);
+            cursor: pointer;
+
+            &.ex-separate {
+                &::before {
+                    border-top: 1px solid #000000;
+                    content: "";
+                    display: block;
+                    height: getVW(30);
+                    margin: 0 getVW(-20);
+                }
+            }
+
+            &.ex-collapse {
+                margin-bottom: getVW(0);
+            }
+
+            &.ex-flex {
+                align-items: flex-start;
+                display: flex;
+
+                > dt {
+                    line-height: 1;
+                    margin-right: getVW(24);
+                }
+            }
+
+            label {
+                font-weight: 700;
+                line-height: 1;
+                margin-bottom: getVW(14) !important;
+                padding: 0;
+                position: relative;
+
+                &.ex-collapse {;
+                    border-bottom: 1px solid #cbcbcb;
+                    border-top: 1px solid #cbcbcb;
+                    line-height: getVW(89);
+                    margin-bottom: -1px;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        border: getVW(12) solid transparent;
+                        border-top: getVW(12) solid #979698;
+                        top: 50%;
+                        transform: translate(0, -25%) rotate(0deg);
+                        transform-origin: 50% 25%;
+                        transition-duration: 0.2s;
+                        right: getVW(20);
+                        z-index: 1;
+                    }
+
+                    &.collapsed {
+                        &::before {
+                            transform: translate(0, -25%) rotate(-90deg);
+                        }
+
+                    }
+                }
+            }
+
+            > div {
+                margin: 0;
+
+                &.ex-chink {
+                    margin-top: getVW(30);
+                }
+
+                &.ex-change {
+                    display: table;
+                    margin: auto;
+                    padding: getVW(45) 0 getVW(70) 0;
+                    text-align: center;
+                }
+
+                .ex-collapse-inner {
+                    padding: getVW(40) getVW(30) getVW(10) getVW(30);
+                }
+            }
+        }
+
+        .main-ranking-intro {
+            padding-top: getVW(80);
+            padding-bottom: getVW(100);
+            line-height: getVW(50);
         }
     }
 }
