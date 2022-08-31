@@ -15,7 +15,7 @@ class CreateCallRankingsTable extends Migration
     {
         Schema::create('call_rankings', function (Blueprint $table) {
             $table->id();
-            $table->integer('boat_id')->default(0);
+            $table->integer('boat_id')->unsigned()->index();
             $table->integer('call_count')->default(0);
             $table->timestamps();
             $table->softDeletes();

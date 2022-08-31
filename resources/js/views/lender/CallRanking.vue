@@ -44,27 +44,33 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in rankingList" :key="index" class="main-tbody-row">
+              <tr
+                v-for="(item, index) in callRankingList.slice(0, 10)"
+                :key="index"
+                class="main-tbody-row"
+              >
                 <td class="main-tbody-bottom-first">
                   <div style="display:flex;">
                     <span class="main-tbody-row-letter1">{{ index + 1 }}</span>
                     <span class="main-tbody-row-letter2">
-                      {{ item.cityName }}
+                      {{ item.prefecture_name + item.city_name }}
                       <br />
-                      {{ item.boatName }}
+                      {{ item.boat_name }}
                     </span>
                   </div>
                 </td>
                 <td class="main-tbody-bottom-second">
-                  {{ item.callRanking }}
+                  {{ item.call_count }}
                 </td>
                 <td class="main-tbody-bottom-first">
-                  <img class="main-tbody-mark" src="/images/lender/icon_mark.svg" />
+                  <span v-if="item.member_type_id === 1">
+                    <img class="main-tbody-mark" src="/images/lender/icon_mark.svg" />
+                  </span>
                 </td>
               </tr>
             </tbody>
           </table>
-          <div class="ex-collapses">
+          <div v-if="callRankingList.slice(10, 50).length !== 0" class="ex-collapses">
             <MCollapse id="Method" label="11〜50位を見る" class-name="main-more-table">
               <table class="main-table-content" style="width: 100%">
                 <colgroup>
@@ -73,22 +79,28 @@
                   <col span="1" style="width: 20%;" />
                 </colgroup>
                 <tbody>
-                  <tr v-for="(item, index) in rankingList" :key="index" class="main-tbody-row">
+                  <tr
+                    v-for="(item, index) in callRankingList.slice(10, 50)"
+                    :key="index"
+                    class="main-tbody-row"
+                  >
                     <td class="main-tbody-bottom-first">
                       <div style="display:flex;">
                         <span class="main-tbody-row-letter1">{{ index + 1 }}</span>
                         <span class="main-tbody-row-letter2">
-                          {{ item.cityName }}
+                          {{ item.prefecture_name + item.city_name }}
                           <br />
-                          {{ item.boatName }}
+                          {{ item.boat_name }}
                         </span>
                       </div>
                     </td>
                     <td class="main-tbody-bottom-second">
-                      {{ item.callRanking }}
+                      {{ item.call_count }}
                     </td>
                     <td class="main-tbody-bottom-first">
-                      <img class="main-tbody-mark" src="/images/lender/icon_mark.svg" />
+                      <span v-if="item.member_type_id === 1">
+                        <img class="main-tbody-mark" src="/images/lender/icon_mark.svg" />
+                      </span>
                     </td>
                   </tr>
                 </tbody>
@@ -120,12 +132,11 @@ import MCollapse from '@/views/components/MCollapse.vue'
 
 // const
 import HTTP_STATUS from '@/consts/httpStatus'
-import ROUTE from '@/consts/route'
 
 // repository
 import { RepositoryFactory } from '@/repositories/repositoryFactory'
 
-const lenderPostRepository = RepositoryFactory.get('lenderPosts')
+const callRankingRepository = RepositoryFactory.get('calls')
 
 export default {
   components: {
@@ -136,18 +147,7 @@ export default {
   },
 
   data: () => ({
-    rankingList: [
-      { cityName: '福岡県福岡市', boatName: '遊漁丸', callRanking: 100 },
-      { cityName: '福岡県福岡市', boatName: '遊漁丸', callRanking: 100 },
-      { cityName: '福岡県福岡市', boatName: '遊漁丸', callRanking: 100 },
-      { cityName: '福岡県福岡市', boatName: '遊漁丸', callRanking: 100 },
-      { cityName: '福岡県福岡市', boatName: '遊漁丸', callRanking: 100 },
-      { cityName: '福岡県福岡市', boatName: '遊漁丸', callRanking: 100 },
-      { cityName: '福岡県福岡市', boatName: '遊漁丸', callRanking: 100 },
-      { cityName: '福岡県福岡市', boatName: '遊漁丸', callRanking: 100 },
-      { cityName: '福岡県福岡市', boatName: '遊漁丸', callRanking: 100 },
-      { cityName: '福岡県福岡市', boatName: '遊漁丸', callRanking: 100 },
-    ],
+    callRankingList: [],
   }),
 
   computed: {
@@ -156,20 +156,21 @@ export default {
 
   async created() {
     this.showLoader()
-    await this.fetchLenderPostIndex()
+    await this.fetchCallRankingList()
     this.hideLoader()
   },
 
   methods: {
-    async fetchLenderPostIndex() {
-      await lenderPostRepository
-        .index(this.lenderUser.lender_id)
+    async fetchCallRankingList() {
+      await callRankingRepository
+        .fetchCallRankingList()
         .then(res => {
           if (res.status !== HTTP_STATUS.OK) {
             this.$toast.errorToast()
             return
           }
-          this.postList = res.data
+          console.log(res.data.slice(0, 10))
+          this.callRankingList = res.data
         })
         .catch(async err => {
           if (err.response) {
@@ -178,20 +179,6 @@ export default {
           }
           this.$toast.errorToast()
         })
-    },
-
-    onDetail(id) {
-      this.$router.push({
-        name: ROUTE.LENDER.POST.DETAIL.name,
-        params: { id },
-      })
-    },
-
-    onNew() {
-      this.$router.push({
-        name: ROUTE.LENDER.POST.DETAIL.name,
-        params: { id: 'new' },
-      })
     },
   },
 }

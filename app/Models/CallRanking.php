@@ -16,13 +16,13 @@ class CallRanking extends BaseModel
         'call_count',
     ];
 
-    // public function prefecture()
-    // {
-    //     return $this->belongsTo(Prefecture::class);
-    // }
+    public function Boat()
+    {
+        return $this->belongsTo(Boat::class, 'boat_id', 'id');
+    }
 
-    // public function ports()
+    // public function lender()
     // {
-    //     return $this->hasMany(Port::class);
+    //     return $this->belongsTo(Lender::class, 'boat.lender_id', 'id');
     // }
 }

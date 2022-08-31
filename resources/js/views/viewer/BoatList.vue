@@ -68,7 +68,11 @@
       <!------------------>
       <!-- 有料会員 -->
       <section v-if="boatIndexDataPaidMember" class="main-boat ex-recommend">
-        <MRecommend :paid-members-data="boatIndexDataPaidMember" @onDetail="onDetail" />
+        <MRecommend
+          :paid-members-data="boatIndexDataPaidMember"
+          @onDetail="onDetail"
+          @increCallCount="increCallCount"
+        />
       </section>
 
       <!-- 無料会員 -->
@@ -194,6 +198,7 @@ import { RepositoryFactory } from '@/repositories/repositoryFactory'
 const cityRepository = RepositoryFactory.get('cities')
 const boatRepository = RepositoryFactory.get('boats')
 const prefectureRepository = RepositoryFactory.get('prefectures')
+const callRankingRepository = RepositoryFactory.get('calls')
 
 export default {
   components: {
@@ -223,117 +228,6 @@ export default {
   },
 
   data: () => ({
-    // recommends: [
-    //   {
-    //     boat_name: '瀬渡し船ニュー大漁丸',
-    //     port_name: '安瀬港',
-    //     review: '★★★★☆',
-    //     operation_names: '〇〇〇〇〇〇',
-    //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-    //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-    //     boat_img_1: '/images/dammy/photo_boat.jpg',
-    //     phone: '0120-777-777',
-    //     comment:
-    //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-    //     url: '#',
-    //   },
-    //   {
-    //     boat_name: '瀬渡し船ニュー大漁丸',
-    //     port_name: '安瀬港',
-    //     review: '★★★★☆',
-    //     operation_names: '〇〇〇〇〇〇',
-    //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-    //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-    //     boat_img_1: '/images/dammy/photo_boat.jpg',
-    //     phone: '0120-777-777',
-    //     comment:
-    //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-    //     url: '#',
-    //   },
-    // ],
-    // frees: [
-    //   {
-    //     boat_name: '瀬渡し船ニュー大漁丸',
-    //     port_name: '安瀬港',
-    //     review: '★★★★☆',
-    //     operation_names: '〇〇〇〇〇〇',
-    //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-    //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-    //     boat_img_1: '/images/dammy/photo_boat.jpg',
-    //     phone: '0120-777-777',
-    //     comment:
-    //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-    //     url: '#',
-    //   },
-    //   {
-    //     boat_name: '瀬渡し船ニュー大漁丸',
-    //     port_name: '安瀬港',
-    //     review: '★★★★☆',
-    //     operation_names: '〇〇〇〇〇〇',
-    //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-    //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-    //     boat_img_1: '/images/dammy/photo_boat.jpg',
-    //     phone: '0120-777-777',
-    //     comment:
-    //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-    //     url: '#',
-    //   },
-    // ],
-    // others: [
-    //   {
-    //     boat_name: '瀬渡し船ニュー大漁丸',
-    //     port_name: '安瀬港',
-    //     review: '★★★★☆',
-    //     operation_names: '〇〇〇〇〇〇',
-    //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-    //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-    //     boat_img_1: '/images/dammy/photo_boat.jpg',
-    //     phone: '0120-777-777',
-    //     comment:
-    //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-    //     url: '#',
-    //   },
-    //   {
-    //     boat_name: '瀬渡し船ニュー大漁丸',
-    //     port_name: '安瀬港',
-    //     review: '★★★★☆',
-    //     operation_names: '〇〇〇〇〇〇',
-    //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-    //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-    //     boat_img_1: '/images/dammy/photo_boat.jpg',
-    //     phone: '0120-777-777',
-    //     comment:
-    //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-    //     url: '#',
-    //   },
-    //   {
-    //     boat_name: '瀬渡し船ニュー大漁丸',
-    //     port_name: '安瀬港',
-    //     review: '★★★★☆',
-    //     operation_names: '〇〇〇〇〇〇',
-    //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-    //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-    //     boat_img_1: '/images/dammy/photo_boat.jpg',
-    //     phone: '0120-777-777',
-    //     comment:
-    //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-    //     url: '#',
-    //   },
-    //   {
-    //     boat_name: '瀬渡し船ニュー大漁丸',
-    //     port_name: '安瀬港',
-    //     review: '★★★★☆',
-    //     operation_names: '〇〇〇〇〇〇',
-    //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-    //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-    //     boat_img_1: '/images/dammy/photo_boat.jpg',
-    //     phone: '0120-777-777',
-    //     comment:
-    //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-    //     url: '#',
-    //   },
-    // ],
-    // BUTTON,
     ROUTE,
     page: 1,
     sortKey: 'id',
@@ -479,6 +373,14 @@ export default {
             this.$toast.errorToast()
           })
       }
+    },
+
+    // 電話の増加
+    async increCallCount(boatId) {
+      const params = { boat_id: boatId }
+      await callRankingRepository.increCallCount(params).catch(() => {
+        this.$toast.errorToast()
+      })
     },
     /*-------------------------------------------*/
     /* その他

@@ -17,31 +17,61 @@ class CallRepository
     /**
      * 電話数の増加
      */
-    public function incrementCallCount($callParam)
+    public function incrementCallCount($callParam):object
     {
         if ($callParam) {
             $boat_id = $callParam->get('boat_id');
-            $call_count = $this->model->where('boat_id', $boat_id)->select('call_count', 'updated_at')->get();
-            if ($call_count[0]) {
+            $ranking_by_id = $this->model->where('boat_id', $boat_id)->select('call_count', 'updated_at', 'id')->get();
+
+            if (count($ranking_by_id) != 0) {
                 $from = Carbon::now()->startOfDay();
                 $to = Carbon::now()->endOfDay();
-                if (($call_count[0]->updated_at >= $from) && ($call_count[0]->updated_at <= $to)){
-                    $call = [
+                $id = $ranking_by_id[0]->id;
+
+                if (($ranking_by_id[0]->updated_at >= $from) && ($ranking_by_id[0]->updated_at <= $to)) {
+                    $param = [
                         'boat_id' => $boat_id,
-                        'call_count' => $call_count[0]->call_count+1,
+                        'call_count' => $ranking_by_id[0]->call_count+1,
                     ];
-
-                    return $call;
-
+                    return $this->model->updateData($id, collect($param));
                 }else{    
-                    echo "Current date is not between two dates";  
+                    $param = [
+                        'boat_id' => $boat_id,
+                        'call_count' => 1,
+                    ];
+                    return $this->model->updateData($id, collect($param));
                 }
             } else {
-                echo "new"; 
-            }
-            
+                $param = [
+                    'boat_id' => $boat_id,
+                    'call_count' => 1,
+                ];
+                return $this->model->storeData(collect($param));
+            }            
         }
-        // return $today;
-        // return $this->model->storeData(collect($callParam));
+    }
+
+    /**
+     * 電話番号リスト取得
+     */
+    public function fetchCallRankingList()
+    {
+        $from = Carbon::now()->startOfDay();
+        $to = Carbon::now()->endOfDay();
+        $query =  $this->model
+                    ->leftJoin('boats', 'boat_id', 'boats.id')
+                    ->leftJoin('lenders', 'lender_id', 'lenders.id')
+                    ->leftJoin('cities', 'city_id', 'cities.id')
+                    ->leftJoin('prefectures', 'lenders.prefecture_id', 'prefectures.id')
+                    ->whereBetween('call_rankings.updated_at', [$from, $to])
+                    ->select(
+                        'boat_name',
+                        'call_count',
+                        'city_name',
+                        'prefecture_name',
+                        'member_type_id',
+                    )
+                    ->get();
+        return  $query;
     }
 }

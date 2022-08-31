@@ -21,8 +21,16 @@ class CallController extends Controller
      *
      * @return object
      */
-    public function incrementCallCount(Request $request)
+    public function incrementCallCount(Request $request):object
     {
         return $this->service->incrementCallCount($request);
+    }
+
+    /**
+     * 電話番号リスト取得
+     */
+    public function fetchCallRankingList()
+    {
+        return $this->service->fetchCallRankingList();
     }
 }

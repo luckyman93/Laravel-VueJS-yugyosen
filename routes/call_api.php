@@ -13,4 +13,5 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('call', [CallController::class, 'incrementCallCount']);
+Route::post('calls', [CallController::class, 'incrementCallCount']);
+Route::get('calls', [CallController::class, 'fetchCallRankingList']);

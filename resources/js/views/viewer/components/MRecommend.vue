@@ -42,7 +42,11 @@
             「遊漁船サーチをみた」とお伝えください
           </dt>
         </dl>
-        <div v-if="item.phone !== null" class="ex-recommend-item-information-call">
+        <div
+          v-if="item.phone !== null"
+          class="ex-recommend-item-information-call"
+          @click="$emit('increCallCount', item.id)"
+        >
           <a :href="'tel:' + item.phone"
             ><img src="/images/boatList/icon_call.svg" alt="電話をかける"
           /></a>

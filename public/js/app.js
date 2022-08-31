@@ -14506,8 +14506,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_lender_components_MITPart_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/views/lender/components/MITPart.vue */ "./resources/js/views/lender/components/MITPart.vue");
 /* harmony import */ var _views_components_MCollapse_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/views/components/MCollapse.vue */ "./resources/js/views/components/MCollapse.vue");
 /* harmony import */ var _consts_httpStatus__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/consts/httpStatus */ "./resources/js/consts/httpStatus.js");
-/* harmony import */ var _consts_route__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/consts/route */ "./resources/js/consts/route.js");
-/* harmony import */ var _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/repositories/repositoryFactory */ "./resources/js/repositories/repositoryFactory.js");
+/* harmony import */ var _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/repositories/repositoryFactory */ "./resources/js/repositories/repositoryFactory.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -14632,17 +14631,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
  // const
 
-
  // repository
 
 
-var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_8__["RepositoryFactory"].get('lenderPosts');
+var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_7__["RepositoryFactory"].get('calls');
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     MHeader: _views_lender_components_MHeader_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -14652,47 +14662,7 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
   },
   data: function data() {
     return {
-      rankingList: [{
-        cityName: '福岡県福岡市',
-        boatName: '遊漁丸',
-        callRanking: 100
-      }, {
-        cityName: '福岡県福岡市',
-        boatName: '遊漁丸',
-        callRanking: 100
-      }, {
-        cityName: '福岡県福岡市',
-        boatName: '遊漁丸',
-        callRanking: 100
-      }, {
-        cityName: '福岡県福岡市',
-        boatName: '遊漁丸',
-        callRanking: 100
-      }, {
-        cityName: '福岡県福岡市',
-        boatName: '遊漁丸',
-        callRanking: 100
-      }, {
-        cityName: '福岡県福岡市',
-        boatName: '遊漁丸',
-        callRanking: 100
-      }, {
-        cityName: '福岡県福岡市',
-        boatName: '遊漁丸',
-        callRanking: 100
-      }, {
-        cityName: '福岡県福岡市',
-        boatName: '遊漁丸',
-        callRanking: 100
-      }, {
-        cityName: '福岡県福岡市',
-        boatName: '遊漁丸',
-        callRanking: 100
-      }, {
-        cityName: '福岡県福岡市',
-        boatName: '遊漁丸',
-        callRanking: 100
-      }]
+      callRankingList: []
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('userModule', ['lenderUser'])),
@@ -14707,7 +14677,7 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
               _this.showLoader();
 
               _context.next = 3;
-              return _this.fetchLenderPostIndex();
+              return _this.fetchCallRankingList();
 
             case 3:
               _this.hideLoader();
@@ -14721,7 +14691,7 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
     }))();
   },
   methods: {
-    fetchLenderPostIndex: function fetchLenderPostIndex() {
+    fetchCallRankingList: function fetchCallRankingList() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
@@ -14730,14 +14700,15 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return lenderPostRepository.index(_this2.lenderUser.lender_id).then(function (res) {
+                return callRankingRepository.fetchCallRankingList().then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_6__["default"].OK) {
                     _this2.$toast.errorToast();
 
                     return;
                   }
 
-                  _this2.postList = res.data;
+                  console.log(res.data.slice(0, 10));
+                  _this2.callRankingList = res.data;
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
@@ -14778,22 +14749,6 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
           }
         }, _callee3);
       }))();
-    },
-    onDetail: function onDetail(id) {
-      this.$router.push({
-        name: _consts_route__WEBPACK_IMPORTED_MODULE_7__["default"].LENDER.POST.DETAIL.name,
-        params: {
-          id: id
-        }
-      });
-    },
-    onNew: function onNew() {
-      this.$router.push({
-        name: _consts_route__WEBPACK_IMPORTED_MODULE_7__["default"].LENDER.POST.DETAIL.name,
-        params: {
-          id: 'new'
-        }
-      });
     }
   }
 });
@@ -17522,6 +17477,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -17536,6 +17495,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var cityRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10__["RepositoryFactory"].get('cities');
 var boatRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10__["RepositoryFactory"].get('boats');
 var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10__["RepositoryFactory"].get('prefectures');
+var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10__["RepositoryFactory"].get('calls');
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     MHeader: _views_viewer_components_MHeader_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -17561,117 +17521,6 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
   },
   data: function data() {
     return {
-      // recommends: [
-      //   {
-      //     boat_name: '瀬渡し船ニュー大漁丸',
-      //     port_name: '安瀬港',
-      //     review: '★★★★☆',
-      //     operation_names: '〇〇〇〇〇〇',
-      //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-      //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-      //     boat_img_1: '/images/dammy/photo_boat.jpg',
-      //     phone: '0120-777-777',
-      //     comment:
-      //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-      //     url: '#',
-      //   },
-      //   {
-      //     boat_name: '瀬渡し船ニュー大漁丸',
-      //     port_name: '安瀬港',
-      //     review: '★★★★☆',
-      //     operation_names: '〇〇〇〇〇〇',
-      //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-      //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-      //     boat_img_1: '/images/dammy/photo_boat.jpg',
-      //     phone: '0120-777-777',
-      //     comment:
-      //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-      //     url: '#',
-      //   },
-      // ],
-      // frees: [
-      //   {
-      //     boat_name: '瀬渡し船ニュー大漁丸',
-      //     port_name: '安瀬港',
-      //     review: '★★★★☆',
-      //     operation_names: '〇〇〇〇〇〇',
-      //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-      //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-      //     boat_img_1: '/images/dammy/photo_boat.jpg',
-      //     phone: '0120-777-777',
-      //     comment:
-      //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-      //     url: '#',
-      //   },
-      //   {
-      //     boat_name: '瀬渡し船ニュー大漁丸',
-      //     port_name: '安瀬港',
-      //     review: '★★★★☆',
-      //     operation_names: '〇〇〇〇〇〇',
-      //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-      //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-      //     boat_img_1: '/images/dammy/photo_boat.jpg',
-      //     phone: '0120-777-777',
-      //     comment:
-      //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-      //     url: '#',
-      //   },
-      // ],
-      // others: [
-      //   {
-      //     boat_name: '瀬渡し船ニュー大漁丸',
-      //     port_name: '安瀬港',
-      //     review: '★★★★☆',
-      //     operation_names: '〇〇〇〇〇〇',
-      //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-      //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-      //     boat_img_1: '/images/dammy/photo_boat.jpg',
-      //     phone: '0120-777-777',
-      //     comment:
-      //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-      //     url: '#',
-      //   },
-      //   {
-      //     boat_name: '瀬渡し船ニュー大漁丸',
-      //     port_name: '安瀬港',
-      //     review: '★★★★☆',
-      //     operation_names: '〇〇〇〇〇〇',
-      //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-      //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-      //     boat_img_1: '/images/dammy/photo_boat.jpg',
-      //     phone: '0120-777-777',
-      //     comment:
-      //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-      //     url: '#',
-      //   },
-      //   {
-      //     boat_name: '瀬渡し船ニュー大漁丸',
-      //     port_name: '安瀬港',
-      //     review: '★★★★☆',
-      //     operation_names: '〇〇〇〇〇〇',
-      //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-      //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-      //     boat_img_1: '/images/dammy/photo_boat.jpg',
-      //     phone: '0120-777-777',
-      //     comment:
-      //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-      //     url: '#',
-      //   },
-      //   {
-      //     boat_name: '瀬渡し船ニュー大漁丸',
-      //     port_name: '安瀬港',
-      //     review: '★★★★☆',
-      //     operation_names: '〇〇〇〇〇〇',
-      //     address: '〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-      //     fishing_point: '〇〇〇〇〇〇〇〇〇',
-      //     boat_img_1: '/images/dammy/photo_boat.jpg',
-      //     phone: '0120-777-777',
-      //     comment:
-      //       '本文（自由入力）今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中し',
-      //     url: '#',
-      //   },
-      // ],
-      // BUTTON,
       ROUTE: _consts_route__WEBPACK_IMPORTED_MODULE_7__["default"],
       page: 1,
       sortKey: 'id',
@@ -17941,6 +17790,32 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
             }
           }
         }, _callee7);
+      }))();
+    },
+    // 電話の増加
+    increCallCount: function increCallCount(boatId) {
+      var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var params;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                params = {
+                  boat_id: boatId
+                };
+                _context8.next = 3;
+                return callRankingRepository.increCallCount(params)["catch"](function () {
+                  _this8.$toast.errorToast();
+                });
+
+              case 3:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
       }))();
     },
 
@@ -18864,6 +18739,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -65432,7 +65311,10 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "tbody",
-                    _vm._l(_vm.rankingList, function(item, index) {
+                    _vm._l(_vm.callRankingList.slice(0, 10), function(
+                      item,
+                      index
+                    ) {
                       return _c(
                         "tr",
                         { key: index, staticClass: "main-tbody-row" },
@@ -65451,13 +65333,15 @@ var render = function() {
                                 [
                                   _vm._v(
                                     "\n                    " +
-                                      _vm._s(item.cityName) +
+                                      _vm._s(
+                                        item.prefecture_name + item.city_name
+                                      ) +
                                       "\n                    "
                                   ),
                                   _c("br"),
                                   _vm._v(
                                     "\n                    " +
-                                      _vm._s(item.boatName) +
+                                      _vm._s(item.boat_name) +
                                       "\n                  "
                                   )
                                 ]
@@ -65471,13 +65355,24 @@ var render = function() {
                             [
                               _vm._v(
                                 "\n                " +
-                                  _vm._s(item.callRanking) +
+                                  _vm._s(item.call_count) +
                                   "\n              "
                               )
                             ]
                           ),
                           _vm._v(" "),
-                          _vm._m(4, true)
+                          _c("td", { staticClass: "main-tbody-bottom-first" }, [
+                            item.member_type_id === 1
+                              ? _c("span", [
+                                  _c("img", {
+                                    staticClass: "main-tbody-mark",
+                                    attrs: {
+                                      src: "/images/lender/icon_mark.svg"
+                                    }
+                                  })
+                                ])
+                              : _vm._e()
+                          ])
                         ]
                       )
                     }),
@@ -65485,137 +65380,163 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "ex-collapses" },
-                  [
-                    _c(
-                      "MCollapse",
-                      {
-                        attrs: {
-                          id: "Method",
-                          label: "11〜50位を見る",
-                          "class-name": "main-more-table"
-                        }
-                      },
+                _vm.callRankingList.slice(10, 50).length !== 0
+                  ? _c(
+                      "div",
+                      { staticClass: "ex-collapses" },
                       [
                         _c(
-                          "table",
+                          "MCollapse",
                           {
-                            staticClass: "main-table-content",
-                            staticStyle: { width: "100%" }
+                            attrs: {
+                              id: "Method",
+                              label: "11〜50位を見る",
+                              "class-name": "main-more-table"
+                            }
                           },
                           [
-                            _c("colgroup", [
-                              _c("col", {
-                                staticStyle: { width: "60%" },
-                                attrs: { span: "1" }
-                              }),
-                              _vm._v(" "),
-                              _c("col", {
-                                staticStyle: { width: "20%" },
-                                attrs: { span: "1" }
-                              }),
-                              _vm._v(" "),
-                              _c("col", {
-                                staticStyle: { width: "20%" },
-                                attrs: { span: "1" }
-                              })
-                            ]),
-                            _vm._v(" "),
                             _c(
-                              "tbody",
-                              _vm._l(_vm.rankingList, function(item, index) {
-                                return _c(
-                                  "tr",
-                                  { key: index, staticClass: "main-tbody-row" },
-                                  [
-                                    _c(
-                                      "td",
-                                      {
-                                        staticClass: "main-tbody-bottom-first"
-                                      },
-                                      [
-                                        _c(
-                                          "div",
-                                          { staticStyle: { display: "flex" } },
-                                          [
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "main-tbody-row-letter1"
-                                              },
-                                              [_vm._v(_vm._s(index + 1))]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "main-tbody-row-letter2"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                        " +
-                                                    _vm._s(item.cityName) +
-                                                    "\n                        "
-                                                ),
-                                                _c("br"),
-                                                _vm._v(
-                                                  "\n                        " +
-                                                    _vm._s(item.boatName) +
-                                                    "\n                      "
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      {
-                                        staticClass: "main-tbody-bottom-second"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                    " +
-                                            _vm._s(item.callRanking) +
-                                            "\n                  "
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      {
-                                        staticClass: "main-tbody-bottom-first"
-                                      },
-                                      [
-                                        _c("img", {
-                                          staticClass: "main-tbody-mark",
-                                          attrs: {
-                                            src: "/images/lender/icon_mark.svg"
-                                          }
-                                        })
-                                      ]
-                                    )
-                                  ]
+                              "table",
+                              {
+                                staticClass: "main-table-content",
+                                staticStyle: { width: "100%" }
+                              },
+                              [
+                                _c("colgroup", [
+                                  _c("col", {
+                                    staticStyle: { width: "60%" },
+                                    attrs: { span: "1" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("col", {
+                                    staticStyle: { width: "20%" },
+                                    attrs: { span: "1" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("col", {
+                                    staticStyle: { width: "20%" },
+                                    attrs: { span: "1" }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "tbody",
+                                  _vm._l(
+                                    _vm.callRankingList.slice(10, 50),
+                                    function(item, index) {
+                                      return _c(
+                                        "tr",
+                                        {
+                                          key: index,
+                                          staticClass: "main-tbody-row"
+                                        },
+                                        [
+                                          _c(
+                                            "td",
+                                            {
+                                              staticClass:
+                                                "main-tbody-bottom-first"
+                                            },
+                                            [
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticStyle: {
+                                                    display: "flex"
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "main-tbody-row-letter1"
+                                                    },
+                                                    [_vm._v(_vm._s(index + 1))]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "main-tbody-row-letter2"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                        " +
+                                                          _vm._s(
+                                                            item.prefecture_name +
+                                                              item.city_name
+                                                          ) +
+                                                          "\n                        "
+                                                      ),
+                                                      _c("br"),
+                                                      _vm._v(
+                                                        "\n                        " +
+                                                          _vm._s(
+                                                            item.boat_name
+                                                          ) +
+                                                          "\n                      "
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "td",
+                                            {
+                                              staticClass:
+                                                "main-tbody-bottom-second"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                    " +
+                                                  _vm._s(item.call_count) +
+                                                  "\n                  "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "td",
+                                            {
+                                              staticClass:
+                                                "main-tbody-bottom-first"
+                                            },
+                                            [
+                                              item.member_type_id === 1
+                                                ? _c("span", [
+                                                    _c("img", {
+                                                      staticClass:
+                                                        "main-tbody-mark",
+                                                      attrs: {
+                                                        src:
+                                                          "/images/lender/icon_mark.svg"
+                                                      }
+                                                    })
+                                                  ])
+                                                : _vm._e()
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    }
+                                  ),
+                                  0
                                 )
-                              }),
-                              0
+                              ]
                             )
                           ]
                         )
-                      ]
+                      ],
+                      1
                     )
-                  ],
-                  1
-                ),
+                  : _vm._e(),
                 _vm._v(" "),
-                _vm._m(5)
+                _vm._m(4)
               ]),
               _vm._v(" "),
               _c("MITPart")
@@ -65700,17 +65621,6 @@ var staticRenderFns = [
           _c("span", { staticClass: "main-thead-text" }, [_vm._v("認定")])
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "main-tbody-bottom-first" }, [
-      _c("img", {
-        staticClass: "main-tbody-mark",
-        attrs: { src: "/images/lender/icon_mark.svg" }
-      })
     ])
   },
   function() {
@@ -68593,7 +68503,10 @@ var render = function() {
               [
                 _c("MRecommend", {
                   attrs: { "paid-members-data": _vm.boatIndexDataPaidMember },
-                  on: { onDetail: _vm.onDetail }
+                  on: {
+                    onDetail: _vm.onDetail,
+                    increCallCount: _vm.increCallCount
+                  }
                 })
               ],
               1
@@ -70179,16 +70092,27 @@ var render = function() {
           ]),
           _vm._v(" "),
           item.phone !== null
-            ? _c("div", { staticClass: "ex-recommend-item-information-call" }, [
-                _c("a", { attrs: { href: "tel:" + item.phone } }, [
-                  _c("img", {
-                    attrs: {
-                      src: "/images/boatList/icon_call.svg",
-                      alt: "電話をかける"
+            ? _c(
+                "div",
+                {
+                  staticClass: "ex-recommend-item-information-call",
+                  on: {
+                    click: function($event) {
+                      return _vm.$emit("increCallCount", item.id)
                     }
-                  })
-                ])
-              ])
+                  }
+                },
+                [
+                  _c("a", { attrs: { href: "tel:" + item.phone } }, [
+                    _c("img", {
+                      attrs: {
+                        src: "/images/boatList/icon_call.svg",
+                        alt: "電話をかける"
+                      }
+                    })
+                  ])
+                ]
+              )
             : _vm._e()
         ]),
         _vm._v(" "),
@@ -88354,6 +88278,34 @@ var resource = '/boats';
 
 /***/ }),
 
+/***/ "./resources/js/repositories/callRankingRepository.js":
+/*!************************************************************!*\
+  !*** ./resources/js/repositories/callRankingRepository.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+var resource = '/calls';
+/* harmony default export */ __webpack_exports__["default"] = ({
+  /*-------------------------------------------*/
+
+  /* VIEWER *認証なし
+  /*-------------------------------------------*/
+  increCallCount: function increCallCount(params) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("".concat(resource), params);
+  },
+  fetchCallRankingList: function fetchCallRankingList() {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(resource));
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/repositories/cityRepository.js":
 /*!*****************************************************!*\
   !*** ./resources/js/repositories/cityRepository.js ***!
@@ -88778,6 +88730,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _regionRepository__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./regionRepository */ "./resources/js/repositories/regionRepository.js");
 /* harmony import */ var _targetRepository__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./targetRepository */ "./resources/js/repositories/targetRepository.js");
 /* harmony import */ var _userRepository__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./userRepository */ "./resources/js/repositories/userRepository.js");
+/* harmony import */ var _callRankingRepository__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./callRankingRepository */ "./resources/js/repositories/callRankingRepository.js");
+
 
 
 
@@ -88810,7 +88764,8 @@ var repositories = {
   prefectures: _prefectureRepository__WEBPACK_IMPORTED_MODULE_12__["default"],
   regions: _regionRepository__WEBPACK_IMPORTED_MODULE_13__["default"],
   targets: _targetRepository__WEBPACK_IMPORTED_MODULE_14__["default"],
-  users: _userRepository__WEBPACK_IMPORTED_MODULE_15__["default"]
+  users: _userRepository__WEBPACK_IMPORTED_MODULE_15__["default"],
+  calls: _callRankingRepository__WEBPACK_IMPORTED_MODULE_16__["default"]
 }; // eslint-disable-next-line import/prefer-default-export
 
 var RepositoryFactory = {
@@ -93981,8 +93936,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Work\laravel+vue\Laravel-VueJS-yugyosen-\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\Work\laravel+vue\Laravel-VueJS-yugyosen-\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Work\laravel+vue\Laravel-VueJS-yugyosen\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Work\laravel+vue\Laravel-VueJS-yugyosen\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

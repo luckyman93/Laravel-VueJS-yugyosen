@@ -19,11 +19,15 @@ class CallService
     /**
      * 電話数の増加
      */
-    public function incrementCallCount($callParam)
+    public function incrementCallCount($callParam):object
     {
         return $this->repository->incrementCallCount($callParam);
     }
     /**
-     * 市町村 都道府県毎のリスト取得
+     * 電話番号リスト取得
      */
+    public function fetchCallRankingList()
+    {
+        return $this->repository->fetchCallRankingList();
+    }
 }

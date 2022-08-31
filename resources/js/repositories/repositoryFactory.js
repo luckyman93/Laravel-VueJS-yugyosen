@@ -14,6 +14,7 @@ import prefectureRepository from './prefectureRepository'
 import regionRepository from './regionRepository'
 import targetRepository from './targetRepository'
 import userRepository from './userRepository'
+import callRankingRepository from './callRankingRepository'
 
 const repositories = {
   auth: authRepository,
@@ -32,6 +33,7 @@ const repositories = {
   regions: regionRepository,
   targets: targetRepository,
   users: userRepository,
+  calls: callRankingRepository,
 }
 
 // eslint-disable-next-line import/prefer-default-export
