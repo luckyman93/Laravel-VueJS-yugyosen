@@ -16,7 +16,7 @@
           </div>
           <div class="main-call-ranking ex-ranking">
             <div class="main-call-ranking__link ex-ranking">
-              <span>電話数ランキング（22.01.01〜2022.02.01)</span>
+              <span>本日電話数ランキング</span>
             </div>
           </div>
           <table class="main-table-content">
@@ -70,7 +70,7 @@
               </tr>
             </tbody>
           </table>
-          <div v-if="callRankingList.slice(10, 50).length !== 0" class="ex-collapses">
+          <div v-if="callRankingList.slice(11, 50).length !== 0" class="ex-collapses">
             <MCollapse id="Method" label="11〜50位を見る" class-name="main-more-table">
               <table class="main-table-content" style="width: 100%">
                 <colgroup>
@@ -156,7 +156,7 @@ export default {
 
   async created() {
     this.showLoader()
-    await this.fetchCallRankingList()
+    // this.fetchCallRankingList()
     this.hideLoader()
   },
 
@@ -169,7 +169,6 @@ export default {
             this.$toast.errorToast()
             return
           }
-          console.log(res.data.slice(0, 10))
           this.callRankingList = res.data
         })
         .catch(async err => {

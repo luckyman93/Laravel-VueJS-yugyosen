@@ -77,7 +77,8 @@
     .ex-check {
         align-items: center;
         display: flex;
-        font-size: $font-form;
+        // font-size: $font-form;
+        font-size: $font-md;
         font-weight: 400 !important;
 
         > span {
@@ -88,13 +89,13 @@
     }
 
     .ex-input {
-        font-size: $font-form;
-        // font-size: $font-md;
+        // font-size: $font-form;
+        font-size: $font-md;
         width: 100%;
 
         &::placeholder {
-            font-size: $font-form;
-            // font-size: $font-md;
+            // font-size: $font-form;
+            font-size: $font-md;
         }
 
         &:focus-visible {
@@ -221,7 +222,8 @@
                 appearance: none;
                 background: #f1f1f1;
                 border: none;
-                line-height: getVW(87);
+                // line-height: getVW(87);
+                line-height: getVW(60);
                 padding: 0 getVW(28);
             }
         }
@@ -278,8 +280,8 @@
             appearance: none;
             background: #f1f1f1;
             border: none;
-            font-size: $font-form;
-            // font-size: $font-md;
+            // font-size: $font-form;
+            font-size: $font-md;
             height: getVW(87);
             padding: getVW(10) getVW(90) getVW(10) getVW(10);
             text-align: center;
@@ -289,14 +291,15 @@
 
     .ex-tree-select {
         .vue-treeselect__single-value {
-            font-size: $font-form;
-            // font-size: $font-md;
+            // font-size: $font-form;
+            font-size: $font-md;
             line-height: getVW(87);
             padding: getVW(0) getVW(90) getVW(0) getVW(20);
         }
 
         .vue-treeselect__placeholder {
-            font-size: $font-form;
+            // font-size: $font-form;
+            font-size: $font-md;
         }
 
         .vue-treeselect__control {
@@ -336,14 +339,17 @@
 
             .vue-treeselect__input-container {
                 padding: 0;
-                font-size: $font-form;
+                // font-size: $font-form;
+                font-size: $font-md;
+
 
                 input {
                     appearance: none;
                     background: #f1f1f1;
                     border: none;
                     box-sizing: border-box;
-                    font-size: $font-form;
+                    // font-size: $font-form;
+                    font-size: $font-md;
                     height: getVW(87);
                     padding: getVW(10) getVW(90) getVW(10) getVW(20);
                     width: auto;
@@ -352,7 +358,8 @@
         }
 
         .vue-treeselect__menu-container {
-            font-size: $font-form;
+            // font-size: $font-form;
+            font-size: $font-md;
 
             label {
                 line-height: 3 !important;

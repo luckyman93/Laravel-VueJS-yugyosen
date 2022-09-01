@@ -82,7 +82,8 @@
         &[type=password] ,
         &[type=number] {
             &.ex-input {
-                line-height: getMax(87);
+                // line-height: getMax(87);
+                line-height: getMax(60);
                 padding: 0 getMax(28);
             }
         }

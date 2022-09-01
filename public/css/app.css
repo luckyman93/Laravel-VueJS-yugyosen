@@ -3901,10 +3901,6 @@ input[type=checkbox] + .box[data-v-b40d696c]:after {
 }
 input[type=checkbox] + .box[data-v-b40d696c]:after {
   position: absolute;
-  left: 4px;
-  top: 6px;
-  margin-top: -5px;
-  margin-left: -4px;
   display: inline-block;
   content: " ";
   width: 20px;
@@ -3924,7 +3920,6 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
   transform: rotate(45deg);
   position: absolute;
   left: 7px;
-  top: 3px;
   width: 6px;
   height: 13px;
   border-width: 2px;
@@ -4325,7 +4320,7 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
 #Wrapper .ex-check {
   align-items: center;
   display: flex;
-  font-size: max(3.2vw, 16px);
+  font-size: 1em;
   font-weight: 400 !important;
 }
 #Wrapper .ex-check > span {
@@ -4334,17 +4329,17 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
   width: 20px;
 }
 #Wrapper .ex-input {
-  font-size: max(3.2vw, 16px);
+  font-size: 1em;
   width: 100%;
 }
 #Wrapper .ex-input::-moz-placeholder {
-  font-size: max(3.2vw, 16px);
+  font-size: 1em;
 }
 #Wrapper .ex-input:-ms-input-placeholder {
-  font-size: max(3.2vw, 16px);
+  font-size: 1em;
 }
 #Wrapper .ex-input::placeholder {
-  font-size: max(3.2vw, 16px);
+  font-size: 1em;
 }
 #Wrapper .ex-input:focus-visible {
   border-radius: 3px;
@@ -4448,7 +4443,7 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
           appearance: none;
   background: #f1f1f1;
   border: none;
-  line-height: 11.6vw;
+  line-height: 8vw;
   padding: 0 3.7333333333vw;
 }
 #Wrapper input[type=number].ex-input {
@@ -4498,19 +4493,19 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
           appearance: none;
   background: #f1f1f1;
   border: none;
-  font-size: max(3.2vw, 16px);
+  font-size: 1em;
   height: 11.6vw;
   padding: 1.3333333333vw 12vw 1.3333333333vw 1.3333333333vw;
   text-align: center;
   width: auto;
 }
 #Wrapper .ex-tree-select .vue-treeselect__single-value {
-  font-size: max(3.2vw, 16px);
+  font-size: 1em;
   line-height: 11.6vw;
   padding: 0vw 12vw 0vw 2.6666666667vw;
 }
 #Wrapper .ex-tree-select .vue-treeselect__placeholder {
-  font-size: max(3.2vw, 16px);
+  font-size: 1em;
 }
 #Wrapper .ex-tree-select .vue-treeselect__control {
   background: #f1f1f1;
@@ -4546,7 +4541,7 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
 }
 #Wrapper .ex-tree-select .vue-treeselect__control .vue-treeselect__input-container {
   padding: 0;
-  font-size: max(3.2vw, 16px);
+  font-size: 1em;
 }
 #Wrapper .ex-tree-select .vue-treeselect__control .vue-treeselect__input-container input {
   -webkit-appearance: none;
@@ -4555,13 +4550,13 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
   background: #f1f1f1;
   border: none;
   box-sizing: border-box;
-  font-size: max(3.2vw, 16px);
+  font-size: 1em;
   height: 11.6vw;
   padding: 1.3333333333vw 12vw 1.3333333333vw 2.6666666667vw;
   width: auto;
 }
 #Wrapper .ex-tree-select .vue-treeselect__menu-container {
-  font-size: max(3.2vw, 16px);
+  font-size: 1em;
 }
 #Wrapper .ex-tree-select .vue-treeselect__menu-container label {
   line-height: 3 !important;
@@ -4690,7 +4685,7 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
     width: 49px;
 }
 #Wrapper input[type=text].ex-input, #Wrapper input[type=password].ex-input, #Wrapper input[type=number].ex-input {
-    line-height: 87px;
+    line-height: 60px;
     padding: 0 28px;
 }
 #Wrapper textarea.ex-input {
@@ -5832,6 +5827,7 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
   margin-left: 0.6666666667vw;
   font-size: 3.4666666667vw;
   color: #0074B6;
+  margin: auto;
 }
 #Wrapper.callRanking .main .main-table .main-table-content .main-tbody-row .main-tbody-bottom-first .main-tbody-row-letter2 {
   flex-basis: 90%;
@@ -6202,7 +6198,22 @@ input[type=checkbox]:checked + .box[data-v-b40d696c]:before {
     padding-bottom: 100px;
     line-height: 50px;
 }
-}@charset "UTF-8";
+}
+.form-date_picker {
+  padding: 0.375rem 0.75rem;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+.form-date_picker:disabled {
+  background-color: #f9f9f9;
+}
+.vdp-datepicker__clear-button {
+  margin-left: -20px;
+  margin-right: 6px;
+}
+@charset "UTF-8";
 /*-------------------------------------------*/
 /*  色
 /*-------------------------------------------*/

@@ -21,7 +21,7 @@ class CallController extends Controller
      *
      * @return object
      */
-    public function incrementCallCount(Request $request):object
+    public function incrementCallCount(Request $request)
     {
         return $this->service->incrementCallCount($request);
     }

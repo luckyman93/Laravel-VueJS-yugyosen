@@ -19,7 +19,7 @@ class CallService
     /**
      * 電話数の増加
      */
-    public function incrementCallCount($callParam):object
+    public function incrementCallCount($callParam)
     {
         return $this->repository->incrementCallCount($callParam);
     }

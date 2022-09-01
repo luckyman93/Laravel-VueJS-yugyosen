@@ -17,11 +17,15 @@ class CallRepository
     /**
      * 電話数の増加
      */
-    public function incrementCallCount($callParam):object
+    public function incrementCallCount($callParam)
     {
         if ($callParam) {
             $boat_id = $callParam->get('boat_id');
             $ranking_by_id = $this->model->where('boat_id', $boat_id)->select('call_count', 'updated_at', 'id')->get();
+            $param = [
+                'boat_id' => $boat_id,
+                'call_count' => 1,
+            ];
 
             if (count($ranking_by_id) != 0) {
                 $from = Carbon::now()->startOfDay();
@@ -29,23 +33,12 @@ class CallRepository
                 $id = $ranking_by_id[0]->id;
 
                 if (($ranking_by_id[0]->updated_at >= $from) && ($ranking_by_id[0]->updated_at <= $to)) {
-                    $param = [
-                        'boat_id' => $boat_id,
-                        'call_count' => $ranking_by_id[0]->call_count+1,
-                    ];
+                    $param['call_count'] = $ranking_by_id[0] -> call_count + 1;                                        
                     return $this->model->updateData($id, collect($param));
                 }else{    
-                    $param = [
-                        'boat_id' => $boat_id,
-                        'call_count' => 1,
-                    ];
                     return $this->model->updateData($id, collect($param));
                 }
             } else {
-                $param = [
-                    'boat_id' => $boat_id,
-                    'call_count' => 1,
-                ];
                 return $this->model->storeData(collect($param));
             }            
         }

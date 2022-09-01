@@ -38,6 +38,7 @@ import LenderBasicInfo from '@/views/lender/BasicInfo.vue'
 import LenderPostList from '@/views/lender/PostList.vue'
 import LenderPostDetail from '@/views/lender/PostDetail.vue'
 import LenderCallRanking from '@/views/lender/CallRanking.vue'
+import LenderPlanSetting from '@/views/lender/PlanSetting.vue'
 
 // ERROR
 import NotFound from '@/views/error/NotFound.vue'
@@ -232,6 +233,12 @@ const routes = [
         path: ROUTE.LENDER.CALL_RANKING.path,
         component: LenderCallRanking,
         name: ROUTE.LENDER.CALL_RANKING.name,
+        meta: { lenderAuth: true },
+      },
+      {
+        path: ROUTE.LENDER.PLAN_SETTING.path,
+        component: LenderPlanSetting,
+        name: ROUTE.LENDER.PLAN_SETTING.name,
         meta: { lenderAuth: true },
       },
     ],

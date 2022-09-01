@@ -88,10 +88,6 @@ input[type='checkbox'] + .box:after {
 
 input[type='checkbox'] + .box:after {
   position: absolute;
-  left: 4px;
-  top: 6px;
-  margin-top: -5px;
-  margin-left: -4px;
   display: inline-block;
   content: ' ';
   width: 20px;
@@ -114,7 +110,6 @@ input[type='checkbox']:checked + .box:before {
   transform: rotate(45deg);
   position: absolute;
   left: 7px;
-  top: 3px;
   width: 6px;
   height: 13px;
   border-width: 2px;

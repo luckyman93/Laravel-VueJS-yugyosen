@@ -121,7 +121,7 @@
             </dl>
             <div class="main-summary-information-tell">「遊漁船サーチをみた」とお伝えください</div>
           </div>
-          <div class="main-summary-information-call">
+          <div class="main-summary-information-call" @click="increCallCount(boatDetail.id)">
             <a :href="'tel:' + boatDetail.lender.phone"
               ><img src="/images/common/icon_call.svg" alt="電話をかける"
             /></a>
@@ -425,7 +425,7 @@
 
       <section class="ex-recommend">
         <h3 class="ex-recommend-headline"><span>その他オススメ遊漁船一覧</span></h3>
-        <MRecommend :paid-members-data="boatIndexData" />
+        <MRecommend :paid-members-data="boatIndexData" @increCallCount="increCallCount" />
       </section>
 
       <section class="ex-search ex-bottom">
@@ -462,6 +462,7 @@ import { RepositoryFactory } from '@/repositories/repositoryFactory'
 const boatRepository = RepositoryFactory.get('boats')
 const cityRepository = RepositoryFactory.get('cities')
 const lenderPostRepository = RepositoryFactory.get('lenderPosts')
+const callRankingRepository = RepositoryFactory.get('calls')
 
 export default {
   components: {
@@ -684,6 +685,15 @@ export default {
         .catch(() => {
           this.$toast.errorToast()
         })
+    },
+    /*-------------------------------------------*/
+    /* 電話の増加
+    /*-------------------------------------------*/
+    async increCallCount(boatId) {
+      const params = { boat_id: boatId }
+      await callRankingRepository.increCallCount(params).catch(() => {
+        this.$toast.errorToast()
+      })
     },
     // lenderPostIndex
     /*-------------------------------------------*/

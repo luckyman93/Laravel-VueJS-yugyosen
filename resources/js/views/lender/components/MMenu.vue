@@ -9,7 +9,7 @@
       </li>
       <li class="ex-menu-item ex-edit">
         <!-- <a href="#" class="ex-edit"><span>プラン登録</span></a> -->
-        <router-link class="ex-menu-item__link ex-edit" :to="ROUTE.LENDER.BASIC_INFO"
+        <router-link class="ex-menu-item__link ex-edit" :to="ROUTE.LENDER.PLAN_SETTING"
           ><span>プラン登録</span></router-link
         >
       </li>
