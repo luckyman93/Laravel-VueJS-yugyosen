@@ -127,7 +127,6 @@ export default {
   methods: {
     async fetchPortIndex() {
       const orderBy = this.isAsc ? 'asc' : 'desc'
-      console.log(this.sortKey, orderBy)
       await PortRepository.fetchPortIndex(this.page, this.keyword, this.sortKey, orderBy)
         .then(res => {
           if (res.status !== HTTP_STATUS.OK) {

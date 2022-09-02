@@ -39,6 +39,11 @@ class Boat extends BaseModel
         return $this->belongsTo(Lender::class);
     }
 
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class, 'lender_id', 'lender_id');
+    }
+
     public function facilities()
     {
         return $this->belongsToMany(Facility::class, 'boat_by_facilities', 'boat_id', 'facility_id');

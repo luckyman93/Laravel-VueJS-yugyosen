@@ -22,11 +22,12 @@ class PlanController extends Controller
       *
       * @authenticated
       * @group plan
-      * @param Request $request
+      * @param PlanRequest $request
       */
-    public function index(): object
+    public function index(Request $request):object
     {
-        return $this->service->fetchPlanIndex();
+        $lenderId = $request->get('lenderId');
+        return $this->service->fetchPlanIndex($lenderId);
     }
 
     /**

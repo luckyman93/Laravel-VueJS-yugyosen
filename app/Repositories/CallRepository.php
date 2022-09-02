@@ -33,9 +33,15 @@ class CallRepository
                 $id = $ranking_by_id[0]->id;
 
                 if (($ranking_by_id[0]->updated_at >= $from) && ($ranking_by_id[0]->updated_at <= $to)) {
-                    $param['call_count'] = $ranking_by_id[0] -> call_count + 1;                                        
+                    $param['call_count'] = $ranking_by_id[0] -> call_count + 1;
                     return $this->model->updateData($id, collect($param));
-                }else{    
+                }else{
+
+                    if ($ranking_by_id[0] -> call_count === 1) {
+                        $param['call_count'] = 0;
+                        $this->model->updateData($id, collect($param));
+                    }
+                    $param['call_count'] = 1;
                     return $this->model->updateData($id, collect($param));
                 }
             } else {

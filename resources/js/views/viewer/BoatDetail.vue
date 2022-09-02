@@ -84,7 +84,7 @@
                   :src="facility.icon_img"
                   :alt="facility.facility_name"
                   :style="[
-                    boatDetail.fitted_facilities_ids.indexOf(facility.id) !== -1
+                    fittedFacilitiesIds.indexOf(facility.id) !== -1
                       ? {}
                       : { filter: 'grayscale(1)' },
                   ]"
@@ -226,96 +226,116 @@
 
         <!-- タブ- プラン -->
         <section id="Plan" class="main-tab-plan tab-pane fade">
-          <div v-for="(plan, pIndex) in plans" :key="pIndex" class="main-tab-plan-inner">
+          <div class="main-tab-plan-inner">
             <h3 class="ex-headline">
-              <span>{{ plan.name }}</span>
+              <span>{{ boatDetail.plan.plan_name }}</span>
             </h3>
 
             <div class="main-tab-plan-items container-fluid">
               <dl class="main-tab-plan-item row">
                 <dt class="col-3">ターゲット</dt>
-                <dd class="col-9">{{ plan.target }}</dd>
+                <dd class="col-9">
+                  <span v-for="(target, tIndex) in targetAllSeasonList" :key="tIndex">
+                    <span v-if="targetAllSeasonList.length - 1 !== tIndex">
+                      {{ tIndex === 0 ? '' : target + '、' }}
+                    </span>
+                    <span v-else>
+                      {{ target }}
+                    </span>
+                  </span>
+                </dd>
               </dl>
               <dl class="main-tab-plan-item row">
                 <dt class="col-3">時期</dt>
-                <dd class="col-9">{{ plan.season }}</dd>
+                <dd class="col-9">{{ boatDetail.plan.delay }}</dd>
               </dl>
               <dl class="main-tab-plan-item row">
                 <dt class="col-3">業種</dt>
-                <dd class="col-9">{{ plan.industry }}</dd>
+                <dd class="col-9">{{ operations }}</dd>
               </dl>
               <dl class="main-tab-plan-item row">
                 <dt class="col-3">料金</dt>
-                <dd class="col-9">{{ plan.price }}</dd>
+                <dd class="col-9">{{ boatDetail.lender.price }}</dd>
               </dl>
             </div>
-            <div class="main-tab-plan-view" data-toggle="modal" :data-target="'#Plan' + pIndex">
+            <div class="main-tab-plan-view" data-toggle="modal" :data-target="'#Plan' + 1">
               このプランを見る
             </div>
 
-            <div :id="'Plan' + pIndex" class="main-tab-plan-modal modal fade" role="dialog">
+            <div :id="'Plan' + 1" class="main-tab-plan-modal modal fade" role="dialog">
               <div class="modal-dialog" role="document">
                 <div class="main-tab-plan-modal-content modal-body">
                   <div class="main-tab-plan-modal-content-close" data-dismiss="modal">
                     <img src="/images/common/icon_close.svg" />
                   </div>
-                  <p class="main-tab-plan-modal-content-explain">{{ plan.explain }}</p>
+                  <p class="main-tab-plan-modal-content-explain">
+                    {{ boatDetail.plan.plan_description }}
+                  </p>
 
                   <div class="main-tab-plan-modal-content-items container-fluid">
                     <dl class="main-tab-plan-modal-content-item row">
-                      <dt class="col-4">ターゲット</dt>
-                      <dd class="col-8">{{ plan.target }}</dd>
+                      <dt class="col-12">ターゲット</dt>
+                      <dd class="col-12">
+                        <span v-for="(target, tIndex) in targetAllSeasonList" :key="tIndex">
+                          <span v-if="targetAllSeasonList.length - 1 !== tIndex">
+                            {{ tIndex === 0 ? '' : target + '、' }}
+                          </span>
+                          <span v-else>
+                            {{ target }}
+                          </span>
+                        </span>
+                      </dd>
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">時期</dt>
-                      <dd class="col-8">{{ plan.season }}</dd>
+                      <dd class="col-8">{{ boatDetail.plan.delay }}</dd>
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">業種</dt>
-                      <dd class="col-8">{{ plan.industry }}</dd>
+                      <dd class="col-8">{{ operations }}</dd>
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">料金</dt>
-                      <dd class="col-8">{{ plan.price }}</dd>
+                      <dd class="col-8">{{ boatDetail.lender.price }}</dd>
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">料金に含まれるもの</dt>
-                      <dd class="col-8">{{ plan.include }}</dd>
+                      <dd class="col-8">{{ boatDetail.plan.price_includes }}</dd>
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">準備が必要なもの</dt>
-                      <dd class="col-8">{{ plan.required }}</dd>
+                      <dd class="col-8">{{ boatDetail.plan.to_prepare }}</dd>
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">出航時間</dt>
-                      <dd class="col-8">{{ plan.start }}</dd>
+                      <dd class="col-8">{{ boatDetail.departure }}</dd>
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">集合時間</dt>
-                      <dd class="col-8">{{ plan.meeting }}</dd>
+                      <dd class="col-8">{{ boatDetail.plan.collection }}</dd>
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">帰港時間</dt>
-                      <dd class="col-8">{{ plan.end }}</dd>
+                      <dd class="col-8">{{ boatDetail.plan.return }}</dd>
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">予約方法</dt>
-                      <dd class="col-8">{{ plan.reserve }}</dd>
+                      <dd class="col-8">{{ boatDetail.plan.reservation }}</dd>
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">支払い方法</dt>
-                      <dd class="col-8">{{ plan.payment }}</dd>
+                      <dd class="col-8">{{ paymentOptions }}</dd>
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">釣り方</dt>
-                      <dd class="col-8">{{ plan.method }}</dd>
+                      <dd class="col-8">{{ boatDetail.fishing_options[0].fishing_option_name }}</dd>
                     </dl>
                   </div>
 
                   <dl class="main-tab-plan-modal-content-note">
                     <dt>備考</dt>
                     <dd>
-                      {{ plan.note }}
+                      {{ boatDetail.plan.other }}
                     </dd>
                   </dl>
                 </div>
@@ -484,57 +504,19 @@ export default {
 
   data() {
     return {
-      boatIndexData: [],
-      plans: [
-        {
-          name: '（プラン名）玄界灘沖ジギングプラン',
-          target: '〇〇〇、〇〇〇、〇〇〇',
-          season: '00〜00月',
-          industry: '乗合',
-          price: '1人 00,000円',
-          include: '〇〇〇〇〇〇〇〇〇',
-          bringing: '〇〇〇〇〇〇〇〇〇',
-          start: '00：00',
-          meeting: '00:00',
-          end: '00：00',
-          reserve: '〇〇〇〇〇〇〇〇〇',
-          payment: '〇〇〇〇〇〇〇〇〇',
-          method: '〇〇〇〇〇〇〇〇〇',
-          note:
-            '●〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇\n●〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇\n●〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇\n●〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇\n●〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-          explain:
-            'プラン紹介（自由入力）\n今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中したらしく30cmオーバー数',
-        },
-        {
-          name: '（プラン名）玄界灘沖ジギングプラン',
-          target: '〇〇〇、〇〇〇、〇〇〇',
-          season: '00〜00月',
-          industry: '乗合',
-          price: '1人 00,000円',
-          include: '〇〇〇〇〇〇〇〇〇',
-          bringing: '〇〇〇〇〇〇〇〇〇',
-          start: '00：00',
-          meeting: '00:00',
-          end: '00：00',
-          reserve: '〇〇〇〇〇〇〇〇〇',
-          payment: '〇〇〇〇〇〇〇〇〇',
-          method: '〇〇〇〇〇〇〇〇〇',
-          note:
-            '●〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇\n●〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇\n●〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇\n●〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇\n●〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
-          explain:
-            'プラン紹介（自由入力）\n今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中したらしく30cmオーバー数釣でした。今日は干潮前30分から良型が集中したらしく30cmオーバー数',
-        },
-      ],
       ROUTE,
       SEASON,
       page: 1,
       paginationData: {},
+      boatIndexData: [],
+      fittedFacilitiesIds: [],
       boatDetail: {
         facilities: {},
-        fishing_options: {},
+        fishing_options: [{}],
         operations: {},
         targets: {},
         lender: { prefecture: {}, city: {}, port: {}, user: {}, payment_options: {} },
+        plan: {},
       },
       imageList: [],
       cityList: [],
@@ -595,6 +577,10 @@ export default {
               return x.operation_name
             })
             .join('、')
+          // 装備されている設備ID配列を取得する
+          this.fittedFacilitiesIds = this.boatDetail.facilities.map(x => {
+            return x.id
+          })
           // ターゲットを季節毎の文字列配列に変換
           if (targetList) {
             this.targetAllSeasonList[SEASON.SPRING] = targetList

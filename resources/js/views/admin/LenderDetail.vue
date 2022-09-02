@@ -967,7 +967,6 @@ export default {
       if (this.isNew) {
         this.form.user.role_id = ROLE.TYPE.LENDER
         this.form.created_user_id = this.adminUser.id
-        console.log('x-----', this.form)
         this.storeLenderWithRelatedData()
       } else {
         this.form.updated_user_id = this.adminUser.id

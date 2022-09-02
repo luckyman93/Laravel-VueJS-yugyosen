@@ -7,7 +7,7 @@
           <div class="main-form-element">
             <AInputForm
               id="plan_name"
-              v-model="form.boats[0].plan_name"
+              v-model="planSettingInfo[0].plan_name"
               :required="true"
               label="プラン名"
               :disabled="!isNew && !isEditing"
@@ -15,15 +15,15 @@
               class-name="ex-input"
               type="text"
             />
-            <!-- <span v-if="errors && errors[`boats.0.boat_name`]" class="error-message">{{
-              errors[`boats.0.boat_name`][0]
-            }}</span> -->
+            <span v-if="errors && errors[`plan_name`]" class="error-message">{{
+              errors[`plan_name`][0]
+            }}</span>
           </div>
 
           <div class="main-form-element">
             <ATextArea
               id="plan_description"
-              v-model="form.boats[0].plan_description"
+              v-model="planSettingInfo[0].plan_description"
               label="プラン説明"
               height="60px"
               :required="false"
@@ -36,7 +36,7 @@
           <div class="main-form-element">
             <AInputForm
               id="delay"
-              v-model="form.delay"
+              v-model="planSettingInfo[0].delay"
               :required="true"
               label="時期"
               :disabled="!isNew && !isEditing"
@@ -44,15 +44,15 @@
               class-name="ex-input"
               type="text"
             />
-            <!-- <span v-if="errors && errors[`zip_code`]" class="error-message">{{
-              errors[`zip_code`][0]
-            }}</span> -->
+            <span v-if="errors && errors[`delay`]" class="error-message">{{
+              errors[`delay`][0]
+            }}</span>
           </div>
 
           <div class="main-form-element">
             <AInputForm
-              id="price"
-              v-model="form.price_1"
+              id="priceIncludes"
+              v-model="planSettingInfo[0].price_includes"
               :required="false"
               label="料金に含まれるもの"
               :disabled="!isNew && !isEditing"
@@ -64,8 +64,8 @@
 
           <div class="main-form-element">
             <AInputForm
-              id="price"
-              v-model="form.price_2"
+              id="ToPrepare"
+              v-model="planSettingInfo[0].to_prepare"
               :required="false"
               label="準備が必要なもの"
               :disabled="!isNew && !isEditing"
@@ -78,7 +78,7 @@
           <div class="main-form-element">
             <AInputForm
               id="collection"
-              v-model="form.collection"
+              v-model="planSettingInfo[0].collection"
               :required="false"
               label="集合時間"
               :disabled="!isNew && !isEditing"
@@ -91,7 +91,7 @@
           <div class="main-form-element">
             <AInputForm
               id="return"
-              v-model="form.return"
+              v-model="planSettingInfo[0].return"
               :required="false"
               label="帰港時間"
               :disabled="!isNew && !isEditing"
@@ -104,7 +104,7 @@
           <div class="main-form-element">
             <AInputForm
               id="reservation"
-              v-model="form.reservation"
+              v-model="planSettingInfo[0].reservation"
               :required="false"
               label="予約方法 "
               :disabled="!isNew && !isEditing"
@@ -117,7 +117,7 @@
           <div class="main-form-element">
             <ATextArea
               id="other"
-              v-model="form.other_"
+              v-model="planSettingInfo[0].other"
               label="備考"
               height="60px"
               :disabled="!isNew && !isEditing"
@@ -127,14 +127,12 @@
             />
           </div>
 
-          <ADatePicker></ADatePicker>
-
           <div class="main-form-element ex-separate">
             <AButton
               label="保存する"
               :disabled="false"
               class-name="ex-button ex-confirm"
-              @onClick="onUpdate"
+              @onClick="onStore"
             />
           </div>
         </div>
@@ -151,24 +149,24 @@ import { mapState } from 'vuex'
 import AButton from '@/views/components/AButton.vue'
 import AInputForm from '@/views/components/AInputForm.vue'
 import ATextArea from '@/views/components/ATextArea.vue'
-import ADatePicker from '@/views/components/ADatePicker.vue'
 import MHeader from '@/views/lender/components/MHeader.vue'
 import MFooter from '@/views/lender/components/MFooter.vue'
 
 // const
 import BUTTON from '@/consts/button'
-// import HTTP_STATUS from '@/consts/httpStatus'
-// import SEASON from '@/consts/season'
-// import TOAST from '@/consts/toast'
+import HTTP_STATUS from '@/consts/httpStatus'
+import TOAST from '@/consts/toast'
 
 // repository
+import { RepositoryFactory } from '@/repositories/repositoryFactory'
+
+const planRepository = RepositoryFactory.get('plans')
 
 export default {
   components: {
     AButton,
     AInputForm,
     ATextArea,
-    ADatePicker,
     MHeader,
     MFooter,
   },
@@ -177,26 +175,111 @@ export default {
     BUTTON,
     isNew: false,
     isEditing: true,
-    form: {
-      user: {},
-      phone: '',
-      city_id: null,
-      port_id: null,
-      boats: [{ boat_name: '' }],
-    },
+    planSettingInfo: [
+      {
+        plan_name: '',
+        plan_description: '',
+        delay: '',
+        price_includes: '',
+        to_prepare: '',
+        collection: '',
+        return: '',
+        reservation: '',
+        other: '',
+      },
+    ],
+    errors: {},
   }),
 
   computed: {
     ...mapState('userModule', ['lenderUser']),
   },
 
-  // async created() {
-
-  // },
+  async created() {
+    this.showLoader()
+    await this.fetchPlanInforIndex(this.lenderUser.lender_id)
+    this.hideLoader()
+  },
 
   methods: {
-    onUpdate() {
-      console.log('xxx')
+    // 業者プラン情報の取得
+    async fetchPlanInforIndex(lenderId) {
+      await planRepository
+        .fetchPlanIndex(lenderId)
+        .then(res => {
+          if (res.status !== HTTP_STATUS.OK) {
+            this.$toast.errorToast()
+            return
+          }
+          if (res.data.length === 0) {
+            this.isNew = true
+          } else {
+            this.isNew = false
+            this.planSettingInfo = res.data
+          }
+        })
+        .catch(async err => {
+          if (err.response) {
+            await this.$errHandling.lenderCatch(err.response.status)
+            return
+          }
+          this.$toast.errorToast()
+        })
+    },
+
+    onStore() {
+      if (this.isNew) {
+        this.storePlans()
+      } else {
+        this.updatePlans()
+      }
+    },
+
+    // 業者プラン情報の登録
+    async storePlans() {
+      this.planSettingInfo[0].lender_id = this.lenderUser.lender_id
+      await planRepository
+        .storePlan(this.planSettingInfo[0])
+        .then(res => {
+          if (res.status !== HTTP_STATUS.CREATED) {
+            this.$toast.errorToast()
+            return
+          }
+          this.$toast.successToast(TOAST.SUCCESS.CREATED)
+          this.planSettingInfo[0] = res.data
+          this.isNew = false
+        })
+        .catch(async err => {
+          if (err.response) {
+            await this.$errHandling.lenderCatch(err.response.status)
+            this.errors = err.response.data.errors
+            return
+          }
+          this.errors = err.response.data.errors
+          this.$toast.errorToast()
+        })
+    },
+    // 業者プラン情報の更新
+    async updatePlans() {
+      await planRepository
+        .updatePlan(this.planSettingInfo[0].id, this.planSettingInfo[0])
+        .then(res => {
+          if (res.status !== HTTP_STATUS.OK) {
+            this.$toast.errorToast()
+            return
+          }
+          this.planSettingInfo[0] = res.data
+          this.$toast.successToast(TOAST.SUCCESS.UPDATED)
+        })
+        .catch(async err => {
+          if (err.response) {
+            await this.$errHandling.lenderCatch(err.response.status)
+            this.errors = err.response.data.errors
+            return
+          }
+          this.errors = err.response.data.errors
+          this.$toast.errorToast()
+        })
     },
   },
 }

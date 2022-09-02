@@ -20,9 +20,11 @@ class PlanRepository
      * @group plan
      * @param Request $request
      */
-    public function fetchPlanIndex(): object
+    public function fetchPlanIndex($lenderId):object
     {
-        $query = $this->model->get();
+        $query = $this->model
+            ->where('lender_id', $lenderId)
+            ->get();
         
         return $query;
     }

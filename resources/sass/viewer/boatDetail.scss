@@ -142,6 +142,7 @@
 				width: 25%;
 
 				.main-tab-link {
+					cursor: pointer;
 					border: none;
 					border-bottom: getVW(6) solid transparent;
 					color: #969497;
@@ -272,6 +273,7 @@
 				}
 
 				.main-tab-plan-view {
+					cursor: pointer;
 					background: #969497;
 					border-radius: 12px;
 					color: #ffffff;

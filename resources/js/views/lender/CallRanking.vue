@@ -19,6 +19,7 @@
               <span>本日電話数ランキング</span>
             </div>
           </div>
+          <!-- 1~10 電話番号ランキングリスト -->
           <table class="main-table-content">
             <colgroup>
               <col span="1" style="width: 60%;" />
@@ -70,6 +71,7 @@
               </tr>
             </tbody>
           </table>
+          <!-- 11~50 電話番号ランキングリスト -->
           <div v-if="callRankingList.slice(11, 50).length !== 0" class="ex-collapses">
             <MCollapse id="Method" label="11〜50位を見る" class-name="main-more-table">
               <table class="main-table-content" style="width: 100%">
@@ -156,11 +158,12 @@ export default {
 
   async created() {
     this.showLoader()
-    // this.fetchCallRankingList()
+    await this.fetchCallRankingList()
     this.hideLoader()
   },
 
   methods: {
+    // 本日電話番号ランキングリスト取得
     async fetchCallRankingList() {
       await callRankingRepository
         .fetchCallRankingList()

@@ -20,9 +20,9 @@ class PlanService
     /**
      * 計画取得
      */
-    public function fetchPlanIndex()
+    public function fetchPlanIndex($lenderId):object
     {
-        return $this->repository->fetchPlanIndex();
+        return $this->repository->fetchPlanIndex($lenderId);
     }
 
     /**

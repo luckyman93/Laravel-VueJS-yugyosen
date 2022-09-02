@@ -38,6 +38,8 @@ class PlanRequest extends FormRequest
             'reservation' => 'nullable|string|max:32',
             'other' => 'nullable|string',
         ];
+
+        return $rules;
     }
 
     public function attributes()
