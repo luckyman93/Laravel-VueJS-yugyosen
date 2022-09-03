@@ -125,7 +125,9 @@
 				}
 			}
 			.main-tab-plan {
+				font-size: getMax(24);
 				padding: 0 getMax(38);
+
 				.main-tab-plan-items {
 					margin-bottom: getMax(42);
 					.main-tab-plan-item {

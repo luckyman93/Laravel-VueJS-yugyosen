@@ -17330,6 +17330,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
  // component
 
 
@@ -17706,6 +17717,18 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
 
     /* その他
     /*-------------------------------------------*/
+    onDetail: function onDetail(id) {
+      var nLength = this.boatIndexData.length;
+
+      for (var i = 0; i < nLength; i += 1) {
+        var boatData = this.boatIndexData[i];
+
+        if (boatData.id === id) {
+          window.location.href = "/boat/".concat(boatData.prefecture_url_param, "/").concat(boatData.city_url_param, "/").concat(boatData.port_id, "/").concat(boatData.id);
+          break;
+        }
+      }
+    },
     onSearchList: function onSearchList(cityParam) {
       window.location.href = "/boat/".concat(this.prefectureParam, "/").concat(cityParam);
     },
@@ -18666,6 +18689,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
  // const
 
@@ -18774,6 +18807,7 @@ var newsRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9_
                     lenderRes = _ref2[0];
 
                 _this.postList = lenderRes.data;
+                console.log(_this.postList);
                 var today = new Date();
 
                 _this.postList.forEach(function (x) {
@@ -18796,13 +18830,8 @@ var newsRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9_
     }))();
   },
   methods: {
-    onDetailBoat: function onDetailBoat(boatId) {
-      this.$router.push({
-        name: _consts_route__WEBPACK_IMPORTED_MODULE_3__["default"].VIEWER.BOAT.DETAIL.name,
-        params: {
-          id: boatId
-        }
-      });
+    onDetailBoat: function onDetailBoat(prefectureUrlParam, cityUrlParam, portId, boatId) {
+      window.location.href = "/boat/".concat(prefectureUrlParam, "/").concat(cityUrlParam, "/").concat(portId, "/").concat(boatId);
     },
 
     /*-------------------------------------------*/
@@ -68406,178 +68435,421 @@ var render = function() {
               attrs: { id: "Plan" }
             },
             [
-              _c("div", { staticClass: "main-tab-plan-inner" }, [
-                _c("h3", { staticClass: "ex-headline" }, [
-                  _c("span", [_vm._v(_vm._s(_vm.boatDetail.plan.plan_name))])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "main-tab-plan-items container-fluid" },
-                  [
-                    _c("dl", { staticClass: "main-tab-plan-item row" }, [
-                      _c("dt", { staticClass: "col-3" }, [
-                        _vm._v("ターゲット")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "dd",
-                        { staticClass: "col-9" },
-                        _vm._l(_vm.targetAllSeasonList, function(
-                          target,
-                          tIndex
-                        ) {
-                          return _c("span", { key: tIndex }, [
-                            _vm.targetAllSeasonList.length - 1 !== tIndex
-                              ? _c("span", [
-                                  _vm._v(
-                                    "\n                    " +
-                                      _vm._s(
-                                        tIndex === 0 ? "" : target + "、"
-                                      ) +
-                                      "\n                  "
-                                  )
-                                ])
-                              : _c("span", [
-                                  _vm._v(
-                                    "\n                    " +
-                                      _vm._s(target) +
-                                      "\n                  "
-                                  )
-                                ])
-                          ])
-                        }),
-                        0
+              _vm.boatDetail.plan === null
+                ? _c(
+                    "div",
+                    {
+                      staticClass:
+                        "mx-5 font-weight-bold d-flex justify-content-center align-items-center",
+                      staticStyle: { "font-size": "24px" }
+                    },
+                    [
+                      _vm._v(
+                        "\n          プラン情報は投稿されておりません。\n        "
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c("dl", { staticClass: "main-tab-plan-item row" }, [
-                      _c("dt", { staticClass: "col-3" }, [_vm._v("時期")]),
-                      _vm._v(" "),
-                      _c("dd", { staticClass: "col-9" }, [
-                        _vm._v(_vm._s(_vm.boatDetail.plan.delay))
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.boatDetail.plan !== null
+                ? _c("div", { staticClass: "main-tab-plan-inner" }, [
+                    _c("h3", { staticClass: "ex-headline" }, [
+                      _c("span", [
+                        _vm._v(_vm._s(_vm.boatDetail.plan.plan_name))
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("dl", { staticClass: "main-tab-plan-item row" }, [
-                      _c("dt", { staticClass: "col-3" }, [_vm._v("業種")]),
-                      _vm._v(" "),
-                      _c("dd", { staticClass: "col-9" }, [
-                        _vm._v(_vm._s(_vm.operations))
-                      ])
-                    ]),
+                    _c(
+                      "div",
+                      { staticClass: "main-tab-plan-items container-fluid" },
+                      [
+                        _c("dl", { staticClass: "main-tab-plan-item row" }, [
+                          _c("dt", { staticClass: "col-3" }, [
+                            _vm._v("ターゲット")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "dd",
+                            { staticClass: "col-9" },
+                            _vm._l(_vm.targetAllSeasonList, function(
+                              target,
+                              tIndex
+                            ) {
+                              return _c("span", { key: tIndex }, [
+                                _vm.targetAllSeasonList.length - 1 !== tIndex
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                    " +
+                                          _vm._s(
+                                            tIndex === 0 ? "" : target + "、"
+                                          ) +
+                                          "\n                  "
+                                      )
+                                    ])
+                                  : _c("span", [
+                                      _vm._v(
+                                        "\n                    " +
+                                          _vm._s(target) +
+                                          "\n                  "
+                                      )
+                                    ])
+                              ])
+                            }),
+                            0
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("dl", { staticClass: "main-tab-plan-item row" }, [
+                          _c("dt", { staticClass: "col-3" }, [_vm._v("時期")]),
+                          _vm._v(" "),
+                          _c("dd", { staticClass: "col-9" }, [
+                            _vm._v(_vm._s(_vm.boatDetail.plan.delay))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("dl", { staticClass: "main-tab-plan-item row" }, [
+                          _c("dt", { staticClass: "col-3" }, [_vm._v("業種")]),
+                          _vm._v(" "),
+                          _c("dd", { staticClass: "col-9" }, [
+                            _vm._v(_vm._s(_vm.operations))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("dl", { staticClass: "main-tab-plan-item row" }, [
+                          _c("dt", { staticClass: "col-3" }, [_vm._v("料金")]),
+                          _vm._v(" "),
+                          _c("dd", { staticClass: "col-9" }, [
+                            _vm._v(_vm._s(_vm.boatDetail.lender.price))
+                          ])
+                        ])
+                      ]
+                    ),
                     _vm._v(" "),
-                    _c("dl", { staticClass: "main-tab-plan-item row" }, [
-                      _c("dt", { staticClass: "col-3" }, [_vm._v("料金")]),
-                      _vm._v(" "),
-                      _c("dd", { staticClass: "col-9" }, [
-                        _vm._v(_vm._s(_vm.boatDetail.lender.price))
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "main-tab-plan-view",
-                    attrs: {
-                      "data-toggle": "modal",
-                      "data-target": "#Plan" + 1
-                    }
-                  },
-                  [_vm._v("\n            このプランを見る\n          ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "main-tab-plan-modal modal fade",
-                    attrs: { id: "Plan" + 1, role: "dialog" }
-                  },
-                  [
                     _c(
                       "div",
                       {
-                        staticClass: "modal-dialog",
-                        attrs: { role: "document" }
+                        staticClass: "main-tab-plan-view",
+                        attrs: {
+                          "data-toggle": "modal",
+                          "data-target": "#Plan" + 1
+                        }
+                      },
+                      [_vm._v("\n            このプランを見る\n          ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "main-tab-plan-modal modal fade",
+                        attrs: { id: "Plan" + 1, role: "dialog" }
                       },
                       [
                         _c(
                           "div",
                           {
-                            staticClass:
-                              "main-tab-plan-modal-content modal-body"
+                            staticClass: "modal-dialog",
+                            attrs: { role: "document" }
                           },
                           [
-                            _vm._m(4),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              {
-                                staticClass:
-                                  "main-tab-plan-modal-content-explain"
-                              },
-                              [
-                                _vm._v(
-                                  "\n                  " +
-                                    _vm._s(
-                                      _vm.boatDetail.plan.plan_description
-                                    ) +
-                                    "\n                "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
                             _c(
                               "div",
                               {
                                 staticClass:
-                                  "main-tab-plan-modal-content-items container-fluid"
+                                  "main-tab-plan-modal-content modal-body"
                               },
                               [
+                                _vm._m(4),
+                                _vm._v(" "),
                                 _c(
-                                  "dl",
+                                  "p",
                                   {
                                     staticClass:
-                                      "main-tab-plan-modal-content-item row"
+                                      "main-tab-plan-modal-content-explain"
                                   },
                                   [
-                                    _c("dt", { staticClass: "col-12" }, [
-                                      _vm._v("ターゲット")
-                                    ]),
+                                    _vm._v(
+                                      "\n                  " +
+                                        _vm._s(
+                                          _vm.boatDetail.plan.plan_description
+                                        ) +
+                                        "\n                "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "main-tab-plan-modal-content-items container-fluid"
+                                  },
+                                  [
+                                    _c(
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-12" }, [
+                                          _vm._v("ターゲット")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dd",
+                                          { staticClass: "col-12" },
+                                          _vm._l(
+                                            _vm.targetAllSeasonList,
+                                            function(target, tIndex) {
+                                              return _c(
+                                                "span",
+                                                { key: tIndex },
+                                                [
+                                                  _vm.targetAllSeasonList
+                                                    .length -
+                                                    1 !==
+                                                  tIndex
+                                                    ? _c("span", [
+                                                        _vm._v(
+                                                          "\n                          " +
+                                                            _vm._s(
+                                                              tIndex === 0
+                                                                ? ""
+                                                                : target + "、"
+                                                            ) +
+                                                            "\n                        "
+                                                        )
+                                                      ])
+                                                    : _c("span", [
+                                                        _vm._v(
+                                                          "\n                          " +
+                                                            _vm._s(target) +
+                                                            "\n                        "
+                                                        )
+                                                      ])
+                                                ]
+                                              )
+                                            }
+                                          ),
+                                          0
+                                        )
+                                      ]
+                                    ),
                                     _vm._v(" "),
                                     _c(
-                                      "dd",
-                                      { staticClass: "col-12" },
-                                      _vm._l(_vm.targetAllSeasonList, function(
-                                        target,
-                                        tIndex
-                                      ) {
-                                        return _c("span", { key: tIndex }, [
-                                          _vm.targetAllSeasonList.length - 1 !==
-                                          tIndex
-                                            ? _c("span", [
-                                                _vm._v(
-                                                  "\n                          " +
-                                                    _vm._s(
-                                                      tIndex === 0
-                                                        ? ""
-                                                        : target + "、"
-                                                    ) +
-                                                    "\n                        "
-                                                )
-                                              ])
-                                            : _c("span", [
-                                                _vm._v(
-                                                  "\n                          " +
-                                                    _vm._s(target) +
-                                                    "\n                        "
-                                                )
-                                              ])
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-4" }, [
+                                          _vm._v("時期")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("dd", { staticClass: "col-8" }, [
+                                          _vm._v(
+                                            _vm._s(_vm.boatDetail.plan.delay)
+                                          )
                                         ])
-                                      }),
-                                      0
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-4" }, [
+                                          _vm._v("業種")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("dd", { staticClass: "col-8" }, [
+                                          _vm._v(_vm._s(_vm.operations))
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-4" }, [
+                                          _vm._v("料金")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("dd", { staticClass: "col-8" }, [
+                                          _vm._v(
+                                            _vm._s(_vm.boatDetail.lender.price)
+                                          )
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-4" }, [
+                                          _vm._v("料金に含まれるもの")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("dd", { staticClass: "col-8" }, [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.boatDetail.plan.price_includes
+                                            )
+                                          )
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-4" }, [
+                                          _vm._v("準備が必要なもの")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("dd", { staticClass: "col-8" }, [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.boatDetail.plan.to_prepare
+                                            )
+                                          )
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-4" }, [
+                                          _vm._v("出航時間")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("dd", { staticClass: "col-8" }, [
+                                          _vm._v(
+                                            _vm._s(_vm.boatDetail.departure)
+                                          )
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-4" }, [
+                                          _vm._v("集合時間")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("dd", { staticClass: "col-8" }, [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.boatDetail.plan.collection
+                                            )
+                                          )
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-4" }, [
+                                          _vm._v("帰港時間")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("dd", { staticClass: "col-8" }, [
+                                          _vm._v(
+                                            _vm._s(_vm.boatDetail.plan.return)
+                                          )
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-4" }, [
+                                          _vm._v("予約方法")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("dd", { staticClass: "col-8" }, [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.boatDetail.plan.reservation
+                                            )
+                                          )
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-4" }, [
+                                          _vm._v("支払い方法")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("dd", { staticClass: "col-8" }, [
+                                          _vm._v(_vm._s(_vm.paymentOptions))
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "dl",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-item row"
+                                      },
+                                      [
+                                        _c("dt", { staticClass: "col-4" }, [
+                                          _vm._v("釣り方")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("dd", { staticClass: "col-8" }, [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.boatDetail.fishing_options[0]
+                                                .fishing_option_name
+                                            )
+                                          )
+                                        ])
+                                      ]
                                     )
                                   ]
                                 ),
@@ -68586,232 +68858,28 @@ var render = function() {
                                   "dl",
                                   {
                                     staticClass:
-                                      "main-tab-plan-modal-content-item row"
+                                      "main-tab-plan-modal-content-note"
                                   },
                                   [
-                                    _c("dt", { staticClass: "col-4" }, [
-                                      _vm._v("時期")
-                                    ]),
+                                    _c("dt", [_vm._v("備考")]),
                                     _vm._v(" "),
-                                    _c("dd", { staticClass: "col-8" }, [
-                                      _vm._v(_vm._s(_vm.boatDetail.plan.delay))
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "dl",
-                                  {
-                                    staticClass:
-                                      "main-tab-plan-modal-content-item row"
-                                  },
-                                  [
-                                    _c("dt", { staticClass: "col-4" }, [
-                                      _vm._v("業種")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("dd", { staticClass: "col-8" }, [
-                                      _vm._v(_vm._s(_vm.operations))
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "dl",
-                                  {
-                                    staticClass:
-                                      "main-tab-plan-modal-content-item row"
-                                  },
-                                  [
-                                    _c("dt", { staticClass: "col-4" }, [
-                                      _vm._v("料金")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("dd", { staticClass: "col-8" }, [
+                                    _c("dd", [
                                       _vm._v(
-                                        _vm._s(_vm.boatDetail.lender.price)
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "dl",
-                                  {
-                                    staticClass:
-                                      "main-tab-plan-modal-content-item row"
-                                  },
-                                  [
-                                    _c("dt", { staticClass: "col-4" }, [
-                                      _vm._v("料金に含まれるもの")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("dd", { staticClass: "col-8" }, [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.boatDetail.plan.price_includes
-                                        )
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "dl",
-                                  {
-                                    staticClass:
-                                      "main-tab-plan-modal-content-item row"
-                                  },
-                                  [
-                                    _c("dt", { staticClass: "col-4" }, [
-                                      _vm._v("準備が必要なもの")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("dd", { staticClass: "col-8" }, [
-                                      _vm._v(
-                                        _vm._s(_vm.boatDetail.plan.to_prepare)
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "dl",
-                                  {
-                                    staticClass:
-                                      "main-tab-plan-modal-content-item row"
-                                  },
-                                  [
-                                    _c("dt", { staticClass: "col-4" }, [
-                                      _vm._v("出航時間")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("dd", { staticClass: "col-8" }, [
-                                      _vm._v(_vm._s(_vm.boatDetail.departure))
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "dl",
-                                  {
-                                    staticClass:
-                                      "main-tab-plan-modal-content-item row"
-                                  },
-                                  [
-                                    _c("dt", { staticClass: "col-4" }, [
-                                      _vm._v("集合時間")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("dd", { staticClass: "col-8" }, [
-                                      _vm._v(
-                                        _vm._s(_vm.boatDetail.plan.collection)
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "dl",
-                                  {
-                                    staticClass:
-                                      "main-tab-plan-modal-content-item row"
-                                  },
-                                  [
-                                    _c("dt", { staticClass: "col-4" }, [
-                                      _vm._v("帰港時間")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("dd", { staticClass: "col-8" }, [
-                                      _vm._v(_vm._s(_vm.boatDetail.plan.return))
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "dl",
-                                  {
-                                    staticClass:
-                                      "main-tab-plan-modal-content-item row"
-                                  },
-                                  [
-                                    _c("dt", { staticClass: "col-4" }, [
-                                      _vm._v("予約方法")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("dd", { staticClass: "col-8" }, [
-                                      _vm._v(
-                                        _vm._s(_vm.boatDetail.plan.reservation)
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "dl",
-                                  {
-                                    staticClass:
-                                      "main-tab-plan-modal-content-item row"
-                                  },
-                                  [
-                                    _c("dt", { staticClass: "col-4" }, [
-                                      _vm._v("支払い方法")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("dd", { staticClass: "col-8" }, [
-                                      _vm._v(_vm._s(_vm.paymentOptions))
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "dl",
-                                  {
-                                    staticClass:
-                                      "main-tab-plan-modal-content-item row"
-                                  },
-                                  [
-                                    _c("dt", { staticClass: "col-4" }, [
-                                      _vm._v("釣り方")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("dd", { staticClass: "col-8" }, [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.boatDetail.fishing_options[0]
-                                            .fishing_option_name
-                                        )
+                                        "\n                    " +
+                                          _vm._s(_vm.boatDetail.plan.other) +
+                                          "\n                  "
                                       )
                                     ])
                                   ]
                                 )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "dl",
-                              {
-                                staticClass: "main-tab-plan-modal-content-note"
-                              },
-                              [
-                                _c("dt", [_vm._v("備考")]),
-                                _vm._v(" "),
-                                _c("dd", [
-                                  _vm._v(
-                                    "\n                    " +
-                                      _vm._s(_vm.boatDetail.plan.other) +
-                                      "\n                  "
-                                  )
-                                ])
                               ]
                             )
                           ]
                         )
                       ]
                     )
-                  ]
-                )
-              ])
+                  ])
+                : _vm._e()
             ]
           ),
           _vm._v(" "),
@@ -69031,7 +69099,7 @@ var render = function() {
             _vm._v(" "),
             _c("MRecommend", {
               attrs: { "paid-members-data": _vm.boatIndexData },
-              on: { increCallCount: _vm.increCallCount }
+              on: { onDetail: _vm.onDetail, increCallCount: _vm.increCallCount }
             })
           ],
           1
@@ -69867,6 +69935,9 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   return _vm.onDetailBoat(
+                                    post.lender.prefecture.url_param,
+                                    post.lender.city.url_param,
+                                    post.lender.port_id,
                                     post.lender.boats[0].id
                                   )
                                 }

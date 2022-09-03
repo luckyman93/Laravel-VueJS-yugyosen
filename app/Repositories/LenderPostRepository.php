@@ -118,12 +118,11 @@ class LenderPostRepository
                     ->with('fishingOptions')
                     ->with('targets')
                     ->with(['lender' => function ($q) {
-                        $q->with('city')
+                        $q  ->with('city')
+                            ->with('prefecture')
                             ->with('boats');
                     }])
                     ->limit($count)
-                    // ->orderBy('created_at', 'asc')
-                    // ->orderBy('created_at', 'desc')
                     ->get();
     }
 }

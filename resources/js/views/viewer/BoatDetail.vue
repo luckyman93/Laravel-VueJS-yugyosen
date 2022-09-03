@@ -226,7 +226,14 @@
 
         <!-- タブ- プラン -->
         <section id="Plan" class="main-tab-plan tab-pane fade">
-          <div class="main-tab-plan-inner">
+          <div
+            v-if="boatDetail.plan === null"
+            class="mx-5 font-weight-bold d-flex justify-content-center align-items-center"
+            style="font-size: 24px;"
+          >
+            プラン情報は投稿されておりません。
+          </div>
+          <div v-if="boatDetail.plan !== null" class="main-tab-plan-inner">
             <h3 class="ex-headline">
               <span>{{ boatDetail.plan.plan_name }}</span>
             </h3>
@@ -445,7 +452,11 @@
 
       <section class="ex-recommend">
         <h3 class="ex-recommend-headline"><span>その他オススメ遊漁船一覧</span></h3>
-        <MRecommend :paid-members-data="boatIndexData" @increCallCount="increCallCount" />
+        <MRecommend
+          :paid-members-data="boatIndexData"
+          @onDetail="onDetail"
+          @increCallCount="increCallCount"
+        />
       </section>
 
       <section class="ex-search ex-bottom">
@@ -703,6 +714,16 @@ export default {
     /*-------------------------------------------*/
     /* その他
     /*-------------------------------------------*/
+    onDetail(id) {
+      const nLength = this.boatIndexData.length
+      for (let i = 0; i < nLength; i += 1) {
+        const boatData = this.boatIndexData[i]
+        if (boatData.id === id) {
+          window.location.href = `/boat/${boatData.prefecture_url_param}/${boatData.city_url_param}/${boatData.port_id}/${boatData.id}`
+          break
+        }
+      }
+    },
     onSearchList(cityParam) {
       window.location.href = `/boat/${this.prefectureParam}/${cityParam}`
     },

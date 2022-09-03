@@ -95,7 +95,17 @@
           <div class="main-result-items container-fluid mw-100">
             <div class="row m-0">
               <div v-for="(post, index) in postList" :key="index" class="main-result-item col-6">
-                <dl class="m-0" @click="onDetailBoat(post.lender.boats[0].id)">
+                <dl
+                  class="m-0"
+                  @click="
+                    onDetailBoat(
+                      post.lender.prefecture.url_param,
+                      post.lender.city.url_param,
+                      post.lender.port_id,
+                      post.lender.boats[0].id
+                    )
+                  "
+                >
                   <dd class="main-result-item-additional">
                     {{ post.lender.city.city_name }}/{{ post.beforeHour }}時間前
                   </dd>
@@ -360,6 +370,7 @@ export default {
     this.showLoader()
     await Promise.all([lenderPostRepository.viewerList(8)]).then(([lenderRes]) => {
       this.postList = lenderRes.data
+      console.log(this.postList)
       const today = new Date()
       this.postList.forEach(x => {
         const createdAt = new Date(x.created_at)
@@ -371,11 +382,8 @@ export default {
   },
 
   methods: {
-    onDetailBoat(boatId) {
-      this.$router.push({
-        name: ROUTE.VIEWER.BOAT.DETAIL.name,
-        params: { id: boatId },
-      })
+    onDetailBoat(prefectureUrlParam, cityUrlParam, portId, boatId) {
+      window.location.href = `/boat/${prefectureUrlParam}/${cityUrlParam}/${portId}/${boatId}`
     },
     /*-------------------------------------------*/
     /* ニュースリスト取得
