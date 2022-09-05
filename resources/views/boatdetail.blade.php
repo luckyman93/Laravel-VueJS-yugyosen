@@ -1,9 +1,11 @@
 @php
 $prefecture = \App\Models\Prefecture::where('url_param', $prefectureParam)->first();
 $prefecture_name = $prefecture['prefecture_name'];
+
 $city = \App\Models\City::where('url_param', $cityParam)->first();
 $city_name = $city['city_name'];
 
+$boatId = number_format(substr($boatParam, 1));
 $boat = \App\Models\Boat::where('id', $boatId)->first();
 $boat_name = $boat['boat_name'];
 $lender = \App\Models\Lender::where('id', $boat['lender_id'])->first();

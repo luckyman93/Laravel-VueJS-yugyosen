@@ -242,6 +242,8 @@ export default {
     portDetail: {},
     copy_cityParam: '',
     copy_portParam: '',
+    port_param: '',
+    boat_param: '',
   }),
 
   watch: {
@@ -310,6 +312,7 @@ export default {
           }
           this.paginationData = res.data
           this.boatIndexData = res.data.data
+          console.log(this.boatIndexData)
           this.boatIndexData.forEach(x => {
             if (x.created_at) x.created_at = moment(x.created_at).format('YYYY-MM-DD')
             if (x.updated_at) x.updated_at = moment(x.updated_at).format('YYYY-MM-DD')
@@ -389,7 +392,21 @@ export default {
       for (let i = 0; i < nLength; i += 1) {
         const boatData = this.boatIndexData[i]
         if (boatData.id === id) {
-          window.location.href = `/boat/${boatData.prefecture_url_param}/${boatData.city_url_param}/${boatData.port_id}/${boatData.id}`
+          if (boatData.id.toString().length === 1) {
+            this.boat_param = `b00${boatData.id.toString()}`
+          } else if (boatData.id.toString().length === 2) {
+            this.boat_param = `b0${boatData.id.toString()}`
+          } else {
+            this.boat_param = `b${boatData.id.toString()}`
+          }
+          if (boatData.port_id.toString().length === 1) {
+            this.port_param = `p00${boatData.port_id.toString()}`
+          } else if (boatData.port_id.toString().length === 2) {
+            this.port_param = `p0${boatData.port_id.toString()}`
+          } else {
+            this.port_param = `p${boatData.port_id.toString()}`
+          }
+          window.location.href = `/boat/${boatData.prefecture_url_param}/${boatData.city_url_param}/${this.port_param}/${this.boat_param}`
           break
         }
       }

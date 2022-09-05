@@ -792,6 +792,12 @@ export default {
         }
         const areaListsRecord = this.areaLists.filter(x => x.id === prefectureId)
         this.cityList = areaListsRecord[0].cities
+        this.portList = []
+        this.cityList.forEach(item => {
+          if (item.ports[0] !== undefined) {
+            this.portList.push(item.ports[0])
+          }
+        })
       },
     },
     'form.city_id': {
@@ -804,8 +810,6 @@ export default {
         if (oldCityId) {
           this.form.port_id = null
         }
-        const cityListsRecord = this.cityList.filter(x => x.id === cityId)
-        this.portList = cityListsRecord[0].ports
       },
     },
     // * 共通処理 管理者画面 ＊BasicInfoと共通ではない
@@ -900,6 +904,7 @@ export default {
             return
           }
           this.form = res.data
+          console.log(this.form)
           this.selectedPaymentOptionIds = this.form.payment_options.map(x => x.id)
           this.selectedFacilityIds = this.form.boats[0].facilities.map(x => x.id)
           this.selectedFishingOptionIds = this.form.boats[0].fishing_options.map(x => x.id)

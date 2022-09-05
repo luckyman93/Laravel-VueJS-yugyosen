@@ -38,6 +38,8 @@ class BoatRepository
             ->leftJoin('users as created_user', 'boats.created_user_id', 'created_user.id')
             ->leftJoin('users as updated_user', 'boats.updated_user_id', 'updated_user.id')
             ->whereNull('boats.deleted_at')
+            ->whereNull('ports.deleted_at')
+            ->whereNull('cities.deleted_at')
             ->select(
                 'boats.id',
                 'boats.boat_name',
@@ -101,7 +103,7 @@ class BoatRepository
             }])
             ->find($id);
         $query -> all_facilities = DB::table('facilities')->get();
-        
+
         return $query;
     }
 

@@ -7980,6 +7980,8 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     // ＊BasicInfoと共通
     'form.prefecture_id': {
       handler: function handler(prefectureId, oldPrefectureId) {
+        var _this = this;
+
         if (!prefectureId) {
           this.cityList = [];
           this.form.city_id = null;
@@ -7996,6 +7998,12 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
           return x.id === prefectureId;
         });
         this.cityList = areaListsRecord[0].cities;
+        this.portList = [];
+        this.cityList.forEach(function (item) {
+          if (item.ports[0] !== undefined) {
+            _this.portList.push(item.ports[0]);
+          }
+        });
       }
     },
     'form.city_id': {
@@ -8009,25 +8017,20 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
         if (oldCityId) {
           this.form.port_id = null;
         }
-
-        var cityListsRecord = this.cityList.filter(function (x) {
-          return x.id === cityId;
-        });
-        this.portList = cityListsRecord[0].ports;
       }
     },
     // * 共通処理 管理者画面 ＊BasicInfoと共通ではない
     $route: {
       handler: function handler() {
-        var _this = this;
+        var _this2 = this;
 
         return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  _this.isNew = _this.id === 'new';
-                  if (_this.isNew) _this.isEditing = true;
+                  _this2.isNew = _this2.id === 'new';
+                  if (_this2.isNew) _this2.isEditing = true;
 
                 case 2:
                 case "end":
@@ -8041,23 +8044,23 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     },
     isEditing: {
       handler: function handler() {
-        var _this2 = this;
+        var _this3 = this;
 
         return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  if (_this2.isNew && _this2.isEditing) {
-                    _this2.pageTitle = '貸船業者 新規登録';
+                  if (_this3.isNew && _this3.isEditing) {
+                    _this3.pageTitle = '貸船業者 新規登録';
                   }
 
-                  if (!_this2.isNew && _this2.isEditing) {
-                    _this2.pageTitle = '貸船業者 編集';
+                  if (!_this3.isNew && _this3.isEditing) {
+                    _this3.pageTitle = '貸船業者 編集';
                   }
 
-                  if (!_this2.isNew && !_this2.isEditing) {
-                    _this2.pageTitle = '貸船業者 詳細';
+                  if (!_this3.isNew && !_this3.isEditing) {
+                    _this3.pageTitle = '貸船業者 詳細';
                   }
 
                 case 3:
@@ -8072,7 +8075,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var data, i;
@@ -8080,9 +8083,9 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              _this3.showLoader();
+              _this4.showLoader();
 
-              _this3.setBreadcrumbData();
+              _this4.setBreadcrumbData();
 
               _context4.next = 4;
               return Promise.all([prefectureRepository.fetchAreaLists(), paymentOptionRepository.fetchPaymentOptionList(), facilityRepository.fetchFacilityList(), fishingOptionRepository.fetchFishingOptionList(), operationRepository.fetchOperationList(), targetRepository.fetchList(), memberTypeRepository.fetchMemberTypeList()]).then(function (_ref) {
@@ -8095,13 +8098,13 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                     targetRes = _ref2[5],
                     memberTypeRes = _ref2[6];
 
-                _this3.areaLists = prefectureRes.data;
-                _this3.paymentOptionList = paymentOptionRes.data;
-                _this3.facilityList = facilityRes.data;
-                _this3.fishingOptionList = fishingOptionRes.data;
-                _this3.operationList = operationRes.data;
-                _this3.targetList = targetRes.data;
-                _this3.memberTypeList = memberTypeRes.data;
+                _this4.areaLists = prefectureRes.data;
+                _this4.paymentOptionList = paymentOptionRes.data;
+                _this4.facilityList = facilityRes.data;
+                _this4.fishingOptionList = fishingOptionRes.data;
+                _this4.operationList = operationRes.data;
+                _this4.targetList = targetRes.data;
+                _this4.memberTypeList = memberTypeRes.data;
               })["catch"]( /*#__PURE__*/function () {
                 var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(err) {
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -8114,7 +8117,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                           }
 
                           _context3.next = 3;
-                          return _this3.$errHandling.adminCatch(err.response.status);
+                          return _this4.$errHandling.adminCatch(err.response.status);
 
                         case 3:
                         case "end":
@@ -8130,9 +8133,9 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
               }());
 
             case 4:
-              _this3.hideLoader();
+              _this4.hideLoader();
 
-              if (!_this3.isNew) {
+              if (!_this4.isNew) {
                 _context4.next = 10;
                 break;
               }
@@ -8145,16 +8148,16 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
               };
 
               for (i = 1; i <= 5; i += 1) {
-                _this3.boatImageList.push(data);
+                _this4.boatImageList.push(data);
               }
 
-              _this3.permissionImageList.push(data);
+              _this4.permissionImageList.push(data);
 
               return _context4.abrupt("return");
 
             case 10:
               _context4.next = 12;
-              return _this3.fetchLenderWithBoatDetail();
+              return _this4.fetchLenderWithBoatDetail();
 
             case 12:
             case "end":
@@ -8170,52 +8173,53 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     /* 詳細取得処理 管理者画面
     /*-------------------------------------------*/
     fetchLenderWithBoatDetail: function fetchLenderWithBoatDetail() {
-      var _this4 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                _this4.showLoader();
+                _this5.showLoader();
 
                 _context6.next = 3;
-                return lenderRepository.showWithBoat(_this4.id).then(function (res) {
+                return lenderRepository.showWithBoat(_this5.id).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_14__["default"].OK) {
-                    _this4.$toast.errorToast();
+                    _this5.$toast.errorToast();
 
                     return;
                   }
 
-                  _this4.form = res.data;
-                  _this4.selectedPaymentOptionIds = _this4.form.payment_options.map(function (x) {
+                  _this5.form = res.data;
+                  console.log(_this5.form);
+                  _this5.selectedPaymentOptionIds = _this5.form.payment_options.map(function (x) {
                     return x.id;
                   });
-                  _this4.selectedFacilityIds = _this4.form.boats[0].facilities.map(function (x) {
+                  _this5.selectedFacilityIds = _this5.form.boats[0].facilities.map(function (x) {
                     return x.id;
                   });
-                  _this4.selectedFishingOptionIds = _this4.form.boats[0].fishing_options.map(function (x) {
+                  _this5.selectedFishingOptionIds = _this5.form.boats[0].fishing_options.map(function (x) {
                     return x.id;
                   });
-                  _this4.selectedOperationIds = _this4.form.boats[0].operations.map(function (x) {
+                  _this5.selectedOperationIds = _this5.form.boats[0].operations.map(function (x) {
                     return x.id;
                   }); // 季節別に選択済ターゲットを振り分け
 
-                  _this4.form.boats[0].targets.forEach(function (x) {
+                  _this5.form.boats[0].targets.forEach(function (x) {
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_17__["default"].SPRING) {
-                      _this4.selectedTargetIds.spring.push(x.id);
+                      _this5.selectedTargetIds.spring.push(x.id);
                     }
 
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_17__["default"].SUMMER) {
-                      _this4.selectedTargetIds.summer.push(x.id);
+                      _this5.selectedTargetIds.summer.push(x.id);
                     }
 
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_17__["default"].AUTUMN) {
-                      _this4.selectedTargetIds.autumn.push(x.id);
+                      _this5.selectedTargetIds.autumn.push(x.id);
                     }
 
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_17__["default"].WINTER) {
-                      _this4.selectedTargetIds.winter.push(x.id);
+                      _this5.selectedTargetIds.winter.push(x.id);
                     }
                   }); // 画像を画像リストへ格納
                   // 船の画像
@@ -8224,24 +8228,24 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                   for (var i = 1; i <= 5; i += 1) {
                     var column = "boat_img_".concat(i);
                     var data = {
-                      image_src: _this4.form.boats[0][column],
-                      image_name: _this4.form.boats[0][column],
+                      image_src: _this5.form.boats[0][column],
+                      image_name: _this5.form.boats[0][column],
                       // 将来的に名前を表示するとなった時のため
-                      save_path: _this4.form.boats[0][column]
+                      save_path: _this5.form.boats[0][column]
                     };
 
-                    _this4.boatImageList.push(data);
+                    _this5.boatImageList.push(data);
                   } // 営業許可画像
 
 
                   var permissionImg = {
-                    image_src: _this4.form.permission_img,
-                    image_name: _this4.form.permission_img,
+                    image_src: _this5.form.permission_img,
+                    image_name: _this5.form.permission_img,
                     // 将来的に名前を表示するとなった時のため
-                    save_path: _this4.form.permission_img
+                    save_path: _this5.form.permission_img
                   };
 
-                  _this4.permissionImageList.push(permissionImg);
+                  _this5.permissionImageList.push(permissionImg);
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
@@ -8254,13 +8258,13 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                             }
 
                             _context5.next = 3;
-                            return _this4.$errHandling.adminCatch(err.response.status);
+                            return _this5.$errHandling.adminCatch(err.response.status);
 
                           case 3:
                             return _context5.abrupt("return");
 
                           case 4:
-                            _this4.$toast.errorToast();
+                            _this5.$toast.errorToast();
 
                           case 5:
                           case "end":
@@ -8276,7 +8280,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                 }());
 
               case 3:
-                _this4.hideLoader();
+                _this5.hideLoader();
 
               case 4:
               case "end":
@@ -8317,28 +8321,28 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     },
     // 新規登録処理
     storeLenderWithRelatedData: function storeLenderWithRelatedData() {
-      var _this5 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                _this5.showLoader(); // console.log('保存直前', this.form)
+                _this6.showLoader(); // console.log('保存直前', this.form)
 
 
-                lenderRepository.storeWithBoat(_this5.form).then(function (res) {
+                lenderRepository.storeWithBoat(_this6.form).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_14__["default"].CREATED) {
-                    _this5.$toast.errorToast();
+                    _this6.$toast.errorToast();
                   } // 新規登録完了後の処理
 
 
-                  _this5.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.CREATED);
+                  _this6.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.CREATED);
 
-                  _this5.errors = {};
-                  _this5.isEditing = false;
+                  _this6.errors = {};
+                  _this6.isEditing = false;
 
-                  _this5.$router.push({
+                  _this6.$router.push({
                     name: _consts_route__WEBPACK_IMPORTED_MODULE_15__["default"].ADMIN.LENDER.LIST.name
                   });
                 })["catch"]( /*#__PURE__*/function () {
@@ -8353,16 +8357,16 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                             }
 
                             _context7.next = 3;
-                            return _this5.$errHandling.adminCatch(err.response.status);
+                            return _this6.$errHandling.adminCatch(err.response.status);
 
                           case 3:
-                            _this5.errors = err.response.data.errors;
+                            _this6.errors = err.response.data.errors;
                             return _context7.abrupt("return");
 
                           case 5:
-                            _this5.errors = err.response.data.errors;
+                            _this6.errors = err.response.data.errors;
 
-                            _this5.$toast.errorToast();
+                            _this6.$toast.errorToast();
 
                           case 7:
                           case "end":
@@ -8377,7 +8381,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                   };
                 }());
 
-                _this5.hideLoader();
+                _this6.hideLoader();
 
               case 3:
               case "end":
@@ -8389,29 +8393,29 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     },
     // 更新処理
     updateLenderWithRelatedData: function updateLenderWithRelatedData() {
-      var _this6 = this;
+      var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                _this6.showLoader();
+                _this7.showLoader();
 
-                lenderRepository.updateWithBoat(_this6.id, _this6.form).then(function (res) {
+                lenderRepository.updateWithBoat(_this7.id, _this7.form).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_14__["default"].OK) {
-                    _this6.$toast.errorToast();
+                    _this7.$toast.errorToast();
 
                     return;
                   } // 更新完了後の処理
 
 
-                  _this6.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.UPDATED);
+                  _this7.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.UPDATED);
 
-                  _this6.errors = {};
-                  _this6.boatDeleteImageList = [];
-                  _this6.permissionDeleteImageList = [];
-                  _this6.isEditing = false;
+                  _this7.errors = {};
+                  _this7.boatDeleteImageList = [];
+                  _this7.permissionDeleteImageList = [];
+                  _this7.isEditing = false;
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
@@ -8424,16 +8428,16 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                             }
 
                             _context9.next = 3;
-                            return _this6.$errHandling.adminCatch(err.response.status);
+                            return _this7.$errHandling.adminCatch(err.response.status);
 
                           case 3:
-                            _this6.errors = err.response.data.errors;
+                            _this7.errors = err.response.data.errors;
                             return _context9.abrupt("return");
 
                           case 5:
-                            _this6.$toast.errorToast();
+                            _this7.$toast.errorToast();
 
-                            _this6.errors = err.response.data.errors;
+                            _this7.errors = err.response.data.errors;
 
                           case 7:
                           case "end":
@@ -8448,7 +8452,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                   };
                 }());
 
-                _this6.hideLoader();
+                _this7.hideLoader();
 
               case 3:
               case "end":
@@ -8464,29 +8468,29 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     /* 削除登録・更新処理 管理者画面
     /*-------------------------------------------*/
     deleteLenderWithRelatedData: function deleteLenderWithRelatedData() {
-      var _this7 = this;
+      var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
             switch (_context12.prev = _context12.next) {
               case 0:
-                _this7.showLoader();
+                _this8.showLoader();
 
                 _context12.next = 3;
-                return lenderRepository.deleteWithBoat(_this7.form.id).then(function (res) {
+                return lenderRepository.deleteWithBoat(_this8.form.id).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_14__["default"].OK) {
-                    _this7.$toast.errorToast();
+                    _this8.$toast.errorToast();
 
                     return;
                   }
 
-                  _this7.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.DELETED);
+                  _this8.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.DELETED);
 
-                  _this7.isEditing = false;
-                  _this7.errors = {};
+                  _this8.isEditing = false;
+                  _this8.errors = {};
 
-                  _this7.$router.push({
+                  _this8.$router.push({
                     name: _consts_route__WEBPACK_IMPORTED_MODULE_15__["default"].ADMIN.LENDER.LIST.name
                   });
                 })["catch"]( /*#__PURE__*/function () {
@@ -8501,13 +8505,13 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                             }
 
                             _context11.next = 3;
-                            return _this7.$errHandling.adminCatch(err.response.status);
+                            return _this8.$errHandling.adminCatch(err.response.status);
 
                           case 3:
                             return _context11.abrupt("return");
 
                           case 4:
-                            _this7.$toast.errorToast();
+                            _this8.$toast.errorToast();
 
                           case 5:
                           case "end":
@@ -8523,7 +8527,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                 }());
 
               case 3:
-                _this7.hideLoader();
+                _this8.hideLoader();
 
               case 4:
               case "end":
@@ -8550,26 +8554,26 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     /* パスワード更新
     /*-------------------------------------------*/
     onChangePassword: function onChangePassword(password) {
-      var _this8 = this;
+      var _this9 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
             switch (_context14.prev = _context14.next) {
               case 0:
-                _this8.showLoader();
+                _this9.showLoader();
 
                 _context14.next = 3;
-                return userRepository.changePassword(_this8.form.user_id, password).then(function (res) {
+                return userRepository.changePassword(_this9.form.user_id, password).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_14__["default"].NO_CONTENT) {
-                    _this8.$toast.errorToast();
+                    _this9.$toast.errorToast();
 
                     return;
                   }
 
-                  _this8.$modal.hide('password-change-modal');
+                  _this9.$modal.hide('password-change-modal');
 
-                  _this8.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.UPDATED_PASSWORD);
+                  _this9.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.UPDATED_PASSWORD);
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref8 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
@@ -8577,10 +8581,10 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                         switch (_context13.prev = _context13.next) {
                           case 0:
                             _context13.next = 2;
-                            return _this8.$errHandling.lenderCatch(err.response.status);
+                            return _this9.$errHandling.lenderCatch(err.response.status);
 
                           case 2:
-                            _this8.$toast.errorToast();
+                            _this9.$toast.errorToast();
 
                           case 3:
                           case "end":
@@ -8596,7 +8600,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                 }());
 
               case 3:
-                _this8.hideLoader();
+                _this9.hideLoader();
 
               case 4:
               case "end":
@@ -8852,6 +8856,7 @@ var lenderRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_
 
                   _this.paginationData = res.data;
                   _this.lenderIndexData = res.data.data;
+                  console.log(_this.lenderIndexData);
 
                   _this.lenderIndexData.forEach(function (x) {
                     if (x.created_at) x.created_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(x.created_at).format('YYYY-MM-DD');
@@ -14938,11 +14943,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _views_lender_components_MHeader_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/views/lender/components/MHeader.vue */ "./resources/js/views/lender/components/MHeader.vue");
-/* harmony import */ var _views_lender_components_MFooter_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/views/lender/components/MFooter.vue */ "./resources/js/views/lender/components/MFooter.vue");
-/* harmony import */ var _views_lender_components_MMenu_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/views/lender/components/MMenu.vue */ "./resources/js/views/lender/components/MMenu.vue");
-/* harmony import */ var _views_lender_components_MITPart_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/views/lender/components/MITPart.vue */ "./resources/js/views/lender/components/MITPart.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _views_lender_components_MHeader_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/views/lender/components/MHeader.vue */ "./resources/js/views/lender/components/MHeader.vue");
+/* harmony import */ var _views_lender_components_MFooter_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/views/lender/components/MFooter.vue */ "./resources/js/views/lender/components/MFooter.vue");
+/* harmony import */ var _views_lender_components_MMenu_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/views/lender/components/MMenu.vue */ "./resources/js/views/lender/components/MMenu.vue");
+/* harmony import */ var _views_lender_components_MITPart_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/views/lender/components/MITPart.vue */ "./resources/js/views/lender/components/MITPart.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -15128,13 +15141,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    MHeader: _views_lender_components_MHeader_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    MFooter: _views_lender_components_MFooter_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    MMenu: _views_lender_components_MMenu_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    MITPart: _views_lender_components_MITPart_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    MHeader: _views_lender_components_MHeader_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    MFooter: _views_lender_components_MFooter_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    MMenu: _views_lender_components_MMenu_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    MITPart: _views_lender_components_MITPart_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
+      boatName: '',
       news: [{
         date: '2022.00.00',
         title: 'ホームページリリースしました'
@@ -15147,7 +15161,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }]
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('userModule', ['lenderUser']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('userModule', ['lenderUser'])),
+  created: function created() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _this.boatName = _this.lenderUser.boat[0].boat_name;
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  }
 });
 
 /***/ }),
@@ -17341,6 +17373,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
  // component
 
 
@@ -17404,7 +17438,9 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
       lenderPostIndex: [],
       paymentOptions: '',
       operations: '',
-      prefectureParam: null
+      prefectureParam: null,
+      port_param: '',
+      boat_param: ''
     };
   },
   created: function created() {
@@ -17418,7 +17454,7 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
               _this.showLoader();
 
               _context.next = 3;
-              return _this.fetchBoatShowViewer(_this.boatId);
+              return _this.fetchBoatShowViewer(Number(_this.boatId.slice(1)));
 
             case 3:
               _context.next = 5;
@@ -17623,8 +17659,9 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
                   } // this.paginationData = res.data
 
 
+                  console.log(res.data.data);
                   _this4.boatIndexData = res.data.data.filter(function (x) {
-                    return x.id !== Number(_this4.boatId);
+                    return x.id !== Number(_this4.boatId.slice(1));
                   }); // this.boatIndexDataPaidMember = this.boatIndexData.filter(
                   //   x => x.member_type_id === MEMBER_TYPE.PAID_MEMBER
                   // )
@@ -17724,7 +17761,23 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
         var boatData = this.boatIndexData[i];
 
         if (boatData.id === id) {
-          window.location.href = "/boat/".concat(boatData.prefecture_url_param, "/").concat(boatData.city_url_param, "/").concat(boatData.port_id, "/").concat(boatData.id);
+          if (boatData.id.toString().length === 1) {
+            this.boat_param = "b00".concat(boatData.id.toString());
+          } else if (boatData.id.toString().length === 2) {
+            this.boat_param = "b0".concat(boatData.id.toString());
+          } else {
+            this.boat_param = "b".concat(boatData.id.toString());
+          }
+
+          if (boatData.port_id.toString().length === 1) {
+            this.port_param = "p00".concat(boatData.port_id.toString());
+          } else if (boatData.port_id.toString().length === 2) {
+            this.port_param = "p0".concat(boatData.port_id.toString());
+          } else {
+            this.port_param = "p".concat(boatData.port_id.toString());
+          }
+
+          window.location.href = "/boat/".concat(boatData.prefecture_url_param, "/").concat(boatData.city_url_param, "/").concat(this.port_param, "/").concat(this.boat_param);
           break;
         }
       }
@@ -18031,7 +18084,9 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
       cityDetail: {},
       portDetail: {},
       copy_cityParam: '',
-      copy_portParam: ''
+      copy_portParam: '',
+      port_param: '',
+      boat_param: ''
     };
   },
   watch: {
@@ -18178,6 +18233,7 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
 
                   _this5.paginationData = res.data;
                   _this5.boatIndexData = res.data.data;
+                  console.log(_this5.boatIndexData);
 
                   _this5.boatIndexData.forEach(function (x) {
                     if (x.created_at) x.created_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(x.created_at).format('YYYY-MM-DD');
@@ -18326,7 +18382,23 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
         var boatData = this.boatIndexData[i];
 
         if (boatData.id === id) {
-          window.location.href = "/boat/".concat(boatData.prefecture_url_param, "/").concat(boatData.city_url_param, "/").concat(boatData.port_id, "/").concat(boatData.id);
+          if (boatData.id.toString().length === 1) {
+            this.boat_param = "b00".concat(boatData.id.toString());
+          } else if (boatData.id.toString().length === 2) {
+            this.boat_param = "b0".concat(boatData.id.toString());
+          } else {
+            this.boat_param = "b".concat(boatData.id.toString());
+          }
+
+          if (boatData.port_id.toString().length === 1) {
+            this.port_param = "p00".concat(boatData.port_id.toString());
+          } else if (boatData.port_id.toString().length === 2) {
+            this.port_param = "p0".concat(boatData.port_id.toString());
+          } else {
+            this.port_param = "p".concat(boatData.port_id.toString());
+          }
+
+          window.location.href = "/boat/".concat(boatData.prefecture_url_param, "/").concat(boatData.city_url_param, "/").concat(this.port_param, "/").concat(this.boat_param);
           break;
         }
       }
@@ -66335,9 +66407,7 @@ var render = function() {
       [
         _c("MHeader", { attrs: { title: "マイページ" } }),
         _vm._v(" "),
-        _c("h1", { staticClass: "headline" }, [
-          _vm._v(_vm._s(_vm.lenderUser.boat[0].boat_name))
-        ]),
+        _c("h1", { staticClass: "headline" }, [_vm._v(_vm._s(_vm.boatName))]),
         _vm._v(" "),
         _c("MMenu"),
         _vm._v(" "),
@@ -67923,20 +67993,22 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c(
-                "li",
-                {
-                  staticClass:
-                    "main-navi-breadcrumbs-item breadcrumb-item active"
-                },
-                [
-                  _vm._v(
-                    "\n          " +
-                      _vm._s(_vm.boatDetail.lender.port.port_name) +
-                      "\n        "
+              _vm.boatDetail.lender.port !== null
+                ? _c(
+                    "li",
+                    {
+                      staticClass:
+                        "main-navi-breadcrumbs-item breadcrumb-item active"
+                    },
+                    [
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(_vm.boatDetail.lender.port.port_name) +
+                          "\n        "
+                      )
+                    ]
                   )
-                ]
-              )
+                : _vm._e()
             ])
           ]
         ),
@@ -67950,7 +68022,11 @@ var render = function() {
             _c("dd", { staticClass: "main-summary-overview-port" }, [
               _vm._v(
                 "\n          " +
-                  _vm._s(_vm.boatDetail.lender.port.port_name) +
+                  _vm._s(
+                    _vm.boatDetail.lender.port === null
+                      ? ""
+                      : _vm.boatDetail.lender.port.port_name
+                  ) +
                   "\n          "
               ),
               _c(
@@ -69049,7 +69125,6 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("MPagination", {
-                staticClass: "mb-5",
                 attrs: { "pagination-data": _vm.paginationData },
                 on: { getPaginationResults: _vm.getPaginationResults }
               })
@@ -88680,11 +88755,11 @@ var LENDER_PREFIX = 'lender';
       }
     },
     CALL_RANKING: {
-      path: "/".concat(LENDER_PREFIX, "/callranking"),
+      path: "/".concat(LENDER_PREFIX, "/call_ranking"),
       name: "".concat(LENDER_PREFIX, "CallRanking")
     },
     PLAN_SETTING: {
-      path: "/".concat(LENDER_PREFIX, "/plansetting"),
+      path: "/".concat(LENDER_PREFIX, "/plan_setting"),
       name: "".concat(LENDER_PREFIX, "PlanSetting")
     }
   }

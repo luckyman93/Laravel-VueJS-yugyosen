@@ -23,6 +23,7 @@ class PortRepository
             ->leftJoin('users as created_user', 'created_user.id', 'ports.created_user_id')
             ->leftJoin('users as updated_user', 'updated_user.id', 'ports.updated_user_id')
             ->whereNull('ports.deleted_at')
+            ->whereNull('cities.deleted_at')
             ->select(
                 'cities.city_name',
                 'cities.url_param',
@@ -53,7 +54,6 @@ class PortRepository
 
         return $query->orderBy($sortKey, $orderBy)->paginate(Util::PAGINATE_COUNT);
         // return $query->paginate(Util::PAGINATE_COUNT);
-
     }
     public function fetchPortList()
     {

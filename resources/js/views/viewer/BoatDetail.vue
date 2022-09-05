@@ -14,7 +14,10 @@
               {{ boatDetail.lender.prefecture.prefecture_name }}
             </a>
           </li>
-          <li class="main-navi-breadcrumbs-item breadcrumb-item active">
+          <li
+            v-if="boatDetail.lender.port !== null"
+            class="main-navi-breadcrumbs-item breadcrumb-item active"
+          >
             {{ boatDetail.lender.port.port_name }}
           </li>
         </ol>
@@ -24,7 +27,7 @@
         <dl class="main-summary-overview">
           <dt class="main-summary-overview-name">{{ boatDetail.boat_name }}</dt>
           <dd class="main-summary-overview-port">
-            {{ boatDetail.lender.port.port_name }}
+            {{ boatDetail.lender.port === null ? '' : boatDetail.lender.port.port_name }}
             <span class="main-summary-overview-port-address">{{ boatDetail.lender.address }}</span>
           </dd>
           <dd class="main-summary-overview-review">★★★★☆</dd>
@@ -425,7 +428,6 @@
             </div>
           </div>
           <MPagination
-            class="mb-5"
             :pagination-data="paginationData"
             @getPaginationResults="getPaginationResults"
           />
@@ -536,12 +538,14 @@ export default {
       paymentOptions: '',
       operations: '',
       prefectureParam: null,
+      port_param: '',
+      boat_param: '',
     }
   },
 
   async created() {
     this.showLoader()
-    await this.fetchBoatShowViewer(this.boatId)
+    await this.fetchBoatShowViewer(Number(this.boatId.slice(1)))
     await this.fetchCityListByPrefecture(this.boatDetail.lender.prefecture.id)
     await this.fetchLenderPostIndex()
     await this.fetchBoatIndex(this.boatDetail.lender.prefecture.url_param)
@@ -668,7 +672,8 @@ export default {
             return
           }
           // this.paginationData = res.data
-          this.boatIndexData = res.data.data.filter(x => x.id !== Number(this.boatId))
+          console.log(res.data.data)
+          this.boatIndexData = res.data.data.filter(x => x.id !== Number(this.boatId.slice(1)))
           // this.boatIndexDataPaidMember = this.boatIndexData.filter(
           //   x => x.member_type_id === MEMBER_TYPE.PAID_MEMBER
           // )
@@ -719,7 +724,21 @@ export default {
       for (let i = 0; i < nLength; i += 1) {
         const boatData = this.boatIndexData[i]
         if (boatData.id === id) {
-          window.location.href = `/boat/${boatData.prefecture_url_param}/${boatData.city_url_param}/${boatData.port_id}/${boatData.id}`
+          if (boatData.id.toString().length === 1) {
+            this.boat_param = `b00${boatData.id.toString()}`
+          } else if (boatData.id.toString().length === 2) {
+            this.boat_param = `b0${boatData.id.toString()}`
+          } else {
+            this.boat_param = `b${boatData.id.toString()}`
+          }
+          if (boatData.port_id.toString().length === 1) {
+            this.port_param = `p00${boatData.port_id.toString()}`
+          } else if (boatData.port_id.toString().length === 2) {
+            this.port_param = `p0${boatData.port_id.toString()}`
+          } else {
+            this.port_param = `p${boatData.port_id.toString()}`
+          }
+          window.location.href = `/boat/${boatData.prefecture_url_param}/${boatData.city_url_param}/${this.port_param}/${this.boat_param}`
           break
         }
       }

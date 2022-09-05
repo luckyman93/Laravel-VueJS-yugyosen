@@ -39,8 +39,18 @@ class LenderRepository
             ->leftJoin('users', 'lenders.user_id', 'users.id')
             ->leftJoin('boats', 'lenders.id', 'boats.lender_id')
             ->leftJoin('prefectures', 'lenders.prefecture_id', 'prefectures.id')
-            ->leftJoin('cities', 'lenders.city_id', 'cities.id')
-            ->leftJoin('ports', 'lenders.port_id', 'ports.id')
+            ->leftJoin('cities', function($join){
+                $join
+                    ->on('lenders.city_id', '=', 'cities.id')
+                    ->whereNull('cities.deleted_at');
+            })
+            ->leftJoin('ports', function($join){
+                $join
+                    ->on('lenders.port_id', '=', 'ports.id')
+                    ->on('ports.city_id', '=', 'cities.id')
+                    ->whereNull('cities.deleted_at')
+                    ->whereNull('ports.deleted_at');
+            })
             ->leftJoin('users as created_user', 'lenders.created_user_id', 'created_user.id')
             ->leftJoin('users as updated_user', 'lenders.updated_user_id', 'updated_user.id')
             ->whereNull('users.deleted_at')

@@ -122,11 +122,11 @@ export default {
       },
     },
     CALL_RANKING: {
-      path: `/${LENDER_PREFIX}/callranking`,
+      path: `/${LENDER_PREFIX}/call_ranking`,
       name: `${LENDER_PREFIX}CallRanking`,
     },
     PLAN_SETTING: {
-      path: `/${LENDER_PREFIX}/plansetting`,
+      path: `/${LENDER_PREFIX}/plan_setting`,
       name: `${LENDER_PREFIX}PlanSetting`,
     },
   },

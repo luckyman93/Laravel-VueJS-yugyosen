@@ -8,7 +8,8 @@ use App\Enums\SeasonType;
 
 class Boat extends BaseModel
 {
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes;
+    use CascadeSoftDeletes;
 
     protected $dates = ['deleted_at'];
 

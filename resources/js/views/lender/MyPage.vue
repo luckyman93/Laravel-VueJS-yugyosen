@@ -2,7 +2,7 @@
   <div id="Wrapper" class="lender mypage">
     <div class="lender-inner">
       <MHeader :title="'マイページ'" />
-      <h1 class="headline">{{ lenderUser.boat[0].boat_name }}</h1>
+      <h1 class="headline">{{ boatName }}</h1>
 
       <MMenu />
 
@@ -188,6 +188,7 @@ export default {
 
   data() {
     return {
+      boatName: '',
       news: [
         { date: '2022.00.00', title: 'ホームページリリースしました' },
         { date: '2022.00.00', title: '遊漁船情報が追加されました' },
@@ -198,6 +199,10 @@ export default {
 
   computed: {
     ...mapState('userModule', ['lenderUser']),
+  },
+
+  async created() {
+    this.boatName = this.lenderUser.boat[0].boat_name
   },
 }
 </script>
