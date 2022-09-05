@@ -145,6 +145,7 @@
                     v-model="form.prefecture_id"
                     item-name="都道府県"
                     :options="areaLists"
+                    :disabled="!isNew && !isEditing"
                     :required="true"
                     :searchable="true"
                     label="prefecture_name"
@@ -161,9 +162,10 @@
                 <span class="ex-tree-select">
                   <ADropdown
                     id="city_id"
-                    v-model="form.city_id"
+                    :value="form.city === null ? null : form.city.id"
                     item-name="市町村"
                     :options="cityList"
+                    :disabled="!isNew && !isEditing"
                     :required="true"
                     :searchable="true"
                     label="city_name"
@@ -197,7 +199,7 @@
                 <span class="ex-tree-select">
                   <ADropdown
                     id="port_id"
-                    v-model="form.port_id"
+                    :value="form.city === null ? null : form.port === null ? null : form.port.id"
                     item-name="港名"
                     :options="portList"
                     :required="true"
@@ -724,8 +726,12 @@ export default {
         name: null,
         name_kana: null,
       },
-      city_id: null,
-      port_id: null,
+      city: {
+        id: null,
+      },
+      port: {
+        id: null,
+      },
       phone: '',
       boats: [
         {
@@ -803,7 +809,6 @@ export default {
     'form.city_id': {
       handler(cityId, oldCityId) {
         if (!cityId) {
-          this.portList = []
           this.form.port_id = null
           return
         }
@@ -904,7 +909,6 @@ export default {
             return
           }
           this.form = res.data
-          console.log(this.form)
           this.selectedPaymentOptionIds = this.form.payment_options.map(x => x.id)
           this.selectedFacilityIds = this.form.boats[0].facilities.map(x => x.id)
           this.selectedFishingOptionIds = this.form.boats[0].fishing_options.map(x => x.id)

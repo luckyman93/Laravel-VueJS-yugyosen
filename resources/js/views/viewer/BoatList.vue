@@ -312,7 +312,6 @@ export default {
           }
           this.paginationData = res.data
           this.boatIndexData = res.data.data
-          console.log(this.boatIndexData)
           this.boatIndexData.forEach(x => {
             if (x.created_at) x.created_at = moment(x.created_at).format('YYYY-MM-DD')
             if (x.updated_at) x.updated_at = moment(x.updated_at).format('YYYY-MM-DD')

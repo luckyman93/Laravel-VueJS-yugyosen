@@ -6,6 +6,7 @@ use App\Models\Lender;
 use App\Models\Boat;
 use App\Models\User;
 use App\Enums\Util;
+use App\Models\City;
 use Illuminate\Support\Facades\DB;
 
 // use PDOException;
@@ -39,12 +40,12 @@ class LenderRepository
             ->leftJoin('users', 'lenders.user_id', 'users.id')
             ->leftJoin('boats', 'lenders.id', 'boats.lender_id')
             ->leftJoin('prefectures', 'lenders.prefecture_id', 'prefectures.id')
-            ->leftJoin('cities', function($join){
+            ->leftJoin('cities', function ($join) {
                 $join
                     ->on('lenders.city_id', '=', 'cities.id')
                     ->whereNull('cities.deleted_at');
             })
-            ->leftJoin('ports', function($join){
+            ->leftJoin('ports', function ($join) {
                 $join
                     ->on('lenders.port_id', '=', 'ports.id')
                     ->on('ports.city_id', '=', 'cities.id')
@@ -105,6 +106,8 @@ class LenderRepository
     public function fetchLenderWithBoatByLenderId($id): object
     {
         return $this->model
+                    ->with('city')
+                    ->with('port')
                     ->with('user')
                     ->with('paymentOptions')
                     ->with(['boats' => function ($q) {

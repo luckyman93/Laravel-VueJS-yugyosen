@@ -337,6 +337,8 @@ export default {
     return {
       ROUTE,
       ROUTE_HTML,
+      boat_param: null,
+      port_param: null,
       mainAreas: [
         { name: '◯◯県◯◯市', photo: '/images/dammy/blank.png', url: '#' },
         { name: '◯◯県◯◯市', photo: '/images/dammy/blank.png', url: '#' },
@@ -370,7 +372,6 @@ export default {
     this.showLoader()
     await Promise.all([lenderPostRepository.viewerList(8)]).then(([lenderRes]) => {
       this.postList = lenderRes.data
-      console.log(this.postList)
       const today = new Date()
       this.postList.forEach(x => {
         const createdAt = new Date(x.created_at)
@@ -383,7 +384,21 @@ export default {
 
   methods: {
     onDetailBoat(prefectureUrlParam, cityUrlParam, portId, boatId) {
-      window.location.href = `/boat/${prefectureUrlParam}/${cityUrlParam}/${portId}/${boatId}`
+      if (portId.toString().length === 1) {
+        this.port_param = `b00${portId.toString()}`
+      } else if (portId.toString().length === 2) {
+        this.port_param = `b0${portId.toString()}`
+      } else {
+        this.port_param = `b${portId.toString()}`
+      }
+      if (boatId.toString().length === 1) {
+        this.boat_param = `p00${boatId.toString()}`
+      } else if (boatId.toString().length === 2) {
+        this.boat_param = `p0${boatId.toString()}`
+      } else {
+        this.boat_param = `p${boatId.toString()}`
+      }
+      window.location.href = `/boat/${prefectureUrlParam}/${cityUrlParam}/${this.port_param}/${this.boat_param}`
     },
     /*-------------------------------------------*/
     /* ニュースリスト取得

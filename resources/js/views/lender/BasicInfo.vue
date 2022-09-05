@@ -95,7 +95,7 @@
             <span class="ex-tree-select">
               <ADropdown
                 id="city_id"
-                v-model="form.city_id"
+                :value="form.city === null ? null : form.city.id"
                 item-name="市町村"
                 :options="cityList"
                 :required="true"
@@ -131,7 +131,7 @@
             <span class="ex-tree-select">
               <ADropdown
                 id="port_id"
-                v-model="form.port_id"
+                :value="form.city === null ? null : form.port === null ? null : form.port.id"
                 item-name="港名"
                 :options="portList"
                 :required="true"
@@ -636,8 +636,12 @@ export default {
     form: {
       user: {},
       phone: '',
-      city_id: null,
-      port_id: null,
+      city: {
+        id: null,
+      },
+      port: {
+        id: null,
+      },
       boats: [{ boat_name: '' }],
     },
     // リスト
@@ -683,20 +687,23 @@ export default {
         }
         const areaListsRecord = this.areaLists.filter(x => x.id === prefectureId)
         this.cityList = areaListsRecord[0].cities
+        this.portList = []
+        this.cityList.forEach(item => {
+          if (item.ports[0] !== undefined) {
+            this.portList.push(item.ports[0])
+          }
+        })
       },
     },
     'form.city_id': {
       handler(cityId, oldCityId) {
         if (!cityId) {
-          this.portList = []
           this.form.port_id = null
           return
         }
         if (oldCityId) {
           this.form.port_id = null
         }
-        const cityListsRecord = this.cityList.filter(x => x.id === cityId)
-        this.portList = cityListsRecord[0].ports
       },
     },
   },

@@ -568,7 +568,6 @@ export default {
             return
           }
           this.boatDetail = res.data
-          console.log(this.boatDetail)
           const targetList = this.boatDetail.targets
           const paymentOptionList = this.boatDetail.lender.payment_options
           const operationList = this.boatDetail.operations
@@ -672,7 +671,6 @@ export default {
             return
           }
           // this.paginationData = res.data
-          console.log(res.data.data)
           this.boatIndexData = res.data.data.filter(x => x.id !== Number(this.boatId.slice(1)))
           // this.boatIndexDataPaidMember = this.boatIndexData.filter(
           //   x => x.member_type_id === MEMBER_TYPE.PAID_MEMBER

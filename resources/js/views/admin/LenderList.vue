@@ -137,7 +137,6 @@ export default {
           }
           this.paginationData = res.data
           this.lenderIndexData = res.data.data
-          console.log(this.lenderIndexData)
           this.lenderIndexData.forEach(x => {
             if (x.created_at) x.created_at = moment(x.created_at).format('YYYY-MM-DD')
             if (x.updated_at) x.updated_at = moment(x.updated_at).format('YYYY-MM-DD')
