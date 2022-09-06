@@ -638,7 +638,7 @@ export default {
     /*-------------------------------------------*/
     async fetchLenderPostIndex() {
       await lenderPostRepository
-        .viewerIndex(this.boatId, this.page)
+        .viewerIndex(Number(this.boatId.slice(1)), this.page)
         .then(res => {
           this.paginationData = res.data
           this.lenderPostIndex = res.data.data

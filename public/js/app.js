@@ -17617,7 +17617,7 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return lenderPostRepository.viewerIndex(_this3.boatId, _this3.page).then(function (res) {
+                return lenderPostRepository.viewerIndex(Number(_this3.boatId.slice(1)), _this3.page).then(function (res) {
                   _this3.paginationData = res.data;
                   _this3.lenderPostIndex = res.data.data;
 
