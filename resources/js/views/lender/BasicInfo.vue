@@ -95,7 +95,7 @@
             <span class="ex-tree-select">
               <ADropdown
                 id="city_id"
-                :value="form.city === null ? null : form.city.id"
+                v-model="city_id"
                 item-name="市町村"
                 :options="cityList"
                 :required="true"
@@ -131,7 +131,7 @@
             <span class="ex-tree-select">
               <ADropdown
                 id="port_id"
-                :value="form.city === null ? null : form.port === null ? null : form.port.id"
+                v-model="port_id"
                 item-name="港名"
                 :options="portList"
                 :required="true"
@@ -636,16 +636,11 @@ export default {
     form: {
       user: {},
       phone: '',
-      city: {
-        id: null,
-      },
-      port: {
-        id: null,
-      },
       boats: [{ boat_name: '' }],
     },
     // リスト
     areaLists: [],
+    allPortList: [],
     cityList: [],
     portList: [],
     paymentOptionList: [],
@@ -666,6 +661,8 @@ export default {
     // error, その他（処理完了後削除）
     errors: {},
     passwordValidErrorMessage: '',
+    city_id: null,
+    port_id: null,
   }),
 
   computed: {
@@ -677,33 +674,17 @@ export default {
       handler(prefectureId, oldPrefectureId) {
         if (!prefectureId) {
           this.cityList = []
-          this.form.city_id = null
-          this.form.port_id = null
+          this.city_id = null
+          this.port_id = null
           return
         }
         if (oldPrefectureId) {
-          this.form.city_id = null
-          this.form.port_id = null
+          this.city_id = null
+          this.port_id = null
         }
         const areaListsRecord = this.areaLists.filter(x => x.id === prefectureId)
         this.cityList = areaListsRecord[0].cities
-        this.portList = []
-        this.cityList.forEach(item => {
-          if (item.ports[0] !== undefined) {
-            this.portList.push(item.ports[0])
-          }
-        })
-      },
-    },
-    'form.city_id': {
-      handler(cityId, oldCityId) {
-        if (!cityId) {
-          this.form.port_id = null
-          return
-        }
-        if (oldCityId) {
-          this.form.port_id = null
-        }
+        this.portList = this.allPortList.filter(x => x.prefecture_id === prefectureId)
       },
     },
   },
@@ -712,6 +693,7 @@ export default {
     this.showLoader()
     await Promise.all([
       prefectureRepository.fetchAreaLists(),
+      prefectureRepository.fetchPortslistsByPrefectureId(),
       paymentOptionRepository.fetchPaymentOptionList(),
       facilityRepository.fetchFacilityList(),
       fishingOptionRepository.fetchFishingOptionList(),
@@ -720,14 +702,16 @@ export default {
     ])
       .then(
         ([
-          prefectureRes,
+          prefectureRes1,
+          prefectureRes2,
           paymentOptionRes,
           facilityRes,
           fishingOptionRes,
           operationRes,
           targetRes,
         ]) => {
-          this.areaLists = prefectureRes.data
+          this.areaLists = prefectureRes1.data
+          this.allPortList = prefectureRes2.data
           this.paymentOptionList = paymentOptionRes.data
           this.facilityList = facilityRes.data
           this.fishingOptionList = fishingOptionRes.data
@@ -761,6 +745,16 @@ export default {
             return
           }
           this.form = res.data
+          if (this.form.city === null) {
+            this.city_id = null
+          } else {
+            this.city_id = this.form.city.id
+          }
+          if (this.form.port === null) {
+            this.port_id = null
+          } else {
+            this.port_id = this.form.port.id
+          }
           this.selectedPaymentOptionIds = this.form.payment_options.map(x => x.id)
           this.selectedFacilityIds = this.form.boats[0].facilities.map(x => x.id)
           this.selectedFishingOptionIds = this.form.boats[0].fishing_options.map(x => x.id)
@@ -824,6 +818,8 @@ export default {
       this.form.boat_delete_image_list = this.boatDeleteImageList
       this.form.permission_image_list = this.permissionImageList
       this.form.permission_delete_image_list = this.permissionDeleteImageList
+      this.form.city_id = this.city_id
+      this.form.port_id = this.port_id
 
       this.showLoader()
 

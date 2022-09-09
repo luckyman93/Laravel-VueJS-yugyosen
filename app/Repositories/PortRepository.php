@@ -18,12 +18,15 @@ class PortRepository
     public function fetchPortIndex($keyword, $sortKey, $orderBy): object
     {
         $query = $this->model
-            ->leftJoin('cities', 'ports.city_id', 'cities.id')
+            ->leftJoin('cities', function ($join) {
+                $join
+                ->on('ports.city_id', '=', 'cities.id')
+                ->whereNull('cities.deleted_at');
+            })
             ->leftJoin('prefectures', 'cities.prefecture_id', 'prefectures.id')
             ->leftJoin('users as created_user', 'created_user.id', 'ports.created_user_id')
             ->leftJoin('users as updated_user', 'updated_user.id', 'ports.updated_user_id')
             ->whereNull('ports.deleted_at')
-            ->whereNull('cities.deleted_at')
             ->select(
                 'cities.city_name',
                 'cities.url_param',

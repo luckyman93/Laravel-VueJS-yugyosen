@@ -2285,6 +2285,148 @@ li[data-v-201ac1e6] {
   top: 0;
   width: 100%;
 }
+#Wrapper.provider .main .main-boat {
+  padding: 0;
+}
+#Wrapper.provider .main .main-boat .main-boat-free {
+  background: #ffffff;
+  border: 1px solid #b2b2b2;
+  border-radius: 12px;
+  display: block;
+  margin-bottom: 4vw;
+  padding: 2.9333333333vw 3.4666666667vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-summary {
+  display: flex;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-summary > dl {
+  margin-bottom: 2.6666666667vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-summary .main-boat-free-summary-icon {
+  height: 14vw;
+  margin-right: 2.6666666667vw;
+  width: 14vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-summary .main-boat-free-summary-name {
+  color: #000000;
+  font-size: 4vw;
+  font-weight: 700;
+  margin-bottom: 0vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-summary .main-boat-free-summary-port {
+  color: #000000;
+  font-size: 2.9333333333vw;
+  font-weight: 700;
+  margin-bottom: 0vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-summary .main-boat-free-summary-review {
+  color: #0074b6;
+  font-size: 2.9333333333vw;
+  font-weight: 700;
+  margin-bottom: 0vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information {
+  display: flex;
+  margin-bottom: 2.6666666667vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information.ex-line {
+  border-bottom: 1px solid #979698;
+  margin-bottom: 2.6666666667vw;
+  padding-bottom: 2.6666666667vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-image {
+  margin-right: 2.6666666667vw;
+  width: 32.8vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-items .main-boat-free-information-item {
+  margin-bottom: 0vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-items .main-boat-free-information-item > dt {
+  color: #0074b6;
+  font-size: 3.2vw;
+  margin-bottom: 0vw;
+  padding: 0;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-items .main-boat-free-information-item > dd {
+  color: #000000;
+  font-size: 3.2vw;
+  margin-bottom: 0vw;
+  padding: 0;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr {
+  color: #000000;
+  margin-right: 5.0666666667vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr .main-boat-free-information-pr-headline {
+  display: flex;
+  font-size: 3.2vw;
+  font-weight: 700;
+  margin-bottom: 2.9333333333vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr .main-boat-free-information-pr-headline::before {
+  background: url(/images/boatList/icon_comment.svg) center no-repeat;
+  background-size: contain;
+  content: "";
+  display: block;
+  height: 4vw;
+  width: 4vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr .main-boat-free-information-pr-comment {
+  font-size: 3.2vw;
+  margin-bottom: 2.9333333333vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr .main-boat-free-information-pr-tell {
+  display: flex;
+  font-size: 3.2vw;
+  font-weight: 700;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr .main-boat-free-information-pr-tell::before {
+  background: url(/images/boatList/icon_tell.svg) center no-repeat;
+  background-size: contain;
+  content: "";
+  display: block;
+  height: 4vw;
+  width: 2.4vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-call {
+  min-width: 24.2666666667vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-detail {
+  background: #4e4d4d;
+  border-radius: 12px;
+  color: #ffffff;
+  display: block;
+  font-size: 3.2vw;
+  line-height: 9.8666666667vw;
+  text-align: center;
+  width: 90.6666666667vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-other {
+  margin: 0 0 9.8666666667vw 0;
+  padding: 0;
+}
+#Wrapper.provider .main .main-boat .main-boat-other .main-boat-other-item {
+  text-align: center;
+}
+#Wrapper.provider .main .main-boat .main-boat-other .main-boat-other-item:nth-child(odd) {
+  padding: 0 1.6vw 3.2vw 0vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-other .main-boat-other-item:nth-child(even) {
+  padding: 0 0vw 3.2vw 1.6vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-other .main-boat-other-item .main-boat-other-item-inner {
+  border: 1px solid #b2b2b2;
+  border-radius: 12px;
+  margin: 0;
+  padding: 0 1.3333333333vw;
+}
+#Wrapper.provider .main .main-boat .main-boat-other .main-boat-other-item .main-boat-other-item-name {
+  font-size: 3.4666666667vw;
+  font-weight: 700;
+}
+#Wrapper.provider .main .main-boat .main-boat-other .main-boat-other-item .main-boat-other-item-address {
+  font-size: 3.2vw;
+}
 @media screen and (min-width: 750px) {
   /*-------------------------------------------*/
   /*  色
@@ -2488,6 +2630,100 @@ li[data-v-201ac1e6] {
     height: 495px;
     margin: 0 -38px;
     width: 750px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free {
+    margin-bottom: 30px;
+    padding: 22px 26px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-summary > dl {
+    margin-bottom: 20px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-summary .main-boat-free-summary-icon {
+    height: 105px;
+    margin-right: 20px;
+    width: 105px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-summary .main-boat-free-summary-name {
+    font-size: 30px;
+    margin-bottom: 0px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-summary .main-boat-free-summary-port {
+    font-size: 22px;
+    margin-bottom: 0px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-summary .main-boat-free-summary-review {
+    font-size: 22px;
+    margin-bottom: 0px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information {
+    margin-bottom: 20px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information.ex-line {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-image {
+    margin-right: 20px;
+    width: 246px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-items .main-boat-free-information-item {
+    margin-bottom: 0px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-items .main-boat-free-information-item > dt {
+    font-size: 24px;
+    margin-bottom: 0px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-items .main-boat-free-information-item > dd {
+    font-size: 24px;
+    margin-bottom: 0px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr {
+    margin-right: 38px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr .main-boat-free-information-pr-headline {
+    font-size: 24px;
+    margin-bottom: 22px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr .main-boat-free-information-pr-headline::before {
+    height: 30px;
+    width: 30px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr .main-boat-free-information-pr-comment {
+    font-size: 24px;
+    margin-bottom: 22px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr .main-boat-free-information-pr-tell {
+    font-size: 24px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-pr .main-boat-free-information-pr-tell::before {
+    height: 30px;
+    width: 18px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-information .main-boat-free-information-call {
+    min-width: 182px;
+}
+#Wrapper.provider .main .main-boat .main-boat-free .main-boat-free-detail {
+    font-size: 24px;
+    line-height: 74px;
+    width: 680px;
+}
+#Wrapper.provider .main .main-boat .main-boat-other {
+    margin: 0 0 74px 0;
+}
+#Wrapper.provider .main .main-boat .main-boat-other .main-boat-other-item:nth-child(odd) {
+    padding: 0 12px 24px 0px;
+}
+#Wrapper.provider .main .main-boat .main-boat-other .main-boat-other-item:nth-child(even) {
+    padding: 0 0px 24px 12px;
+}
+#Wrapper.provider .main .main-boat .main-boat-other .main-boat-other-item .main-boat-other-item-inner {
+    padding: 0 10px;
+}
+#Wrapper.provider .main .main-boat .main-boat-other .main-boat-other-item .main-boat-other-item-name {
+    font-size: 26px;
+}
+#Wrapper.provider .main .main-boat .main-boat-other .main-boat-other-item .main-boat-other-item-address {
+    font-size: 24px;
 }
 }@charset "UTF-8";
 /*-------------------------------------------*/

@@ -95,7 +95,7 @@ class PrefectureController extends Controller
     }
 
     /**
-     * 都道府県、市町村、港 ネスト状態でリスト取得
+     * 都道府県、市町村、ネスト状態でリスト取得
      *
      * @authenticated
      * @group Prefecture
@@ -103,6 +103,17 @@ class PrefectureController extends Controller
     public function fetchAreaLists(): object
     {
         return $this->service->fetchAreaLists();
+    }
+
+    /**
+     * 都道府県、港 ネスト状態でリスト取得
+     *
+     * @authenticated
+     * @group Prefecture
+     */
+    public function fetchPostListsByPrefectureId(): object
+    {
+        return $this->service->fetchPostListsByPrefectureId();
     }
 
     /*-------------------------------------------*/

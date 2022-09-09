@@ -25,7 +25,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         'update',
         'destroy',
     ]);
-    Route::get('prefectures/fetch/lists/with-city-port', [PrefectureController::class, 'fetchAreaLists']);
+    Route::get('prefectures/fetch/lists/with-city', [PrefectureController::class, 'fetchAreaLists']);
+    Route::get('prefectures/fetch/lists/with-port', [PrefectureController::class, 'fetchPostListsByPrefectureId']);
     Route::get('prefectures/fetch/list', [PrefectureController::class, 'fetchPrefectureList']);
 });
 /*-------------------------------------------*/

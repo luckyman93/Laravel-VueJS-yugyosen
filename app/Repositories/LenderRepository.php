@@ -48,8 +48,6 @@ class LenderRepository
             ->leftJoin('ports', function ($join) {
                 $join
                     ->on('lenders.port_id', '=', 'ports.id')
-                    ->on('ports.city_id', '=', 'cities.id')
-                    ->whereNull('cities.deleted_at')
                     ->whereNull('ports.deleted_at');
             })
             ->leftJoin('users as created_user', 'lenders.created_user_id', 'created_user.id')

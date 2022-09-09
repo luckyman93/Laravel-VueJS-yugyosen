@@ -67,12 +67,24 @@ class PrefectureService
     }
 
     /**
-     * 都道府県、市町村、港 ネスト状態でリスト取得
+     * 都道府県、市町村 ネスト状態でリスト取得
      */
     public function fetchAreaLists(): object
     {
         return $this->repository->fetchAreaLists();
     }
+
+    /**
+     * 都道府県、港 ネスト状態でリスト取得
+     *
+     * @authenticated
+     * @group Prefecture
+     */
+    public function fetchPostListsByPrefectureId(): object
+    {
+        return $this->repository->fetchPostListsByPrefectureId();
+    }
+
     /*-------------------------------------------*/
     /* VIEWER *認証なし
     /*-------------------------------------------*/

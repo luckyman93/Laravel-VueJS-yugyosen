@@ -96,6 +96,7 @@
             <div class="row m-0">
               <div v-for="(post, index) in postList" :key="index" class="main-result-item col-6">
                 <dl
+                  v-if="post.lender === null"
                   class="m-0"
                   @click="
                     onDetailBoat(
@@ -372,6 +373,7 @@ export default {
     this.showLoader()
     await Promise.all([lenderPostRepository.viewerList(8)]).then(([lenderRes]) => {
       this.postList = lenderRes.data
+      console.log(this.postList)
       const today = new Date()
       this.postList.forEach(x => {
         const createdAt = new Date(x.created_at)

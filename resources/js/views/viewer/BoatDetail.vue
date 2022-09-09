@@ -232,7 +232,6 @@
           <div
             v-if="boatDetail.plan === null"
             class="mx-5 font-weight-bold d-flex justify-content-center align-items-center"
-            style="font-size: 24px;"
           >
             プラン情報は投稿されておりません。
           </div>
@@ -455,10 +454,46 @@
       <section class="ex-recommend">
         <h3 class="ex-recommend-headline"><span>その他オススメ遊漁船一覧</span></h3>
         <MRecommend
-          :paid-members-data="boatIndexData"
+          v-if="boatIndexDataPaidMember.length !== 0"
+          :paid-members-data="boatIndexDataPaidMember"
           @onDetail="onDetail"
           @increCallCount="increCallCount"
         />
+      </section>
+
+      <!-- 無料会員 -->
+      <section v-if="boatIndexDataPaidMember.length === 0" class="main-boat">
+        <div v-for="(item, index) in boatIndexDataFreeMember" :key="index" class="main-boat-free">
+          <div class="main-boat-free-summary">
+            <dl>
+              <dt class="main-boat-free-summary-name">{{ item.boat_name }}</dt>
+              <dd class="main-boat-free-summary-port">{{ item.port_name }}</dd>
+              <dd class="main-boat-free-summary-review">{{ item.review }}</dd>
+            </dl>
+          </div>
+          <div class="main-boat-free-information">
+            <div class="main-boat-free-information-items container-fluid">
+              <dl class="main-boat-free-information-item row">
+                <dt class="col-3">業種</dt>
+                <dd class="col-9">{{ item.operation_names }}</dd>
+              </dl>
+              <dl class="main-boat-free-information-item row">
+                <dt class="col-3">所在地</dt>
+                <dd class="col-9">
+                  〒{{ item.zip_code }}<br />{{ item.prefecture_name }} {{ item.city_name }}
+                  {{ item.address }}
+                </dd>
+              </dl>
+              <dl class="main-boat-free-information-item row">
+                <dt class="col-3">釣り方</dt>
+                <dd class="col-9">{{ item.fishing_point }}</dd>
+              </dl>
+            </div>
+          </div>
+          <button class="main-boat-free-detail" @click="onDetail(item.id)">
+            詳細を見る
+          </button>
+        </div>
       </section>
 
       <section class="ex-search ex-bottom">
@@ -487,7 +522,7 @@ import ONavbar from '@/views/viewer/components/ONavbar.vue'
 // const
 import ROUTE from '@/consts/route'
 import HTTP_STATUS from '@/consts/httpStatus'
-// import MEMBER_TYPE from '@/consts/memberType'
+import MEMBER_TYPE from '@/consts/memberType'
 import SEASON from '@/consts/season'
 // repository
 import { RepositoryFactory } from '@/repositories/repositoryFactory'
@@ -519,9 +554,13 @@ export default {
     return {
       ROUTE,
       SEASON,
+      MEMBER_TYPE,
       page: 1,
       paginationData: {},
       boatIndexData: [],
+      boatIndexDataPaidMember: [],
+      boatIndexDataFreeMember: [],
+      // boatIndexDataGeneral: [],
       fittedFacilitiesIds: [],
       boatDetail: {
         facilities: {},
@@ -664,20 +703,20 @@ export default {
     /*-------------------------------------------*/
     async fetchBoatIndex(prefectureUrlParam) {
       await boatRepository
-        .viewerIndex(1, 'id', 'asc', prefectureUrlParam, 'all', 'all')
+        .viewerIndex(this.page, 'id', 'asc', prefectureUrlParam, 'all', 'all')
         .then(res => {
           if (res.status !== HTTP_STATUS.OK) {
             this.$toast.errorToast()
             return
           }
-          // this.paginationData = res.data
+          this.paginationData = res.data
           this.boatIndexData = res.data.data.filter(x => x.id !== Number(this.boatId.slice(1)))
-          // this.boatIndexDataPaidMember = this.boatIndexData.filter(
-          //   x => x.member_type_id === MEMBER_TYPE.PAID_MEMBER
-          // )
-          // this.boatIndexDataFreeMember = this.boatIndexData.filter(
-          //   x => x.member_type_id === MEMBER_TYPE.FREE_MEMBER
-          // )
+          this.boatIndexDataPaidMember = this.boatIndexData.filter(
+            x => x.member_type_id === MEMBER_TYPE.PAID_MEMBER
+          )
+          this.boatIndexDataFreeMember = this.boatIndexData.filter(
+            x => x.member_type_id === MEMBER_TYPE.FREE_MEMBER
+          )
           // this.boatIndexDataGeneral = this.boatIndexData.filter(
           //   x => x.member_type_id === MEMBER_TYPE.GENERAL
           // )

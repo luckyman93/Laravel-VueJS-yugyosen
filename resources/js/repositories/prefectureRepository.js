@@ -33,7 +33,11 @@ export default {
   },
 
   fetchAreaLists() {
-    return axios.get(`${resource}/fetch/lists/with-city-port`)
+    return axios.get(`${resource}/fetch/lists/with-city`)
+  },
+
+  fetchPortslistsByPrefectureId() {
+    return axios.get(`${resource}/fetch/lists/with-port`)
   },
   /*-------------------------------------------*/
   /* VIEWER *認証なし

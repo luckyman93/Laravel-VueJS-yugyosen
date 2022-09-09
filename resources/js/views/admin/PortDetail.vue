@@ -190,6 +190,8 @@ export default {
         }
         const areaListsRecord = this.areaLists.filter(x => x.id === prefectureId)
         this.cityList = areaListsRecord[0].cities
+        const bool = this.cityList.some(list => list.id === this.form.city_id)
+        if (!bool) this.form.city_id = null
       },
     },
   },
@@ -290,7 +292,6 @@ export default {
           }
           // 成功時の処理
           this.$toast.successToast(TOAST.SUCCESS.UPDATED)
-          this.form = res.data
           this.isEditing = false
           this.errors = {}
           this.$router.push({

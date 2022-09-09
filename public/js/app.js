@@ -7926,12 +7926,6 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
           name: null,
           name_kana: null
         },
-        city: {
-          id: null
-        },
-        port: {
-          id: null
-        },
         phone: '',
         boats: [{
           boat_name: '',
@@ -7954,6 +7948,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
       // リスト
       areaLists: [],
       cityList: [],
+      allPortList: [],
       portList: [],
       paymentOptionList: [],
       facilityList: [],
@@ -7977,7 +7972,9 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
       },
       // error, その他（処理完了後削除）
       errors: {},
-      passwordValidErrorMessage: ''
+      passwordValidErrorMessage: '',
+      city_id: null,
+      port_id: null
     };
   },
   // ＊BasicInfoと共通
@@ -7986,56 +7983,39 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     // ＊BasicInfoと共通
     'form.prefecture_id': {
       handler: function handler(prefectureId, oldPrefectureId) {
-        var _this = this;
-
         if (!prefectureId) {
-          this.cityList = [];
-          this.form.city_id = null;
-          this.form.port_id = null;
+          this.portList = [];
+          this.city_id = null;
+          this.port_id = null;
           return;
         }
 
         if (oldPrefectureId) {
-          this.form.city_id = null;
-          this.form.port_id = null;
+          this.city_id = null;
+          this.port_id = null;
         }
 
         var areaListsRecord = this.areaLists.filter(function (x) {
           return x.id === prefectureId;
         });
         this.cityList = areaListsRecord[0].cities;
-        this.portList = [];
-        this.cityList.forEach(function (item) {
-          if (item.ports[0] !== undefined) {
-            _this.portList.push(item.ports[0]);
-          }
+        this.portList = this.allPortList.filter(function (x) {
+          return x.prefecture_id === prefectureId;
         });
-      }
-    },
-    'form.city_id': {
-      handler: function handler(cityId, oldCityId) {
-        if (!cityId) {
-          this.form.port_id = null;
-          return;
-        }
-
-        if (oldCityId) {
-          this.form.port_id = null;
-        }
       }
     },
     // * 共通処理 管理者画面 ＊BasicInfoと共通ではない
     $route: {
       handler: function handler() {
-        var _this2 = this;
+        var _this = this;
 
         return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  _this2.isNew = _this2.id === 'new';
-                  if (_this2.isNew) _this2.isEditing = true;
+                  _this.isNew = _this.id === 'new';
+                  if (_this.isNew) _this.isEditing = true;
 
                 case 2:
                 case "end":
@@ -8049,23 +8029,23 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     },
     isEditing: {
       handler: function handler() {
-        var _this3 = this;
+        var _this2 = this;
 
         return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  if (_this3.isNew && _this3.isEditing) {
-                    _this3.pageTitle = '貸船業者 新規登録';
+                  if (_this2.isNew && _this2.isEditing) {
+                    _this2.pageTitle = '貸船業者 新規登録';
                   }
 
-                  if (!_this3.isNew && _this3.isEditing) {
-                    _this3.pageTitle = '貸船業者 編集';
+                  if (!_this2.isNew && _this2.isEditing) {
+                    _this2.pageTitle = '貸船業者 編集';
                   }
 
-                  if (!_this3.isNew && !_this3.isEditing) {
-                    _this3.pageTitle = '貸船業者 詳細';
+                  if (!_this2.isNew && !_this2.isEditing) {
+                    _this2.pageTitle = '貸船業者 詳細';
                   }
 
                 case 3:
@@ -8080,7 +8060,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this3 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var data, i;
@@ -8088,28 +8068,30 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              _this4.showLoader();
+              _this3.showLoader();
 
-              _this4.setBreadcrumbData();
+              _this3.setBreadcrumbData();
 
               _context4.next = 4;
-              return Promise.all([prefectureRepository.fetchAreaLists(), paymentOptionRepository.fetchPaymentOptionList(), facilityRepository.fetchFacilityList(), fishingOptionRepository.fetchFishingOptionList(), operationRepository.fetchOperationList(), targetRepository.fetchList(), memberTypeRepository.fetchMemberTypeList()]).then(function (_ref) {
-                var _ref2 = _slicedToArray(_ref, 7),
-                    prefectureRes = _ref2[0],
-                    paymentOptionRes = _ref2[1],
-                    facilityRes = _ref2[2],
-                    fishingOptionRes = _ref2[3],
-                    operationRes = _ref2[4],
-                    targetRes = _ref2[5],
-                    memberTypeRes = _ref2[6];
+              return Promise.all([prefectureRepository.fetchAreaLists(), prefectureRepository.fetchPortslistsByPrefectureId(), paymentOptionRepository.fetchPaymentOptionList(), facilityRepository.fetchFacilityList(), fishingOptionRepository.fetchFishingOptionList(), operationRepository.fetchOperationList(), targetRepository.fetchList(), memberTypeRepository.fetchMemberTypeList()]).then(function (_ref) {
+                var _ref2 = _slicedToArray(_ref, 8),
+                    prefectureRes1 = _ref2[0],
+                    prefectureRes2 = _ref2[1],
+                    paymentOptionRes = _ref2[2],
+                    facilityRes = _ref2[3],
+                    fishingOptionRes = _ref2[4],
+                    operationRes = _ref2[5],
+                    targetRes = _ref2[6],
+                    memberTypeRes = _ref2[7];
 
-                _this4.areaLists = prefectureRes.data;
-                _this4.paymentOptionList = paymentOptionRes.data;
-                _this4.facilityList = facilityRes.data;
-                _this4.fishingOptionList = fishingOptionRes.data;
-                _this4.operationList = operationRes.data;
-                _this4.targetList = targetRes.data;
-                _this4.memberTypeList = memberTypeRes.data;
+                _this3.areaLists = prefectureRes1.data;
+                _this3.allPortList = prefectureRes2.data;
+                _this3.paymentOptionList = paymentOptionRes.data;
+                _this3.facilityList = facilityRes.data;
+                _this3.fishingOptionList = fishingOptionRes.data;
+                _this3.operationList = operationRes.data;
+                _this3.targetList = targetRes.data;
+                _this3.memberTypeList = memberTypeRes.data;
               })["catch"]( /*#__PURE__*/function () {
                 var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(err) {
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -8122,7 +8104,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                           }
 
                           _context3.next = 3;
-                          return _this4.$errHandling.adminCatch(err.response.status);
+                          return _this3.$errHandling.adminCatch(err.response.status);
 
                         case 3:
                         case "end":
@@ -8138,9 +8120,9 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
               }());
 
             case 4:
-              _this4.hideLoader();
+              _this3.hideLoader();
 
-              if (!_this4.isNew) {
+              if (!_this3.isNew) {
                 _context4.next = 10;
                 break;
               }
@@ -8153,16 +8135,16 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
               };
 
               for (i = 1; i <= 5; i += 1) {
-                _this4.boatImageList.push(data);
+                _this3.boatImageList.push(data);
               }
 
-              _this4.permissionImageList.push(data);
+              _this3.permissionImageList.push(data);
 
               return _context4.abrupt("return");
 
             case 10:
               _context4.next = 12;
-              return _this4.fetchLenderWithBoatDetail();
+              return _this3.fetchLenderWithBoatDetail();
 
             case 12:
             case "end":
@@ -8178,52 +8160,65 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     /* 詳細取得処理 管理者画面
     /*-------------------------------------------*/
     fetchLenderWithBoatDetail: function fetchLenderWithBoatDetail() {
-      var _this5 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                _this5.showLoader();
+                _this4.showLoader();
 
                 _context6.next = 3;
-                return lenderRepository.showWithBoat(_this5.id).then(function (res) {
+                return lenderRepository.showWithBoat(_this4.id).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_14__["default"].OK) {
-                    _this5.$toast.errorToast();
+                    _this4.$toast.errorToast();
 
                     return;
                   }
 
-                  _this5.form = res.data;
-                  _this5.selectedPaymentOptionIds = _this5.form.payment_options.map(function (x) {
+                  _this4.form = res.data;
+
+                  if (_this4.form.city === null) {
+                    _this4.city_id = null;
+                  } else {
+                    _this4.city_id = _this4.form.city.id;
+                  }
+
+                  if (_this4.form.port === null) {
+                    _this4.port_id = null;
+                  } else {
+                    _this4.port_id = _this4.form.port.id;
+                  }
+
+                  _this4.selectedPaymentOptionIds = _this4.form.payment_options.map(function (x) {
                     return x.id;
                   });
-                  _this5.selectedFacilityIds = _this5.form.boats[0].facilities.map(function (x) {
+                  _this4.selectedFacilityIds = _this4.form.boats[0].facilities.map(function (x) {
                     return x.id;
                   });
-                  _this5.selectedFishingOptionIds = _this5.form.boats[0].fishing_options.map(function (x) {
+                  _this4.selectedFishingOptionIds = _this4.form.boats[0].fishing_options.map(function (x) {
                     return x.id;
                   });
-                  _this5.selectedOperationIds = _this5.form.boats[0].operations.map(function (x) {
+                  _this4.selectedOperationIds = _this4.form.boats[0].operations.map(function (x) {
                     return x.id;
                   }); // 季節別に選択済ターゲットを振り分け
 
-                  _this5.form.boats[0].targets.forEach(function (x) {
+                  _this4.form.boats[0].targets.forEach(function (x) {
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_17__["default"].SPRING) {
-                      _this5.selectedTargetIds.spring.push(x.id);
+                      _this4.selectedTargetIds.spring.push(x.id);
                     }
 
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_17__["default"].SUMMER) {
-                      _this5.selectedTargetIds.summer.push(x.id);
+                      _this4.selectedTargetIds.summer.push(x.id);
                     }
 
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_17__["default"].AUTUMN) {
-                      _this5.selectedTargetIds.autumn.push(x.id);
+                      _this4.selectedTargetIds.autumn.push(x.id);
                     }
 
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_17__["default"].WINTER) {
-                      _this5.selectedTargetIds.winter.push(x.id);
+                      _this4.selectedTargetIds.winter.push(x.id);
                     }
                   }); // 画像を画像リストへ格納
                   // 船の画像
@@ -8232,24 +8227,24 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                   for (var i = 1; i <= 5; i += 1) {
                     var column = "boat_img_".concat(i);
                     var data = {
-                      image_src: _this5.form.boats[0][column],
-                      image_name: _this5.form.boats[0][column],
+                      image_src: _this4.form.boats[0][column],
+                      image_name: _this4.form.boats[0][column],
                       // 将来的に名前を表示するとなった時のため
-                      save_path: _this5.form.boats[0][column]
+                      save_path: _this4.form.boats[0][column]
                     };
 
-                    _this5.boatImageList.push(data);
+                    _this4.boatImageList.push(data);
                   } // 営業許可画像
 
 
                   var permissionImg = {
-                    image_src: _this5.form.permission_img,
-                    image_name: _this5.form.permission_img,
+                    image_src: _this4.form.permission_img,
+                    image_name: _this4.form.permission_img,
                     // 将来的に名前を表示するとなった時のため
-                    save_path: _this5.form.permission_img
+                    save_path: _this4.form.permission_img
                   };
 
-                  _this5.permissionImageList.push(permissionImg);
+                  _this4.permissionImageList.push(permissionImg);
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
@@ -8262,13 +8257,13 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                             }
 
                             _context5.next = 3;
-                            return _this5.$errHandling.adminCatch(err.response.status);
+                            return _this4.$errHandling.adminCatch(err.response.status);
 
                           case 3:
                             return _context5.abrupt("return");
 
                           case 4:
-                            _this5.$toast.errorToast();
+                            _this4.$toast.errorToast();
 
                           case 5:
                           case "end":
@@ -8284,7 +8279,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                 }());
 
               case 3:
-                _this5.hideLoader();
+                _this4.hideLoader();
 
               case 4:
               case "end":
@@ -8310,6 +8305,8 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
 
       this.form.boat_image_list = this.boatImageList;
       this.form.permission_image_list = this.permissionImageList;
+      this.form.city_id = this.city_id;
+      this.form.port_id = this.port_id;
       this.showLoader();
 
       if (this.isNew) {
@@ -8325,28 +8322,28 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     },
     // 新規登録処理
     storeLenderWithRelatedData: function storeLenderWithRelatedData() {
-      var _this6 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                _this6.showLoader(); // console.log('保存直前', this.form)
+                _this5.showLoader(); // console.log('保存直前', this.form)
 
 
-                lenderRepository.storeWithBoat(_this6.form).then(function (res) {
+                lenderRepository.storeWithBoat(_this5.form).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_14__["default"].CREATED) {
-                    _this6.$toast.errorToast();
+                    _this5.$toast.errorToast();
                   } // 新規登録完了後の処理
 
 
-                  _this6.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.CREATED);
+                  _this5.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.CREATED);
 
-                  _this6.errors = {};
-                  _this6.isEditing = false;
+                  _this5.errors = {};
+                  _this5.isEditing = false;
 
-                  _this6.$router.push({
+                  _this5.$router.push({
                     name: _consts_route__WEBPACK_IMPORTED_MODULE_15__["default"].ADMIN.LENDER.LIST.name
                   });
                 })["catch"]( /*#__PURE__*/function () {
@@ -8361,16 +8358,16 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                             }
 
                             _context7.next = 3;
-                            return _this6.$errHandling.adminCatch(err.response.status);
+                            return _this5.$errHandling.adminCatch(err.response.status);
 
                           case 3:
-                            _this6.errors = err.response.data.errors;
+                            _this5.errors = err.response.data.errors;
                             return _context7.abrupt("return");
 
                           case 5:
-                            _this6.errors = err.response.data.errors;
+                            _this5.errors = err.response.data.errors;
 
-                            _this6.$toast.errorToast();
+                            _this5.$toast.errorToast();
 
                           case 7:
                           case "end":
@@ -8385,7 +8382,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                   };
                 }());
 
-                _this6.hideLoader();
+                _this5.hideLoader();
 
               case 3:
               case "end":
@@ -8397,29 +8394,29 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     },
     // 更新処理
     updateLenderWithRelatedData: function updateLenderWithRelatedData() {
-      var _this7 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                _this7.showLoader();
+                _this6.showLoader();
 
-                lenderRepository.updateWithBoat(_this7.id, _this7.form).then(function (res) {
+                lenderRepository.updateWithBoat(_this6.id, _this6.form).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_14__["default"].OK) {
-                    _this7.$toast.errorToast();
+                    _this6.$toast.errorToast();
 
                     return;
                   } // 更新完了後の処理
 
 
-                  _this7.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.UPDATED);
+                  _this6.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.UPDATED);
 
-                  _this7.errors = {};
-                  _this7.boatDeleteImageList = [];
-                  _this7.permissionDeleteImageList = [];
-                  _this7.isEditing = false;
+                  _this6.errors = {};
+                  _this6.boatDeleteImageList = [];
+                  _this6.permissionDeleteImageList = [];
+                  _this6.isEditing = false;
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
@@ -8432,16 +8429,16 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                             }
 
                             _context9.next = 3;
-                            return _this7.$errHandling.adminCatch(err.response.status);
+                            return _this6.$errHandling.adminCatch(err.response.status);
 
                           case 3:
-                            _this7.errors = err.response.data.errors;
+                            _this6.errors = err.response.data.errors;
                             return _context9.abrupt("return");
 
                           case 5:
-                            _this7.$toast.errorToast();
+                            _this6.$toast.errorToast();
 
-                            _this7.errors = err.response.data.errors;
+                            _this6.errors = err.response.data.errors;
 
                           case 7:
                           case "end":
@@ -8456,7 +8453,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                   };
                 }());
 
-                _this7.hideLoader();
+                _this6.hideLoader();
 
               case 3:
               case "end":
@@ -8472,29 +8469,29 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     /* 削除登録・更新処理 管理者画面
     /*-------------------------------------------*/
     deleteLenderWithRelatedData: function deleteLenderWithRelatedData() {
-      var _this8 = this;
+      var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
             switch (_context12.prev = _context12.next) {
               case 0:
-                _this8.showLoader();
+                _this7.showLoader();
 
                 _context12.next = 3;
-                return lenderRepository.deleteWithBoat(_this8.form.id).then(function (res) {
+                return lenderRepository.deleteWithBoat(_this7.form.id).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_14__["default"].OK) {
-                    _this8.$toast.errorToast();
+                    _this7.$toast.errorToast();
 
                     return;
                   }
 
-                  _this8.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.DELETED);
+                  _this7.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.DELETED);
 
-                  _this8.isEditing = false;
-                  _this8.errors = {};
+                  _this7.isEditing = false;
+                  _this7.errors = {};
 
-                  _this8.$router.push({
+                  _this7.$router.push({
                     name: _consts_route__WEBPACK_IMPORTED_MODULE_15__["default"].ADMIN.LENDER.LIST.name
                   });
                 })["catch"]( /*#__PURE__*/function () {
@@ -8509,13 +8506,13 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                             }
 
                             _context11.next = 3;
-                            return _this8.$errHandling.adminCatch(err.response.status);
+                            return _this7.$errHandling.adminCatch(err.response.status);
 
                           case 3:
                             return _context11.abrupt("return");
 
                           case 4:
-                            _this8.$toast.errorToast();
+                            _this7.$toast.errorToast();
 
                           case 5:
                           case "end":
@@ -8531,7 +8528,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                 }());
 
               case 3:
-                _this8.hideLoader();
+                _this7.hideLoader();
 
               case 4:
               case "end":
@@ -8558,26 +8555,26 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
     /* パスワード更新
     /*-------------------------------------------*/
     onChangePassword: function onChangePassword(password) {
-      var _this9 = this;
+      var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
             switch (_context14.prev = _context14.next) {
               case 0:
-                _this9.showLoader();
+                _this8.showLoader();
 
                 _context14.next = 3;
-                return userRepository.changePassword(_this9.form.user_id, password).then(function (res) {
+                return userRepository.changePassword(_this8.form.user_id, password).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_14__["default"].NO_CONTENT) {
-                    _this9.$toast.errorToast();
+                    _this8.$toast.errorToast();
 
                     return;
                   }
 
-                  _this9.$modal.hide('password-change-modal');
+                  _this8.$modal.hide('password-change-modal');
 
-                  _this9.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.UPDATED_PASSWORD);
+                  _this8.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_18__["default"].SUCCESS.UPDATED_PASSWORD);
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref8 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
@@ -8585,10 +8582,10 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                         switch (_context13.prev = _context13.next) {
                           case 0:
                             _context13.next = 2;
-                            return _this9.$errHandling.lenderCatch(err.response.status);
+                            return _this8.$errHandling.lenderCatch(err.response.status);
 
                           case 2:
-                            _this9.$toast.errorToast();
+                            _this8.$toast.errorToast();
 
                           case 3:
                           case "end":
@@ -8604,7 +8601,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_19
                 }());
 
               case 3:
-                _this9.hideLoader();
+                _this8.hideLoader();
 
               case 4:
               case "end":
@@ -10123,6 +10120,8 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
     },
     'form.prefecture_id': {
       handler: function handler(prefectureId, oldPrefectureId) {
+        var _this3 = this;
+
         if (!prefectureId) {
           this.cityList = [];
           this.form.city_id = null;
@@ -10137,11 +10136,15 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
           return x.id === prefectureId;
         });
         this.cityList = areaListsRecord[0].cities;
+        var bool = this.cityList.some(function (list) {
+          return list.id === _this3.form.city_id;
+        });
+        if (!bool) this.form.city_id = null;
       }
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -10149,14 +10152,14 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
-              return _this3.setBreadcrumbData();
+              return _this4.setBreadcrumbData();
 
             case 2:
               _context3.next = 4;
-              return _this3.fetchAreaLists();
+              return _this4.fetchAreaLists();
 
             case 4:
-              if (!_this3.isNew) {
+              if (!_this4.isNew) {
                 _context3.next = 6;
                 break;
               }
@@ -10164,7 +10167,7 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
               return _context3.abrupt("return");
 
             case 6:
-              _this3.fetchPortShow();
+              _this4.fetchPortShow();
 
             case 7:
             case "end":
@@ -10180,31 +10183,31 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
     /* 詳細取得処理 管理者画面
     /*-------------------------------------------*/
     fetchPortShow: function fetchPortShow() {
-      var _this4 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _this4.showLoader();
+                _this5.showLoader();
 
                 _context5.next = 3;
-                return portRepository.fetchPortShow(_this4.id).then(function (res) {
+                return portRepository.fetchPortShow(_this5.id).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__["default"].OK) {
-                    _this4.$toast.errorToast();
+                    _this5.$toast.errorToast();
 
                     return;
                   }
 
-                  _this4.form = res.data;
+                  _this5.form = res.data;
 
-                  var areaListsRecord = _this4.areaLists.filter(function (x) {
-                    return x.id === _this4.form.prefecture_id;
+                  var areaListsRecord = _this5.areaLists.filter(function (x) {
+                    return x.id === _this5.form.prefecture_id;
                   });
 
-                  _this4.cityList = areaListsRecord[0].cities;
-                  _this4.isFirstLoad = false;
+                  _this5.cityList = areaListsRecord[0].cities;
+                  _this5.isFirstLoad = false;
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
@@ -10217,13 +10220,13 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                             }
 
                             _context4.next = 3;
-                            return _this4.$errHandling.adminCatch(err.response.status);
+                            return _this5.$errHandling.adminCatch(err.response.status);
 
                           case 3:
                             return _context4.abrupt("return");
 
                           case 4:
-                            _this4.$toast.errorToast();
+                            _this5.$toast.errorToast();
 
                           case 5:
                           case "end":
@@ -10239,7 +10242,7 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                 }());
 
               case 3:
-                _this4.hideLoader();
+                _this5.hideLoader();
 
               case 4:
               case "end":
@@ -10263,41 +10266,41 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
     },
     // 新規登録
     storePort: function storePort() {
-      var _this5 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                _this5.form.created_user_id = _this5.adminUser.id;
-                _this5.form.updated_user_id = _this5.adminUser.id;
+                _this6.form.created_user_id = _this6.adminUser.id;
+                _this6.form.updated_user_id = _this6.adminUser.id;
 
-                _this5.showLoader();
+                _this6.showLoader();
 
                 _context7.next = 5;
-                return portRepository.storePort(_this5.form).then(function (res) {
+                return portRepository.storePort(_this6.form).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__["default"].CREATED) {
-                    _this5.$toast.errorToast();
+                    _this6.$toast.errorToast();
 
                     return;
                   } // 成功時の処理
 
 
-                  _this5.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_10__["default"].SUCCESS.CREATED);
+                  _this6.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_10__["default"].SUCCESS.CREATED);
 
-                  _this5.pageTitle = '港 詳細';
-                  _this5.isNew = false;
-                  _this5.isEditing = false;
-                  _this5.errors = {};
+                  _this6.pageTitle = '港 詳細';
+                  _this6.isNew = false;
+                  _this6.isEditing = false;
+                  _this6.errors = {};
 
-                  _this5.setBreadcrumbData(); // this.$router.push({
+                  _this6.setBreadcrumbData(); // this.$router.push({
                   //   name: ROUTE.ADMIN.PORT.DETAIL.name,
                   //   param: { id: res.data.id },
                   // })
 
 
-                  _this5.$router.push({
+                  _this6.$router.push({
                     name: _consts_route__WEBPACK_IMPORTED_MODULE_11__["default"].ADMIN.PORT.LIST.name
                   });
                 })["catch"]( /*#__PURE__*/function () {
@@ -10306,9 +10309,9 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                       while (1) {
                         switch (_context6.prev = _context6.next) {
                           case 0:
-                            _this5.errors = err.response.data.errors;
+                            _this6.errors = err.response.data.errors;
                             _context6.next = 3;
-                            return _this5.$errHandling.adminCatch(err.response.status);
+                            return _this6.$errHandling.adminCatch(err.response.status);
 
                           case 3:
                           case "end":
@@ -10324,7 +10327,7 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                 }());
 
               case 5:
-                _this5.hideLoader();
+                _this6.hideLoader();
 
               case 6:
               case "end":
@@ -10336,33 +10339,32 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
     },
     // 更新
     updatePort: function updatePort() {
-      var _this6 = this;
+      var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
-                _this6.form.updated_user_id = _this6.adminUser.id;
+                _this7.form.updated_user_id = _this7.adminUser.id;
 
-                _this6.showLoader();
+                _this7.showLoader();
 
                 _context9.next = 4;
-                return portRepository.updatePort(_this6.id, _this6.form).then(function (res) {
+                return portRepository.updatePort(_this7.id, _this7.form).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__["default"].OK) {
-                    _this6.$toast.errorToast();
+                    _this7.$toast.errorToast();
 
                     return;
                   } // 成功時の処理
 
 
-                  _this6.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_10__["default"].SUCCESS.UPDATED);
+                  _this7.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_10__["default"].SUCCESS.UPDATED);
 
-                  _this6.form = res.data;
-                  _this6.isEditing = false;
-                  _this6.errors = {};
+                  _this7.isEditing = false;
+                  _this7.errors = {};
 
-                  _this6.$router.push({
+                  _this7.$router.push({
                     name: _consts_route__WEBPACK_IMPORTED_MODULE_11__["default"].ADMIN.PORT.DETAIL.name,
                     param: {
                       id: res.data.id
@@ -10374,9 +10376,9 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                       while (1) {
                         switch (_context8.prev = _context8.next) {
                           case 0:
-                            _this6.errors = err.response.data.errors;
+                            _this7.errors = err.response.data.errors;
                             _context8.next = 3;
-                            return _this6.$errHandling.adminCatch(err.response.status);
+                            return _this7.$errHandling.adminCatch(err.response.status);
 
                           case 3:
                           case "end":
@@ -10392,7 +10394,7 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                 }());
 
               case 4:
-                _this6.hideLoader();
+                _this7.hideLoader();
 
               case 5:
               case "end":
@@ -10408,29 +10410,29 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
     /* 削除処理 管理者画面
     /*-------------------------------------------*/
     deletePort: function deletePort() {
-      var _this7 = this;
+      var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
-                _this7.showLoader();
+                _this8.showLoader();
 
                 _context11.next = 3;
-                return portRepository.deletePort(_this7.id).then(function (res) {
+                return portRepository.deletePort(_this8.id).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__["default"].OK) {
-                    _this7.$toast.errorToast();
+                    _this8.$toast.errorToast();
 
                     return;
                   }
 
-                  _this7.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_10__["default"].SUCCESS.DELETED);
+                  _this8.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_10__["default"].SUCCESS.DELETED);
 
-                  _this7.isEditing = false;
-                  _this7.errors = {};
+                  _this8.isEditing = false;
+                  _this8.errors = {};
 
-                  _this7.$router.push({
+                  _this8.$router.push({
                     name: _consts_route__WEBPACK_IMPORTED_MODULE_11__["default"].ADMIN.PORT.LIST.name
                   });
                 })["catch"]( /*#__PURE__*/function () {
@@ -10440,7 +10442,7 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                         switch (_context10.prev = _context10.next) {
                           case 0:
                             _context10.next = 2;
-                            return _this7.$errHandling.adminCatch(err.response.status);
+                            return _this8.$errHandling.adminCatch(err.response.status);
 
                           case 2:
                           case "end":
@@ -10456,7 +10458,7 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                 }());
 
               case 3:
-                _this7.hideLoader();
+                _this8.hideLoader();
 
               case 4:
               case "end":
@@ -10472,7 +10474,7 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
     /* その他
     /*-------------------------------------------*/
     fetchAreaLists: function fetchAreaLists() {
-      var _this8 = this;
+      var _this9 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
@@ -10482,12 +10484,12 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                 _context13.next = 2;
                 return prefectureRepository.fetchAreaLists().then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__["default"].OK) {
-                    _this8.$toast.errorToast();
+                    _this9.$toast.errorToast();
 
                     return;
                   }
 
-                  _this8.areaLists = res.data;
+                  _this9.areaLists = res.data;
                   console.log(res, 'eria');
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(err) {
@@ -10501,13 +10503,13 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                             }
 
                             _context12.next = 3;
-                            return _this8.$errHandling.adminCatch(err.response.status);
+                            return _this9.$errHandling.adminCatch(err.response.status);
 
                           case 3:
                             return _context12.abrupt("return");
 
                           case 4:
-                            _this8.$toast.errorToast();
+                            _this9.$toast.errorToast();
 
                           case 5:
                           case "end":
@@ -14007,18 +14009,13 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
       form: {
         user: {},
         phone: '',
-        city: {
-          id: null
-        },
-        port: {
-          id: null
-        },
         boats: [{
           boat_name: ''
         }]
       },
       // リスト
       areaLists: [],
+      allPortList: [],
       cityList: [],
       portList: [],
       paymentOptionList: [],
@@ -14043,78 +14040,65 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
       },
       // error, その他（処理完了後削除）
       errors: {},
-      passwordValidErrorMessage: ''
+      passwordValidErrorMessage: '',
+      city_id: null,
+      port_id: null
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('userModule', ['lenderUser'])),
   watch: {
     'form.prefecture_id': {
       handler: function handler(prefectureId, oldPrefectureId) {
-        var _this = this;
-
         if (!prefectureId) {
           this.cityList = [];
-          this.form.city_id = null;
-          this.form.port_id = null;
+          this.city_id = null;
+          this.port_id = null;
           return;
         }
 
         if (oldPrefectureId) {
-          this.form.city_id = null;
-          this.form.port_id = null;
+          this.city_id = null;
+          this.port_id = null;
         }
 
         var areaListsRecord = this.areaLists.filter(function (x) {
           return x.id === prefectureId;
         });
         this.cityList = areaListsRecord[0].cities;
-        this.portList = [];
-        this.cityList.forEach(function (item) {
-          if (item.ports[0] !== undefined) {
-            _this.portList.push(item.ports[0]);
-          }
+        this.portList = this.allPortList.filter(function (x) {
+          return x.prefecture_id === prefectureId;
         });
-      }
-    },
-    'form.city_id': {
-      handler: function handler(cityId, oldCityId) {
-        if (!cityId) {
-          this.form.port_id = null;
-          return;
-        }
-
-        if (oldCityId) {
-          this.form.port_id = null;
-        }
       }
     }
   },
   created: function created() {
-    var _this2 = this;
+    var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _this2.showLoader();
+              _this.showLoader();
 
               _context2.next = 3;
-              return Promise.all([prefectureRepository.fetchAreaLists(), paymentOptionRepository.fetchPaymentOptionList(), facilityRepository.fetchFacilityList(), fishingOptionRepository.fetchFishingOptionList(), operationRepository.fetchOperationList(), targetRepository.fetchList()]).then(function (_ref) {
-                var _ref2 = _slicedToArray(_ref, 6),
-                    prefectureRes = _ref2[0],
-                    paymentOptionRes = _ref2[1],
-                    facilityRes = _ref2[2],
-                    fishingOptionRes = _ref2[3],
-                    operationRes = _ref2[4],
-                    targetRes = _ref2[5];
+              return Promise.all([prefectureRepository.fetchAreaLists(), prefectureRepository.fetchPortslistsByPrefectureId(), paymentOptionRepository.fetchPaymentOptionList(), facilityRepository.fetchFacilityList(), fishingOptionRepository.fetchFishingOptionList(), operationRepository.fetchOperationList(), targetRepository.fetchList()]).then(function (_ref) {
+                var _ref2 = _slicedToArray(_ref, 7),
+                    prefectureRes1 = _ref2[0],
+                    prefectureRes2 = _ref2[1],
+                    paymentOptionRes = _ref2[2],
+                    facilityRes = _ref2[3],
+                    fishingOptionRes = _ref2[4],
+                    operationRes = _ref2[5],
+                    targetRes = _ref2[6];
 
-                _this2.areaLists = prefectureRes.data;
-                _this2.paymentOptionList = paymentOptionRes.data;
-                _this2.facilityList = facilityRes.data;
-                _this2.fishingOptionList = fishingOptionRes.data;
-                _this2.operationList = operationRes.data;
-                _this2.targetList = targetRes.data;
+                _this.areaLists = prefectureRes1.data;
+                _this.allPortList = prefectureRes2.data;
+                _this.paymentOptionList = paymentOptionRes.data;
+                _this.facilityList = facilityRes.data;
+                _this.fishingOptionList = fishingOptionRes.data;
+                _this.operationList = operationRes.data;
+                _this.targetList = targetRes.data;
               })["catch"]( /*#__PURE__*/function () {
                 var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(err) {
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -14127,7 +14111,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
                           }
 
                           _context.next = 3;
-                          return _this2.$errHandling.lenderCatch(err.response.status);
+                          return _this.$errHandling.lenderCatch(err.response.status);
 
                         case 3:
                         case "end":
@@ -14143,10 +14127,10 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
               }());
 
             case 3:
-              _this2.hideLoader();
+              _this.hideLoader();
 
               _context2.next = 6;
-              return _this2.fetchLenderWithBoatDetail(_this2.lenderUser.id);
+              return _this.fetchLenderWithBoatDetail(_this.lenderUser.id);
 
             case 6:
             case "end":
@@ -14163,52 +14147,65 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
     /*-------------------------------------------*/
     // 詳細取得
     fetchLenderWithBoatDetail: function fetchLenderWithBoatDetail() {
-      var _this3 = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _this3.showLoader();
+                _this2.showLoader();
 
                 _context4.next = 3;
-                return lenderRepository.showWithBoat(_this3.lenderUser.lender_id).then(function (res) {
+                return lenderRepository.showWithBoat(_this2.lenderUser.lender_id).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_13__["default"].OK) {
-                    _this3.$toast.errorToast();
+                    _this2.$toast.errorToast();
 
                     return;
                   }
 
-                  _this3.form = res.data;
-                  _this3.selectedPaymentOptionIds = _this3.form.payment_options.map(function (x) {
+                  _this2.form = res.data;
+
+                  if (_this2.form.city === null) {
+                    _this2.city_id = null;
+                  } else {
+                    _this2.city_id = _this2.form.city.id;
+                  }
+
+                  if (_this2.form.port === null) {
+                    _this2.port_id = null;
+                  } else {
+                    _this2.port_id = _this2.form.port.id;
+                  }
+
+                  _this2.selectedPaymentOptionIds = _this2.form.payment_options.map(function (x) {
                     return x.id;
                   });
-                  _this3.selectedFacilityIds = _this3.form.boats[0].facilities.map(function (x) {
+                  _this2.selectedFacilityIds = _this2.form.boats[0].facilities.map(function (x) {
                     return x.id;
                   });
-                  _this3.selectedFishingOptionIds = _this3.form.boats[0].fishing_options.map(function (x) {
+                  _this2.selectedFishingOptionIds = _this2.form.boats[0].fishing_options.map(function (x) {
                     return x.id;
                   });
-                  _this3.selectedOperationIds = _this3.form.boats[0].operations.map(function (x) {
+                  _this2.selectedOperationIds = _this2.form.boats[0].operations.map(function (x) {
                     return x.id;
                   }); // 季節別に選択済ターゲットを振り分け
 
-                  _this3.form.boats[0].targets.forEach(function (x) {
+                  _this2.form.boats[0].targets.forEach(function (x) {
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_14__["default"].SPRING) {
-                      _this3.selectedTargetIds.spring.push(x.id);
+                      _this2.selectedTargetIds.spring.push(x.id);
                     }
 
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_14__["default"].SUMMER) {
-                      _this3.selectedTargetIds.summer.push(x.id);
+                      _this2.selectedTargetIds.summer.push(x.id);
                     }
 
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_14__["default"].AUTUMN) {
-                      _this3.selectedTargetIds.autumn.push(x.id);
+                      _this2.selectedTargetIds.autumn.push(x.id);
                     }
 
                     if (x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_14__["default"].WINTER) {
-                      _this3.selectedTargetIds.winter.push(x.id);
+                      _this2.selectedTargetIds.winter.push(x.id);
                     }
                   }); // 画像を画像リストへ格納
                   // 船の画像
@@ -14217,24 +14214,24 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
                   for (var i = 1; i <= 5; i += 1) {
                     var column = "boat_img_".concat(i);
                     var data = {
-                      image_src: _this3.form.boats[0][column],
-                      image_name: _this3.form.boats[0][column],
+                      image_src: _this2.form.boats[0][column],
+                      image_name: _this2.form.boats[0][column],
                       // 将来的に名前を表示するとなった時のため
-                      save_path: _this3.form.boats[0][column]
+                      save_path: _this2.form.boats[0][column]
                     };
 
-                    _this3.boatImageList.push(data);
+                    _this2.boatImageList.push(data);
                   } // 営業許可画像
 
 
                   var permissionImg = {
-                    image_src: _this3.form.permission_img,
-                    image_name: _this3.form.permission_img,
+                    image_src: _this2.form.permission_img,
+                    image_name: _this2.form.permission_img,
                     // 将来的に名前を表示するとなった時のため
-                    save_path: _this3.form.permission_img
+                    save_path: _this2.form.permission_img
                   };
 
-                  _this3.permissionImageList.push(permissionImg);
+                  _this2.permissionImageList.push(permissionImg);
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -14247,13 +14244,13 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
                             }
 
                             _context3.next = 3;
-                            return _this3.$errHandling.lenderCatch(err.response.status);
+                            return _this2.$errHandling.lenderCatch(err.response.status);
 
                           case 3:
                             return _context3.abrupt("return");
 
                           case 4:
-                            _this3.$toast.errorToast();
+                            _this2.$toast.errorToast();
 
                           case 5:
                           case "end":
@@ -14269,7 +14266,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
                 }());
 
               case 3:
-                _this3.hideLoader();
+                _this2.hideLoader();
 
               case 4:
               case "end":
@@ -14285,29 +14282,31 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
     /* 更新処理 閲覧者画面
     /*-------------------------------------------*/
     onUpdate: function onUpdate() {
-      var _this4 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                _this4.form.updated_user_id = _this4.lenderUser.id; // チェックボックス 選択内容
+                _this3.form.updated_user_id = _this3.lenderUser.id; // チェックボックス 選択内容
 
-                _this4.form.payment_option_ids = _this4.selectedPaymentOptionIds;
-                _this4.form.facility_ids = _this4.selectedFacilityIds;
-                _this4.form.fishing_option_ids = _this4.selectedFishingOptionIds;
-                _this4.form.operation_ids = _this4.selectedOperationIds;
-                _this4.form.targets = _this4.selectedTargetIds; // 画像
+                _this3.form.payment_option_ids = _this3.selectedPaymentOptionIds;
+                _this3.form.facility_ids = _this3.selectedFacilityIds;
+                _this3.form.fishing_option_ids = _this3.selectedFishingOptionIds;
+                _this3.form.operation_ids = _this3.selectedOperationIds;
+                _this3.form.targets = _this3.selectedTargetIds; // 画像
 
-                _this4.form.boat_image_list = _this4.boatImageList;
-                _this4.form.boat_delete_image_list = _this4.boatDeleteImageList;
-                _this4.form.permission_image_list = _this4.permissionImageList;
-                _this4.form.permission_delete_image_list = _this4.permissionDeleteImageList;
+                _this3.form.boat_image_list = _this3.boatImageList;
+                _this3.form.boat_delete_image_list = _this3.boatDeleteImageList;
+                _this3.form.permission_image_list = _this3.permissionImageList;
+                _this3.form.permission_delete_image_list = _this3.permissionDeleteImageList;
+                _this3.form.city_id = _this3.city_id;
+                _this3.form.port_id = _this3.port_id;
 
-                _this4.showLoader();
+                _this3.showLoader();
 
-                lenderRepository.updateWithBoat(_this4.lenderUser.lender_id, _this4.form).then( /*#__PURE__*/function () {
+                lenderRepository.updateWithBoat(_this3.lenderUser.lender_id, _this3.form).then( /*#__PURE__*/function () {
                   var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(res) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
                       while (1) {
@@ -14318,17 +14317,17 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
                               break;
                             }
 
-                            _this4.$toast.errorToast();
+                            _this3.$toast.errorToast();
 
                             return _context5.abrupt("return");
 
                           case 3:
                             // 更新完了後の処理
-                            _this4.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_15__["default"].SUCCESS.UPDATED);
+                            _this3.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_15__["default"].SUCCESS.UPDATED);
 
-                            _this4.errors = {};
-                            _this4.boatDeleteImageList = [];
-                            _this4.permissionDeleteImageList = [];
+                            _this3.errors = {};
+                            _this3.boatDeleteImageList = [];
+                            _this3.permissionDeleteImageList = [];
 
                           case 7:
                           case "end":
@@ -14353,16 +14352,16 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
                             }
 
                             _context6.next = 3;
-                            return _this4.$errHandling.lenderCatch(err.response.status);
+                            return _this3.$errHandling.lenderCatch(err.response.status);
 
                           case 3:
-                            _this4.errors = err.response.data.errors;
+                            _this3.errors = err.response.data.errors;
                             return _context6.abrupt("return");
 
                           case 5:
-                            _this4.errors = err.response.data.errors;
+                            _this3.errors = err.response.data.errors;
 
-                            _this4.$toast.errorToast();
+                            _this3.$toast.errorToast();
 
                           case 7:
                           case "end":
@@ -14377,9 +14376,9 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
                   };
                 }());
 
-                _this4.hideLoader();
+                _this3.hideLoader();
 
-              case 13:
+              case 15:
               case "end":
                 return _context7.stop();
             }
@@ -14404,26 +14403,26 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
     /* パスワード更新
     /*-------------------------------------------*/
     onChangePassword: function onChangePassword(password) {
-      var _this5 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
-                _this5.showLoader();
+                _this4.showLoader();
 
                 _context9.next = 3;
-                return userRepository.changePassword(_this5.lenderUser.id, password).then(function (res) {
+                return userRepository.changePassword(_this4.lenderUser.id, password).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_13__["default"].NO_CONTENT) {
-                    _this5.$toast.errorToast();
+                    _this4.$toast.errorToast();
 
                     return;
                   }
 
-                  _this5.$modal.hide('password-change-modal');
+                  _this4.$modal.hide('password-change-modal');
 
-                  _this5.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_15__["default"].SUCCESS.UPDATED_PASSWORD);
+                  _this4.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_15__["default"].SUCCESS.UPDATED_PASSWORD);
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref7 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
@@ -14431,10 +14430,10 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
                         switch (_context8.prev = _context8.next) {
                           case 0:
                             _context8.next = 2;
-                            return _this5.$errHandling.lenderCatch(err.response.status);
+                            return _this4.$errHandling.lenderCatch(err.response.status);
 
                           case 2:
-                            _this5.$toast.errorToast();
+                            _this4.$toast.errorToast();
 
                           case 3:
                           case "end":
@@ -14450,7 +14449,7 @@ var userRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_16
                 }());
 
               case 3:
-                _this5.hideLoader();
+                _this4.hideLoader();
 
               case 4:
               case "end":
@@ -16900,14 +16899,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_viewer_components_ONavbar_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/views/viewer/components/ONavbar.vue */ "./resources/js/views/viewer/components/ONavbar.vue");
 /* harmony import */ var _consts_route__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/consts/route */ "./resources/js/consts/route.js");
 /* harmony import */ var _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/consts/httpStatus */ "./resources/js/consts/httpStatus.js");
-/* harmony import */ var _consts_season__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/consts/season */ "./resources/js/consts/season.js");
-/* harmony import */ var _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/repositories/repositoryFactory */ "./resources/js/repositories/repositoryFactory.js");
+/* harmony import */ var _consts_memberType__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/consts/memberType */ "./resources/js/consts/memberType.js");
+/* harmony import */ var _consts_season__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/consts/season */ "./resources/js/consts/season.js");
+/* harmony import */ var _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/repositories/repositoryFactory */ "./resources/js/repositories/repositoryFactory.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -17394,15 +17429,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  // const
 
 
- // import MEMBER_TYPE from '@/consts/memberType'
+
 
  // repository
 
 
-var boatRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_11__["RepositoryFactory"].get('boats');
-var cityRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_11__["RepositoryFactory"].get('cities');
-var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_11__["RepositoryFactory"].get('lenderPosts');
-var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_11__["RepositoryFactory"].get('calls');
+var boatRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_12__["RepositoryFactory"].get('boats');
+var cityRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_12__["RepositoryFactory"].get('cities');
+var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_12__["RepositoryFactory"].get('lenderPosts');
+var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_12__["RepositoryFactory"].get('calls');
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     ASelectArea: _views_viewer_components_ASelectArea_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -17422,10 +17457,14 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
   data: function data() {
     return {
       ROUTE: _consts_route__WEBPACK_IMPORTED_MODULE_8__["default"],
-      SEASON: _consts_season__WEBPACK_IMPORTED_MODULE_10__["default"],
+      SEASON: _consts_season__WEBPACK_IMPORTED_MODULE_11__["default"],
+      MEMBER_TYPE: _consts_memberType__WEBPACK_IMPORTED_MODULE_10__["default"],
       page: 1,
       paginationData: {},
       boatIndexData: [],
+      boatIndexDataPaidMember: [],
+      boatIndexDataFreeMember: [],
+      // boatIndexDataGeneral: [],
       fittedFacilitiesIds: [],
       boatDetail: {
         facilities: {},
@@ -17538,23 +17577,23 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
                   }); // ターゲットを季節毎の文字列配列に変換
 
                   if (targetList) {
-                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_10__["default"].SPRING] = targetList.filter(function (x) {
-                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_10__["default"].SPRING;
+                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].SPRING] = targetList.filter(function (x) {
+                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].SPRING;
                     }).map(function (x) {
                       return x.target_name;
                     }).join('、');
-                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_10__["default"].SUMMER] = targetList.filter(function (x) {
-                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_10__["default"].SUMMER;
+                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].SUMMER] = targetList.filter(function (x) {
+                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].SUMMER;
                     }).map(function (x) {
                       return x.target_name;
                     }).join('、');
-                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_10__["default"].AUTUMN] = targetList.filter(function (x) {
-                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_10__["default"].AUTUMN;
+                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].AUTUMN] = targetList.filter(function (x) {
+                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].AUTUMN;
                     }).map(function (x) {
                       return x.target_name;
                     }).join('、');
-                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_10__["default"].WINTER] = targetList.filter(function (x) {
-                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_10__["default"].WINTER;
+                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].WINTER] = targetList.filter(function (x) {
+                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].WINTER;
                     }).map(function (x) {
                       return x.target_name;
                     }).join('、');
@@ -17659,23 +17698,23 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return boatRepository.viewerIndex(1, 'id', 'asc', prefectureUrlParam, 'all', 'all').then(function (res) {
+                return boatRepository.viewerIndex(_this4.page, 'id', 'asc', prefectureUrlParam, 'all', 'all').then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__["default"].OK) {
                     _this4.$toast.errorToast();
 
                     return;
-                  } // this.paginationData = res.data
+                  }
 
-
+                  _this4.paginationData = res.data;
                   _this4.boatIndexData = res.data.data.filter(function (x) {
                     return x.id !== Number(_this4.boatId.slice(1));
-                  }); // this.boatIndexDataPaidMember = this.boatIndexData.filter(
-                  //   x => x.member_type_id === MEMBER_TYPE.PAID_MEMBER
-                  // )
-                  // this.boatIndexDataFreeMember = this.boatIndexData.filter(
-                  //   x => x.member_type_id === MEMBER_TYPE.FREE_MEMBER
-                  // )
-                  // this.boatIndexDataGeneral = this.boatIndexData.filter(
+                  });
+                  _this4.boatIndexDataPaidMember = _this4.boatIndexData.filter(function (x) {
+                    return x.member_type_id === _consts_memberType__WEBPACK_IMPORTED_MODULE_10__["default"].PAID_MEMBER;
+                  });
+                  _this4.boatIndexDataFreeMember = _this4.boatIndexData.filter(function (x) {
+                    return x.member_type_id === _consts_memberType__WEBPACK_IMPORTED_MODULE_10__["default"].FREE_MEMBER;
+                  }); // this.boatIndexDataGeneral = this.boatIndexData.filter(
                   //   x => x.member_type_id === MEMBER_TYPE.GENERAL
                   // )
                 })["catch"](function () {
@@ -18777,6 +18816,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
  // const
 
@@ -18887,6 +18927,7 @@ var newsRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9_
                     lenderRes = _ref2[0];
 
                 _this.postList = lenderRes.data;
+                console.log(_this.postList);
                 var today = new Date();
 
                 _this.postList.forEach(function (x) {
@@ -60324,10 +60365,6 @@ var render = function() {
                               _c("ADropdown", {
                                 attrs: {
                                   id: "city_id",
-                                  value:
-                                    _vm.form.city === null
-                                      ? null
-                                      : _vm.form.city.id,
                                   "item-name": "市町村",
                                   options: _vm.cityList,
                                   disabled: !_vm.isNew && !_vm.isEditing,
@@ -60335,6 +60372,13 @@ var render = function() {
                                   searchable: true,
                                   label: "city_name",
                                   "label-key": "id"
+                                },
+                                model: {
+                                  value: _vm.city_id,
+                                  callback: function($$v) {
+                                    _vm.city_id = $$v
+                                  },
+                                  expression: "city_id"
                                 }
                               })
                             ],
@@ -60389,12 +60433,6 @@ var render = function() {
                               _c("ADropdown", {
                                 attrs: {
                                   id: "port_id",
-                                  value:
-                                    _vm.form.city === null
-                                      ? null
-                                      : _vm.form.port === null
-                                      ? null
-                                      : _vm.form.port.id,
                                   "item-name": "港名",
                                   options: _vm.portList,
                                   required: true,
@@ -60402,6 +60440,13 @@ var render = function() {
                                   searchable: true,
                                   label: "port_name",
                                   "label-key": "id"
+                                },
+                                model: {
+                                  value: _vm.port_id,
+                                  callback: function($$v) {
+                                    _vm.port_id = $$v
+                                  },
+                                  expression: "port_id"
                                 }
                               })
                             ],
@@ -64889,13 +64934,19 @@ var render = function() {
                   _c("ADropdown", {
                     attrs: {
                       id: "city_id",
-                      value: _vm.form.city === null ? null : _vm.form.city.id,
                       "item-name": "市町村",
                       options: _vm.cityList,
                       required: true,
                       searchable: true,
                       label: "city_name",
                       "label-key": "id"
+                    },
+                    model: {
+                      value: _vm.city_id,
+                      callback: function($$v) {
+                        _vm.city_id = $$v
+                      },
+                      expression: "city_id"
                     }
                   })
                 ],
@@ -64950,12 +65001,6 @@ var render = function() {
                   _c("ADropdown", {
                     attrs: {
                       id: "port_id",
-                      value:
-                        _vm.form.city === null
-                          ? null
-                          : _vm.form.port === null
-                          ? null
-                          : _vm.form.port.id,
                       "item-name": "港名",
                       options: _vm.portList,
                       required: true,
@@ -64963,6 +65008,13 @@ var render = function() {
                       searchable: true,
                       label: "port_name",
                       "label-key": "id"
+                    },
+                    model: {
+                      value: _vm.port_id,
+                      callback: function($$v) {
+                        _vm.port_id = $$v
+                      },
+                      expression: "port_id"
                     }
                   })
                 ],
@@ -68530,8 +68582,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "mx-5 font-weight-bold d-flex justify-content-center align-items-center",
-                      staticStyle: { "font-size": "24px" }
+                        "mx-5 font-weight-bold d-flex justify-content-center align-items-center"
                     },
                     [
                       _vm._v(
@@ -69186,13 +69237,138 @@ var render = function() {
           [
             _vm._m(5),
             _vm._v(" "),
-            _c("MRecommend", {
-              attrs: { "paid-members-data": _vm.boatIndexData },
-              on: { onDetail: _vm.onDetail, increCallCount: _vm.increCallCount }
-            })
+            _vm.boatIndexDataPaidMember.length !== 0
+              ? _c("MRecommend", {
+                  attrs: { "paid-members-data": _vm.boatIndexDataPaidMember },
+                  on: {
+                    onDetail: _vm.onDetail,
+                    increCallCount: _vm.increCallCount
+                  }
+                })
+              : _vm._e()
           ],
           1
         ),
+        _vm._v(" "),
+        _vm.boatIndexDataPaidMember.length === 0
+          ? _c(
+              "section",
+              { staticClass: "main-boat" },
+              _vm._l(_vm.boatIndexDataFreeMember, function(item, index) {
+                return _c(
+                  "div",
+                  { key: index, staticClass: "main-boat-free" },
+                  [
+                    _c("div", { staticClass: "main-boat-free-summary" }, [
+                      _c("dl", [
+                        _c(
+                          "dt",
+                          { staticClass: "main-boat-free-summary-name" },
+                          [_vm._v(_vm._s(item.boat_name))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "dd",
+                          { staticClass: "main-boat-free-summary-port" },
+                          [_vm._v(_vm._s(item.port_name))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "dd",
+                          { staticClass: "main-boat-free-summary-review" },
+                          [_vm._v(_vm._s(item.review))]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "main-boat-free-information" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "main-boat-free-information-items container-fluid"
+                        },
+                        [
+                          _c(
+                            "dl",
+                            {
+                              staticClass: "main-boat-free-information-item row"
+                            },
+                            [
+                              _c("dt", { staticClass: "col-3" }, [
+                                _vm._v("業種")
+                              ]),
+                              _vm._v(" "),
+                              _c("dd", { staticClass: "col-9" }, [
+                                _vm._v(_vm._s(item.operation_names))
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "dl",
+                            {
+                              staticClass: "main-boat-free-information-item row"
+                            },
+                            [
+                              _c("dt", { staticClass: "col-3" }, [
+                                _vm._v("所在地")
+                              ]),
+                              _vm._v(" "),
+                              _c("dd", { staticClass: "col-9" }, [
+                                _vm._v(
+                                  "\n                〒" + _vm._s(item.zip_code)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  _vm._s(item.prefecture_name) +
+                                    " " +
+                                    _vm._s(item.city_name) +
+                                    "\n                " +
+                                    _vm._s(item.address) +
+                                    "\n              "
+                                )
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "dl",
+                            {
+                              staticClass: "main-boat-free-information-item row"
+                            },
+                            [
+                              _c("dt", { staticClass: "col-3" }, [
+                                _vm._v("釣り方")
+                              ]),
+                              _vm._v(" "),
+                              _c("dd", { staticClass: "col-9" }, [
+                                _vm._v(_vm._s(item.fishing_point))
+                              ])
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "main-boat-free-detail",
+                        on: {
+                          click: function($event) {
+                            return _vm.onDetail(item.id)
+                          }
+                        }
+                      },
+                      [_vm._v("\n          詳細を見る\n        ")]
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "section",
@@ -70017,85 +70193,96 @@ var render = function() {
                         "div",
                         { key: index, staticClass: "main-result-item col-6" },
                         [
-                          _c(
-                            "dl",
-                            {
-                              staticClass: "m-0",
-                              on: {
-                                click: function($event) {
-                                  return _vm.onDetailBoat(
-                                    post.lender.prefecture.url_param,
-                                    post.lender.city.url_param,
-                                    post.lender.port_id,
-                                    post.lender.boats[0].id
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "dd",
-                                { staticClass: "main-result-item-additional" },
-                                [
-                                  _vm._v(
-                                    "\n                  " +
-                                      _vm._s(post.lender.city.city_name) +
-                                      "/" +
-                                      _vm._s(post.beforeHour) +
-                                      "時間前\n                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "dd",
-                                { staticClass: "main-result-item-photo m-0" },
-                                [
-                                  _c("img", {
-                                    attrs: {
-                                      src: post.post_img_1
-                                        ? post.post_img_1
-                                        : "/storage/images/dummy/dummy.png"
+                          post.lender === null
+                            ? _c(
+                                "dl",
+                                {
+                                  staticClass: "m-0",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.onDetailBoat(
+                                        post.lender.prefecture.url_param,
+                                        post.lender.city.url_param,
+                                        post.lender.port_id,
+                                        post.lender.boats[0].id
+                                      )
                                     }
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "dt",
-                                { staticClass: "main-result-item-summary" },
+                                  }
+                                },
                                 [
-                                  post.targets.length > 0
-                                    ? _c(
+                                  _c(
+                                    "dd",
+                                    {
+                                      staticClass: "main-result-item-additional"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                  " +
+                                          _vm._s(post.lender.city.city_name) +
+                                          "/" +
+                                          _vm._s(post.beforeHour) +
+                                          "時間前\n                "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "dd",
+                                    {
+                                      staticClass: "main-result-item-photo m-0"
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: {
+                                          src: post.post_img_1
+                                            ? post.post_img_1
+                                            : "/storage/images/dummy/dummy.png"
+                                        }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "dt",
+                                    { staticClass: "main-result-item-summary" },
+                                    [
+                                      post.targets.length > 0
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "main-result-item-fish"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                    " +
+                                                  _vm._s(
+                                                    post.targets[0].target_name
+                                                  ) +
+                                                  "\n                  "
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _c(
                                         "div",
                                         {
-                                          staticClass: "main-result-item-fish"
+                                          staticClass: "main-result-item-boat"
                                         },
                                         [
                                           _vm._v(
-                                            "\n                    " +
-                                              _vm._s(
-                                                post.targets[0].target_name
-                                              ) +
-                                              "\n                  "
+                                            _vm._s(
+                                              post.lender.boats[0].boat_name
+                                            )
                                           )
                                         ]
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "main-result-item-boat" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(post.lender.boats[0].boat_name)
                                       )
                                     ]
                                   )
                                 ]
                               )
-                            ]
-                          )
+                            : _vm._e()
                         ]
                       )
                     }),
@@ -89709,7 +89896,10 @@ var resource = '/prefectures';
     return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(resource, "/fetch/list"));
   },
   fetchAreaLists: function fetchAreaLists() {
-    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(resource, "/fetch/lists/with-city-port"));
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(resource, "/fetch/lists/with-city"));
+  },
+  fetchPortslistsByPrefectureId: function fetchPortslistsByPrefectureId() {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(resource, "/fetch/lists/with-port"));
   },
 
   /*-------------------------------------------*/
