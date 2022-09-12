@@ -93,10 +93,9 @@
         <section class="main-result">
           <h2 class="main-result-headline">釣果情報</h2>
           <div class="main-result-items container-fluid mw-100">
-            <div class="row m-0">
+            <div v-if="postList.length > 0" class="row m-0">
               <div v-for="(post, index) in postList" :key="index" class="main-result-item col-6">
                 <dl
-                  v-if="post.lender === null"
                   class="m-0"
                   @click="
                     onDetailBoat(
@@ -124,6 +123,13 @@
                   </dt>
                 </dl>
               </div>
+            </div>
+            <!-- 該当するデータがないとき -->
+            <div
+              v-if="postList.length === 0"
+              class="d-flex justify-content-center mb-5 font-weight-bold"
+            >
+              該当するデータがありません。
             </div>
           </div>
         </section>
@@ -371,20 +377,29 @@ export default {
 
   async created() {
     this.showLoader()
-    await Promise.all([lenderPostRepository.viewerList(8)]).then(([lenderRes]) => {
-      this.postList = lenderRes.data
-      console.log(this.postList)
-      const today = new Date()
-      this.postList.forEach(x => {
-        const createdAt = new Date(x.created_at)
-        x.beforeHour = Math.floor(Math.abs(today - createdAt) / (60 * 60 * 1000))
-      })
-    })
+    this.fetchPostListIndex()
     this.fetchNewsIndex()
     this.hideLoader()
   },
 
   methods: {
+    /*-------------------------------------------*/
+    /* 漁業情報一覧取得
+    /*-------------------------------------------*/
+    async fetchPostListIndex() {
+      await lenderPostRepository
+        .viewerList(8)
+        .then(res => {
+          if (res.status !== HTTP_STATUS.OK) {
+            this.$toast.errorToast()
+            return
+          }
+          this.postList = res.data
+        })
+        .catch(() => {
+          this.$toast.errorToast()
+        })
+    },
     onDetailBoat(prefectureUrlParam, cityUrlParam, portId, boatId) {
       if (portId.toString().length === 1) {
         this.port_param = `b00${portId.toString()}`

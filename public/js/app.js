@@ -18483,18 +18483,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/repositories/repositoryFactory */ "./resources/js/repositories/repositoryFactory.js");
 
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -18505,6 +18493,12 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -18921,27 +18915,13 @@ var newsRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9_
             case 0:
               _this.showLoader();
 
-              _context.next = 3;
-              return Promise.all([lenderPostRepository.viewerList(8)]).then(function (_ref) {
-                var _ref2 = _slicedToArray(_ref, 1),
-                    lenderRes = _ref2[0];
+              _this.fetchPostListIndex();
 
-                _this.postList = lenderRes.data;
-                console.log(_this.postList);
-                var today = new Date();
-
-                _this.postList.forEach(function (x) {
-                  var createdAt = new Date(x.created_at);
-                  x.beforeHour = Math.floor(Math.abs(today - createdAt) / (60 * 60 * 1000));
-                });
-              });
-
-            case 3:
               _this.fetchNewsIndex();
 
               _this.hideLoader();
 
-            case 5:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -18950,6 +18930,39 @@ var newsRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9_
     }))();
   },
   methods: {
+    /*-------------------------------------------*/
+
+    /* 漁業情報一覧取得
+    /*-------------------------------------------*/
+    fetchPostListIndex: function fetchPostListIndex() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return lenderPostRepository.viewerList(8).then(function (res) {
+                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_5__["default"].OK) {
+                    _this2.$toast.errorToast();
+
+                    return;
+                  }
+
+                  _this2.postList = res.data;
+                })["catch"](function () {
+                  _this2.$toast.errorToast();
+                });
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
     onDetailBoat: function onDetailBoat(prefectureUrlParam, cityUrlParam, portId, boatId) {
       if (portId.toString().length === 1) {
         this.port_param = "b00".concat(portId.toString());
@@ -18975,65 +18988,65 @@ var newsRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9_
     /* ニュースリスト取得
     /*-------------------------------------------*/
     fetchNewsIndex: function fetchNewsIndex() {
-      var _this2 = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.next = 2;
+                _context4.next = 2;
                 return newsRepository.fetchNewsIndex('created_at', 'desc').then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_5__["default"].OK) {
-                    _this2.$toast.errorToast();
+                    _this3.$toast.errorToast();
 
                     return;
                   }
 
-                  _this2.news = res.data;
+                  _this3.news = res.data;
 
-                  _this2.news.forEach(function (x) {
+                  _this3.news.forEach(function (x) {
                     if (x.created_at) x.created_at = moment__WEBPACK_IMPORTED_MODULE_2___default()(x.created_at).format('YYYY.MM.DD');
                   });
                 })["catch"]( /*#__PURE__*/function () {
-                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(err) {
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(err) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                       while (1) {
-                        switch (_context2.prev = _context2.next) {
+                        switch (_context3.prev = _context3.next) {
                           case 0:
                             if (!err.response) {
-                              _context2.next = 4;
+                              _context3.next = 4;
                               break;
                             }
 
-                            _context2.next = 3;
-                            return _this2.$errHandling.adminCatch(err.response.status);
+                            _context3.next = 3;
+                            return _this3.$errHandling.adminCatch(err.response.status);
 
                           case 3:
-                            return _context2.abrupt("return");
+                            return _context3.abrupt("return");
 
                           case 4:
-                            _this2.$toast.errorToast();
+                            _this3.$toast.errorToast();
 
                           case 5:
                           case "end":
-                            return _context2.stop();
+                            return _context3.stop();
                         }
                       }
-                    }, _callee2);
+                    }, _callee3);
                   }));
 
                   return function (_x) {
-                    return _ref3.apply(this, arguments);
+                    return _ref.apply(this, arguments);
                   };
                 }());
 
               case 2:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     }
   }
@@ -68193,7 +68206,7 @@ var render = function() {
           _c("div", { staticClass: "main-summary-facilities" }, [
             _c(
               "div",
-              { staticClass: "row" },
+              { staticClass: "row", staticStyle: { "flex-wrap": "inherit" } },
               _vm._l(_vm.boatDetail.all_facilities, function(facility, fIndex) {
                 return _c(
                   "dl",
@@ -70185,16 +70198,19 @@ var render = function() {
                 "div",
                 { staticClass: "main-result-items container-fluid mw-100" },
                 [
-                  _c(
-                    "div",
-                    { staticClass: "row m-0" },
-                    _vm._l(_vm.postList, function(post, index) {
-                      return _c(
+                  _vm.postList.length > 0
+                    ? _c(
                         "div",
-                        { key: index, staticClass: "main-result-item col-6" },
-                        [
-                          post.lender === null
-                            ? _c(
+                        { staticClass: "row m-0" },
+                        _vm._l(_vm.postList, function(post, index) {
+                          return _c(
+                            "div",
+                            {
+                              key: index,
+                              staticClass: "main-result-item col-6"
+                            },
+                            [
+                              _c(
                                 "dl",
                                 {
                                   staticClass: "m-0",
@@ -70282,12 +70298,27 @@ var render = function() {
                                   )
                                 ]
                               )
-                            : _vm._e()
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.postList.length === 0
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex justify-content-center mb-5 font-weight-bold"
+                        },
+                        [
+                          _vm._v(
+                            "\n            該当するデータがありません。\n          "
+                          )
                         ]
                       )
-                    }),
-                    0
-                  )
+                    : _vm._e()
                 ]
               )
             ]),

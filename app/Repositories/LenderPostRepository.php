@@ -122,6 +122,12 @@ class LenderPostRepository
                             ->with('prefecture')
                             ->with('boats');
                     }])
+                    ->whereHas('lender', function ($query) {
+                        $query  ->whereNull('lenders.deleted_at');
+                        $query  ->wherehas('city', function ($q) {
+                            $q->whereNull('cities.deleted_at');
+                        });
+                    })
                     ->limit($count)
                     ->get();
     }

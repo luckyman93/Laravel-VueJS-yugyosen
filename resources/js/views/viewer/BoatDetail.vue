@@ -76,7 +76,7 @@
 
         <!-- ファシリティ -->
         <div class="main-summary-facilities">
-          <div class="row">
+          <div class="row" style="flex-wrap: inherit;">
             <dl
               v-for="(facility, fIndex) in boatDetail.all_facilities"
               :key="fIndex"
