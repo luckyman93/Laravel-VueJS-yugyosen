@@ -602,15 +602,19 @@
                 text-align: center;
             }
 
-            .main-news-item-date {
-                color: #979698;
-                font-size: getVW(24);
-            }
+            .main-news-item {
+                cursor: pointer;
+                .main-news-item-date {
+                    color: #979698;
+                    font-size: getVW(24);
+                }
 
-            .main-news-item-title {
-                color: #000000;
-                font-size: getVW(24);
+                .main-news-item-title {
+                    color: #000000;
+                    font-size: getVW(24);
+                }
             }
+            
         }
     }
 }

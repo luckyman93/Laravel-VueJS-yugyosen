@@ -238,12 +238,16 @@
                 padding: getMax(60) 0 getMax(40) 0;
                 margin-bottom: getMax(50);
             }
-            .main-news-item-date {
-                font-size: getMax(24);
+
+            .main-news-item {
+                .main-news-item-date {
+                    font-size: getMax(24);
+                }
+                .main-news-item-title {
+                    font-size: getMax(24);
+                }
             }
-            .main-news-item-title {
-                font-size: getMax(24);
-            }
+            
         }
     }
 }

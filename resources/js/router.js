@@ -15,6 +15,7 @@ import Home from '@/views/viewer/Home.vue'
 import BoatList from '@/views/viewer/BoatList.vue'
 import BoatDetail from '@/views/viewer/BoatDetail.vue'
 import About from '@/views/viewer/About.vue'
+import News from '@/views/viewer/NewsDetail.vue'
 
 // ADMIN
 import Admin from '@/views/admin/Admin.vue'
@@ -58,6 +59,13 @@ const routes = [
         path: ROUTE.VIEWER.HOME.path,
         component: Home,
         name: ROUTE.VIEWER.HOME.name,
+        meta: { viewerAuth: true },
+        props: true,
+      },
+      {
+        path: ROUTE.VIEWER.NEWS.path,
+        component: News,
+        name: ROUTE.VIEWER.NEWS.name,
         meta: { viewerAuth: true },
         props: true,
       },

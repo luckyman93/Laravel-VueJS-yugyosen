@@ -22,7 +22,7 @@
                   {{ news.updated_at }}
                 </td>
                 <td class="align-middle py-1 pointer news-content-width">
-                  {{ news.news_content }}
+                  {{ news.news_title }}
                 </td>
                 <td class="d-flex align-middle py-1">
                   <AButton

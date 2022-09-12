@@ -24,7 +24,8 @@ class NewsRequest extends FormRequest
     public function rules()
     {
         return [
-            'news_content' => 'required|string|max:256',
+            'news_title' => 'required|string|max:256',
+            'news_content' => 'required|string|max:1024',
         ];
     }
 
@@ -32,7 +33,8 @@ class NewsRequest extends FormRequest
     public function attributes()
     {
         return [
-            'news_content' => 'ニュース',
+            'news_title' => 'ニュースタイトル',
+            'news_content' => 'ニュースコンテンツ',
         ];
     }
 }

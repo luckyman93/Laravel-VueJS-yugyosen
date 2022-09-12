@@ -10,6 +10,10 @@ export default {
       path: '/',
       name: 'home',
     },
+    NEWS: {
+      path: '/news/:cityId',
+      name: 'news',
+    },
     BOAT: {
       LIST1: {
         path: '/boat/:prefectureParam',

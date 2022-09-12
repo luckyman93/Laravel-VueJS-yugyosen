@@ -19,6 +19,18 @@
       <template #content>
         <div class="container my-5">
           <div class="mb-4">
+            <AInputForm
+              id="news_title"
+              v-model="form.news_title"
+              :required="true"
+              label="ニュースタイトル"
+              :disabled="!isEditing"
+            />
+            <span v-if="errors && errors.news_title" class="error-message">{{
+              errors.news_title[0]
+            }}</span>
+          </div>
+          <div class="mb-4">
             <ATextArea
               id="news_content"
               v-model="form.news_content"
@@ -45,6 +57,7 @@ import { mapState } from 'vuex'
 import ATextArea from '@/views/components/ATextArea.vue'
 import MBaseDetail from '@/views/admin/components/MBaseDetail.vue'
 import MBreadcrumb from '@/views/admin/components/MBreadcrumb.vue'
+import AInputForm from '@/views/components/AInputForm.vue'
 // const
 import HTTP_STATUS from '@/consts/httpStatus'
 import TOAST from '@/consts/toast'
@@ -59,6 +72,7 @@ export default {
     ATextArea,
     MBaseDetail,
     MBreadcrumb,
+    AInputForm,
   },
 
   props: {

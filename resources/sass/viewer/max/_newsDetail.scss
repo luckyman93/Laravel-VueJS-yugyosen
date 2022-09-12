@@ -1,0 +1,42 @@
+@import "../_variables";
+#Wrapper.provider {
+	.main {
+		margin-top: getMax(50);
+		font-size: getMax(24);
+		.main-tab {
+			.main-tab-information {
+				margin-bottom: getMax(56);
+				padding: 0 getMax(38);
+				.main-tab-information-comment-content {
+					font-size: getMax(24);
+					margin-bottom: getMax(50);
+
+				}
+				.main-tab-information-target {
+					margin-bottom: getMax(56);
+					.main-tab-information-target-content {
+						font-size: getMax(24);
+					}
+					.main-tab-information-target-items {
+						font-size: getMax(24);
+						padding: 0 getMax(24);
+					}
+				}
+				.main-tab-information-other {
+					.main-tab-information-other-items {
+						.main-tab-information-other-item {
+							font-size: getMax(24);
+							.main-tab-information-other-item-index {
+								padding: getMax(10);
+							}
+							.main-tab-information-other-item-value {
+								padding: getMax(10);
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+}

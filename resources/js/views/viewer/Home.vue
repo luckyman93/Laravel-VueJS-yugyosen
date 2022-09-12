@@ -264,12 +264,12 @@
         <section class="main-news">
           <h2 class="main-news-headline">遊漁船ニュース</h2>
           <div class="main-news-items">
-            <router-link v-for="(item, index) in news" :key="index" to="#" class="main-news-item">
-              <dl>
+            <div v-for="(item, index) in news" :key="index" class="main-news-item">
+              <dl @click="onDetailNews(item.id)">
                 <dd class="main-news-item-date">{{ item.created_at }}</dd>
-                <dt class="main-news-item-title">{{ item.news_content }}</dt>
+                <dt class="main-news-item-title">{{ item.news_title }}</dt>
               </dl>
-            </router-link>
+            </div>
           </div>
           <!-- 該当するデータがないとき -->
           <div v-if="news.length === 0" class="d-flex justify-content-center mb-5 font-weight-bold">
@@ -440,6 +440,9 @@ export default {
           }
           this.$toast.errorToast()
         })
+    },
+    onDetailNews(id) {
+      window.location.href = `/news/${id}`
     },
   },
 }
