@@ -337,7 +337,13 @@
                     </dl>
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">釣り方</dt>
-                      <dd class="col-8">{{ boatDetail.fishing_options[0].fishing_option_name }}</dd>
+                      <dd class="col-8">
+                        {{
+                          boatDetail.fishing_options[0] === undefined
+                            ? ''
+                            : boatDetail.fishing_options[0].fishing_option_name
+                        }}
+                      </dd>
                     </dl>
                   </div>
 

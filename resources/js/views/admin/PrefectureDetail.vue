@@ -11,7 +11,6 @@
       @onSave="onSave"
       @onBackList="onBackList"
       @onCancel="onCancelEdit"
-      @onDelete="onOpenModal('delete-modal')"
     >
       <template #breadcrumb>
         <MBreadcrumb :breadcrumb-data="breadcrumbData"></MBreadcrumb>
@@ -72,12 +71,6 @@
         </div>
       </template>
     </MBaseDetail>
-
-    <MDeleteModal
-      :target-name="form.prefecture_name"
-      @onCancel="onCloseModal('delete-modal')"
-      @onDelete="deletePrefecture"
-    />
   </div>
 </template>
 
@@ -89,7 +82,6 @@ import { mapState } from 'vuex'
 import AInputForm from '@/views/components/AInputForm.vue'
 import ATextArea from '@/views/components/ATextArea.vue'
 import MBaseDetail from '@/views/admin/components/MBaseDetail.vue'
-import MDeleteModal from '@/views/components/MDeleteModal.vue'
 import MBreadcrumb from '@/views/admin/components/MBreadcrumb.vue'
 // const
 import BUTTON from '@/consts/button'
@@ -106,7 +98,6 @@ export default {
     AInputForm,
     ATextArea,
     MBaseDetail,
-    MDeleteModal,
     MBreadcrumb,
   },
 
@@ -297,12 +288,6 @@ export default {
     onBackList() {
       this.$router.back()
       // this.$router.go(-1)
-    },
-    onOpenModal($modalName) {
-      this.$modal.show($modalName)
-    },
-    onCloseModal($modalName) {
-      this.$modal.hide($modalName)
     },
     // 呼び出しメソッドが異なるため完全に共通できない。
     onCancelEdit() {

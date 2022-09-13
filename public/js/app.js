@@ -10909,13 +10909,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_components_AInputForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/views/components/AInputForm.vue */ "./resources/js/views/components/AInputForm.vue");
 /* harmony import */ var _views_components_ATextArea_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/views/components/ATextArea.vue */ "./resources/js/views/components/ATextArea.vue");
 /* harmony import */ var _views_admin_components_MBaseDetail_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/views/admin/components/MBaseDetail.vue */ "./resources/js/views/admin/components/MBaseDetail.vue");
-/* harmony import */ var _views_components_MDeleteModal_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/views/components/MDeleteModal.vue */ "./resources/js/views/components/MDeleteModal.vue");
-/* harmony import */ var _views_admin_components_MBreadcrumb_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/views/admin/components/MBreadcrumb.vue */ "./resources/js/views/admin/components/MBreadcrumb.vue");
-/* harmony import */ var _consts_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/consts/button */ "./resources/js/consts/button.js");
-/* harmony import */ var _consts_httpStatus__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/consts/httpStatus */ "./resources/js/consts/httpStatus.js");
-/* harmony import */ var _consts_toast__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/consts/toast */ "./resources/js/consts/toast.js");
-/* harmony import */ var _consts_route__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/consts/route */ "./resources/js/consts/route.js");
-/* harmony import */ var _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/repositories/repositoryFactory */ "./resources/js/repositories/repositoryFactory.js");
+/* harmony import */ var _views_admin_components_MBreadcrumb_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/views/admin/components/MBreadcrumb.vue */ "./resources/js/views/admin/components/MBreadcrumb.vue");
+/* harmony import */ var _consts_button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/consts/button */ "./resources/js/consts/button.js");
+/* harmony import */ var _consts_httpStatus__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/consts/httpStatus */ "./resources/js/consts/httpStatus.js");
+/* harmony import */ var _consts_toast__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/consts/toast */ "./resources/js/consts/toast.js");
+/* harmony import */ var _consts_route__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/consts/route */ "./resources/js/consts/route.js");
+/* harmony import */ var _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/repositories/repositoryFactory */ "./resources/js/repositories/repositoryFactory.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -11004,16 +11003,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
  // import error from '@/functions/error'
 // component
-
 
 
 
@@ -11026,14 +11017,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  // repository
 
 
-var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_11__["RepositoryFactory"].get('prefectures');
+var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10__["RepositoryFactory"].get('prefectures');
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     AInputForm: _views_components_AInputForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     ATextArea: _views_components_ATextArea_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     MBaseDetail: _views_admin_components_MBaseDetail_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    MDeleteModal: _views_components_MDeleteModal_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    MBreadcrumb: _views_admin_components_MBreadcrumb_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    MBreadcrumb: _views_admin_components_MBreadcrumb_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   props: {
     id: {
@@ -11044,7 +11034,7 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
   },
   data: function data() {
     return {
-      BUTTON: _consts_button__WEBPACK_IMPORTED_MODULE_7__["default"],
+      BUTTON: _consts_button__WEBPACK_IMPORTED_MODULE_6__["default"],
       pageTitle: '都道府県 詳細',
       isNew: false,
       isEditing: false,
@@ -11130,7 +11120,7 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
 
                 _context4.next = 3;
                 return prefectureRepository.fetchPrefectureShow(_this3.id).then(function (res) {
-                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_8__["default"].OK) {
+                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_7__["default"].OK) {
                     _this3.$toast.errorToast();
 
                     return;
@@ -11209,14 +11199,14 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
 
                 _context6.next = 5;
                 return prefectureRepository.storePrefecture(_this4.form).then(function (res) {
-                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_8__["default"].CREATED) {
+                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_7__["default"].CREATED) {
                     _this4.$toast.errorToast();
 
                     return;
                   } // 成功時の処理
 
 
-                  _this4.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_9__["default"].SUCCESS.CREATED);
+                  _this4.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_8__["default"].SUCCESS.CREATED);
 
                   _this4.pageTitle = '都道府県 詳細';
                   _this4.isNew = false;
@@ -11230,7 +11220,7 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
 
 
                   _this4.$router.push({
-                    name: _consts_route__WEBPACK_IMPORTED_MODULE_10__["default"].ADMIN.PREFECTURE.LIST.name
+                    name: _consts_route__WEBPACK_IMPORTED_MODULE_9__["default"].ADMIN.PREFECTURE.LIST.name
                   });
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(err) {
@@ -11281,21 +11271,21 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
 
                 _context8.next = 4;
                 return prefectureRepository.updatePrefecture(_this5.id, _this5.form).then(function (res) {
-                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_8__["default"].OK) {
+                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_7__["default"].OK) {
                     _this5.$toast.errorToast();
 
                     return;
                   } // 成功時の処理
 
 
-                  _this5.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_9__["default"].SUCCESS.UPDATED);
+                  _this5.$toast.successToast(_consts_toast__WEBPACK_IMPORTED_MODULE_8__["default"].SUCCESS.UPDATED);
 
                   _this5.form = res.data;
                   _this5.isEditing = false;
                   _this5.errors = {};
 
                   _this5.$router.push({
-                    name: _consts_route__WEBPACK_IMPORTED_MODULE_10__["default"].ADMIN.PREFECTURE.DETAIL.name,
+                    name: _consts_route__WEBPACK_IMPORTED_MODULE_9__["default"].ADMIN.PREFECTURE.DETAIL.name,
                     param: {
                       id: res.data.id
                     }
@@ -11369,12 +11359,6 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
     onBackList: function onBackList() {
       this.$router.back(); // this.$router.go(-1)
     },
-    onOpenModal: function onOpenModal($modalName) {
-      this.$modal.show($modalName);
-    },
-    onCloseModal: function onCloseModal($modalName) {
-      this.$modal.hide($modalName);
-    },
     // 呼び出しメソッドが異なるため完全に共通できない。
     onCancelEdit: function onCancelEdit() {
       this.isEditing = false;
@@ -11390,7 +11374,7 @@ var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
       this.breadcrumbData = [{
         title: '都道府県 一覧',
         link: {
-          name: _consts_route__WEBPACK_IMPORTED_MODULE_10__["default"].ADMIN.PREFECTURE.LIST.name
+          name: _consts_route__WEBPACK_IMPORTED_MODULE_9__["default"].ADMIN.PREFECTURE.LIST.name
         }
       }, {
         title: this.pageTitle,
@@ -17434,6 +17418,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
  // component
 
 
@@ -19369,88 +19359,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -63192,10 +63100,7 @@ var render = function() {
           onEdit: _vm.onEdit,
           onSave: _vm.onSave,
           onBackList: _vm.onBackList,
-          onCancel: _vm.onCancelEdit,
-          onDelete: function($event) {
-            return _vm.onOpenModal("delete-modal")
-          }
+          onCancel: _vm.onCancelEdit
         },
         scopedSlots: _vm._u([
           {
@@ -63337,16 +63242,6 @@ var render = function() {
             proxy: true
           }
         ])
-      }),
-      _vm._v(" "),
-      _c("MDeleteModal", {
-        attrs: { "target-name": _vm.form.prefecture_name },
-        on: {
-          onCancel: function($event) {
-            return _vm.onCloseModal("delete-modal")
-          },
-          onDelete: _vm.deletePrefecture
-        }
       })
     ],
     1
@@ -69248,10 +69143,17 @@ var render = function() {
                                         _vm._v(" "),
                                         _c("dd", { staticClass: "col-8" }, [
                                           _vm._v(
-                                            _vm._s(
-                                              _vm.boatDetail.fishing_options[0]
-                                                .fishing_option_name
-                                            )
+                                            "\n                      " +
+                                              _vm._s(
+                                                _vm.boatDetail
+                                                  .fishing_options[0] ===
+                                                  undefined
+                                                  ? ""
+                                                  : _vm.boatDetail
+                                                      .fishing_options[0]
+                                                      .fishing_option_name
+                                              ) +
+                                              "\n                    "
                                           )
                                         ])
                                       ]
@@ -71259,49 +71161,45 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("footer", { staticClass: "footer" }, [
-    _c("section", { staticClass: "footer-area" }, [
-      _c("div", { staticClass: "footer-area-headline" }, [
-        _vm._v("都道府県から遊漁船を探す")
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "footer-area-inner container-fluid p-0" },
+    _c(
+      "section",
+      { staticClass: "footer-area" },
+      [
+        _c("div", { staticClass: "footer_div_01" }, [
+          _vm._v("都道府県から遊漁船を探す")
+        ]),
+        _vm._v(" "),
         _vm._l(_vm.footerRegionList, function(region, ri) {
-          return _c("div", { key: ri }, [
-            _c("h5", { staticClass: "footer-area-category" }, [
+          return _c("div", { key: ri, staticClass: "footer_div_02" }, [
+            _c("p", { staticClass: "footer_div_02_p" }, [
               _vm._v(_vm._s(region.region_name))
             ]),
             _vm._v(" "),
             _c(
               "ul",
-              { staticClass: "footer-area-prefs row p-0" },
+              { staticClass: "footer_div_02_ul" },
               _vm._l(region.prefectures, function(prefecture, pi) {
-                return _c(
-                  "li",
-                  { key: pi, staticClass: "footer-area-pref col-2" },
-                  [
-                    _c(
-                      "a",
-                      { attrs: { href: "/boat/" + prefecture.url_param } },
-                      [
-                        _vm._v(
-                          "\n              " +
-                            _vm._s(prefecture.prefecture_name) +
-                            "\n            "
-                        )
-                      ]
-                    )
-                  ]
-                )
+                return _c("li", { key: pi }, [
+                  _c(
+                    "a",
+                    { attrs: { href: "/boat/" + prefecture.url_param } },
+                    [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(prefecture.prefecture_name) +
+                          "\n          "
+                      )
+                    ]
+                  )
+                ])
               }),
               0
             )
           ])
-        }),
-        0
-      )
-    ]),
+        })
+      ],
+      2
+    ),
     _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),

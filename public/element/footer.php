@@ -77,29 +77,38 @@
 		<li><a href="#"><img src="/images/common/icon_sns_facebook.svg"></a></li>
 		<li><a href="#"><img src="/images/common/icon_sns_line.svg"></a></li>
 	</ul>
-	<ul class="footer-menu">
-		<li><a href="/about" class="">遊漁船サーチとは</a></li>
-		<li><a href="#" class="footer-menu">遊漁船を探す</a></li>
-		<li><a href="/book.php" class="footer-menu">船釣りの始め方</a></li>
-		<li><a href="/call.php" class="">予約電話のコツ</a></li>
-		<li><a href="/to-lender.php" class="footer-menu">遊漁船業者様へ</a></li>
-		<li><a href="/faq.php" class="">よくある質問</a></li>
-		<li><a href="/contact.php" class="footer-menu">お問合せ</a></li>
+	<ul class="footer-menus">
+		<li>
+			<a href="#" class="footer-menu">遊漁船サーチとは</a>
+			<a href="#" class="footer-menu">遊漁船を探す</a>
+			<a href="#" class="footer-menu">船釣りの始め方</a>
+		</li>
+		<li>
+			<a href="#" class="footer-menu">予約電話のコツ</a>
+			<a href="#" class="footer-menu">遊漁船業者様へ</a>
+		</li>
+		<li>
+			<a href="#" class="footer-menu">よくある質問</a>
+			<a href="#" class="footer-menu">お問合せ</a>
+		</li>
 	</ul>
-	<div class="footer_div_menubox">
-		<ul class="footer_div_menubox_ul">
-			<li><a href="/lender/login" class="footer-link">業者ログイン</a></li>
-			<li><a href="/regist.php" class="footer-link">掲載依頼</a></li>
-			<li><a href="/company.php" class="footer-link">運営会社</a></li>
-			<li><a href="/policy.php" class="footer-link">プライバシーポリシー</a></li>
-			<li><a href="/legal.php" class="footer-link">特定商法取引</a></li>
-			<li><a href="/agreement.php" class="footer-link">利用規約</a></li>
-			<li><a href="/mass.php" class="footer-link">マスコミの方へ</a></li>
-			<li><a href="/link.php" class="footer-link">リンクについて</a></li>
-		</ul>
+	<div class="footer-links container-fluid">
+		<div class="row">
+			<div class="col-6">
+				<a href="#" class="footer-link">業者ログイン</a>
+				<a href="#" class="footer-link">掲載依頼</a>
+				<a href="#" class="footer-link">運営会社</a>
+				<a href="#" class="footer-link">プライバシーポリシー</a>
+			</div>
+			<div class="col-6">
+				<a href="#" class="footer-link">特定商法取引</a>
+				<a href="#" class="footer-link">マスコミの方へ</a>
+				<a href="#" class="footer-link">リンクについて</a>
+			</div>
+		</div>
 	</div>
-	<div class="footer_logo_box">
-		<a href="/"><img src="/images/common/logo_footer.svg"></a>
+	<div class="footer-logo">
+		<a to="/"><img class="mw-100" src="/images/common/logo_footer.svg" /></a>
 	</div>
 	<div class="copyright_box">copyright© <a href="/">遊漁船サーチ</a> all rights reserved.</div>
 </footer>
