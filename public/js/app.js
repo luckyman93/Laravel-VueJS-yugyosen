@@ -8805,6 +8805,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
  // import ASearchBox from '@/views/components/ASearchBox.vue' /フェーズ2以降で使うので残しておく 2022/6/5
 
@@ -16896,18 +16900,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_viewer_components_MRecommend_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/views/viewer/components/MRecommend.vue */ "./resources/js/views/viewer/components/MRecommend.vue");
 /* harmony import */ var _views_components_MPagination_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/views/components/MPagination.vue */ "./resources/js/views/components/MPagination.vue");
 /* harmony import */ var _views_viewer_components_ONavbar_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/views/viewer/components/ONavbar.vue */ "./resources/js/views/viewer/components/ONavbar.vue");
-/* harmony import */ var _consts_route__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/consts/route */ "./resources/js/consts/route.js");
-/* harmony import */ var _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/consts/httpStatus */ "./resources/js/consts/httpStatus.js");
-/* harmony import */ var _consts_memberType__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/consts/memberType */ "./resources/js/consts/memberType.js");
-/* harmony import */ var _consts_season__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/consts/season */ "./resources/js/consts/season.js");
-/* harmony import */ var _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/repositories/repositoryFactory */ "./resources/js/repositories/repositoryFactory.js");
+/* harmony import */ var _views_error_NotFound_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/views/error/NotFound.vue */ "./resources/js/views/error/NotFound.vue");
+/* harmony import */ var _consts_route__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/consts/route */ "./resources/js/consts/route.js");
+/* harmony import */ var _consts_httpStatus__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/consts/httpStatus */ "./resources/js/consts/httpStatus.js");
+/* harmony import */ var _consts_memberType__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/consts/memberType */ "./resources/js/consts/memberType.js");
+/* harmony import */ var _consts_season__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/consts/season */ "./resources/js/consts/season.js");
+/* harmony import */ var _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/repositories/repositoryFactory */ "./resources/js/repositories/repositoryFactory.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
 //
 //
 //
@@ -17431,6 +17435,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+ // ERROR
+
  // const
 
 
@@ -17439,10 +17445,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  // repository
 
 
-var boatRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_12__["RepositoryFactory"].get('boats');
-var cityRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_12__["RepositoryFactory"].get('cities');
-var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_12__["RepositoryFactory"].get('lenderPosts');
-var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_12__["RepositoryFactory"].get('calls');
+var boatRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_13__["RepositoryFactory"].get('boats');
+var cityRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_13__["RepositoryFactory"].get('cities');
+var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_13__["RepositoryFactory"].get('lenderPosts');
+var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_13__["RepositoryFactory"].get('calls');
+var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_13__["RepositoryFactory"].get('ports');
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     ASelectArea: _views_viewer_components_ASelectArea_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -17450,9 +17457,25 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
     MFooter: _views_viewer_components_MFooter_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     MRecommend: _views_viewer_components_MRecommend_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     MPagination: _views_components_MPagination_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    ONavbar: _views_viewer_components_ONavbar_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+    ONavbar: _views_viewer_components_ONavbar_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    NotFound: _views_error_NotFound_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   },
   props: {
+    prefectureParam: {
+      type: null,
+      required: true,
+      "default": null
+    },
+    cityParam: {
+      type: null,
+      required: true,
+      "default": null
+    },
+    portParam: {
+      type: null,
+      required: true,
+      "default": null
+    },
     boatId: {
       type: null,
       required: true,
@@ -17461,9 +17484,9 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
   },
   data: function data() {
     return {
-      ROUTE: _consts_route__WEBPACK_IMPORTED_MODULE_8__["default"],
-      SEASON: _consts_season__WEBPACK_IMPORTED_MODULE_11__["default"],
-      MEMBER_TYPE: _consts_memberType__WEBPACK_IMPORTED_MODULE_10__["default"],
+      ROUTE: _consts_route__WEBPACK_IMPORTED_MODULE_9__["default"],
+      SEASON: _consts_season__WEBPACK_IMPORTED_MODULE_12__["default"],
+      MEMBER_TYPE: _consts_memberType__WEBPACK_IMPORTED_MODULE_11__["default"],
       page: 1,
       paginationData: {},
       boatIndexData: [],
@@ -17491,9 +17514,10 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
       lenderPostIndex: [],
       paymentOptions: '',
       operations: '',
-      prefectureParam: null,
+      prefecture_param: null,
+      boatParam: '',
       port_param: '',
-      boat_param: ''
+      isError: false
     };
   },
   created: function created() {
@@ -17550,7 +17574,7 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
                 _context3.next = 3;
                 return boatRepository.viewerShow(id).then(function (res) {
                   // console.log('詳細データチェック', res.data)
-                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__["default"].OK) {
+                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_10__["default"].OK) {
                     _this2.$toast.errorToast();
 
                     return;
@@ -17561,7 +17585,7 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
                   var paymentOptionList = _this2.boatDetail.lender.payment_options;
                   var operationList = _this2.boatDetail.operations; // 都道府県ID
 
-                  _this2.prefectureParam = _this2.boatDetail.lender.prefecture.url_param; // 画像配列作成
+                  _this2.prefecture_param = _this2.boatDetail.lender.prefecture.url_param; // 画像配列作成
 
                   if (_this2.boatDetail.boat_img_1) _this2.imageList.push(_this2.boatDetail.boat_img_1);
                   if (_this2.boatDetail.boat_img_2) _this2.imageList.push(_this2.boatDetail.boat_img_2);
@@ -17582,23 +17606,23 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
                   }); // ターゲットを季節毎の文字列配列に変換
 
                   if (targetList) {
-                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].SPRING] = targetList.filter(function (x) {
-                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].SPRING;
+                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_12__["default"].SPRING] = targetList.filter(function (x) {
+                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_12__["default"].SPRING;
                     }).map(function (x) {
                       return x.target_name;
                     }).join('、');
-                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].SUMMER] = targetList.filter(function (x) {
-                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].SUMMER;
+                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_12__["default"].SUMMER] = targetList.filter(function (x) {
+                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_12__["default"].SUMMER;
                     }).map(function (x) {
                       return x.target_name;
                     }).join('、');
-                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].AUTUMN] = targetList.filter(function (x) {
-                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].AUTUMN;
+                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_12__["default"].AUTUMN] = targetList.filter(function (x) {
+                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_12__["default"].AUTUMN;
                     }).map(function (x) {
                       return x.target_name;
                     }).join('、');
-                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].WINTER] = targetList.filter(function (x) {
-                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_11__["default"].WINTER;
+                    _this2.targetAllSeasonList[_consts_season__WEBPACK_IMPORTED_MODULE_12__["default"].WINTER] = targetList.filter(function (x) {
+                      return x.pivot.season_id === _consts_season__WEBPACK_IMPORTED_MODULE_12__["default"].WINTER;
                     }).map(function (x) {
                       return x.target_name;
                     }).join('、');
@@ -17704,7 +17728,7 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
               case 0:
                 _context5.next = 2;
                 return boatRepository.viewerIndex(_this4.page, 'id', 'asc', prefectureUrlParam, 'all', 'all').then(function (res) {
-                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__["default"].OK) {
+                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_10__["default"].OK) {
                     _this4.$toast.errorToast();
 
                     return;
@@ -17715,10 +17739,10 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
                     return x.id !== Number(_this4.boatId.slice(1));
                   });
                   _this4.boatIndexDataPaidMember = _this4.boatIndexData.filter(function (x) {
-                    return x.member_type_id === _consts_memberType__WEBPACK_IMPORTED_MODULE_10__["default"].PAID_MEMBER;
+                    return x.member_type_id === _consts_memberType__WEBPACK_IMPORTED_MODULE_11__["default"].PAID_MEMBER;
                   });
                   _this4.boatIndexDataFreeMember = _this4.boatIndexData.filter(function (x) {
-                    return x.member_type_id === _consts_memberType__WEBPACK_IMPORTED_MODULE_10__["default"].FREE_MEMBER;
+                    return x.member_type_id === _consts_memberType__WEBPACK_IMPORTED_MODULE_11__["default"].FREE_MEMBER;
                   }); // this.boatIndexDataGeneral = this.boatIndexData.filter(
                   //   x => x.member_type_id === MEMBER_TYPE.GENERAL
                   // )
@@ -17781,7 +17805,7 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
               case 0:
                 _context7.next = 2;
                 return cityRepository.viewerFetchCityListByPrefectureId(prefectureId).then(function (res) {
-                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_9__["default"].OK) {
+                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_10__["default"].OK) {
                     _this6.$toast.errorToast();
 
                     return;
@@ -17813,11 +17837,11 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
 
         if (boatData.id === id) {
           if (boatData.id.toString().length === 1) {
-            this.boat_param = "b00".concat(boatData.id.toString());
+            this.boatParam = "b00".concat(boatData.id.toString());
           } else if (boatData.id.toString().length === 2) {
-            this.boat_param = "b0".concat(boatData.id.toString());
+            this.boatParam = "b0".concat(boatData.id.toString());
           } else {
-            this.boat_param = "b".concat(boatData.id.toString());
+            this.boatParam = "b".concat(boatData.id.toString());
           }
 
           if (boatData.port_id.toString().length === 1) {
@@ -17828,38 +17852,96 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
             this.port_param = "p".concat(boatData.port_id.toString());
           }
 
-          window.location.href = "/boat/".concat(boatData.prefecture_url_param, "/").concat(boatData.city_url_param, "/").concat(this.port_param, "/").concat(this.boat_param);
+          this.fetchCityParmByPortId(boatData.port_id, boatData.prefecture_url_param);
           break;
         }
       }
     },
-    onSearchList: function onSearchList(cityParam) {
-      window.location.href = "/boat/".concat(this.prefectureParam, "/").concat(cityParam);
-    },
-    getPaginationResults: function getPaginationResults(page) {
+    fetchCityParmByPortId: function fetchCityParmByPortId(portId, prefectureUrlParam) {
       var _this7 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
-                _this7.page = page;
+                _context9.next = 2;
+                return portRepository.fetchCityParmByPortId(portId).then(function (res) {
+                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_10__["default"].OK) {
+                    _this7.$toast.errorToast();
 
-                _this7.showLoader();
+                    return;
+                  }
 
-                _context8.next = 4;
-                return _this7.fetchLenderPostIndex();
+                  window.location.href = "/boat/".concat(prefectureUrlParam, "/").concat(res.data.city_url_param, "/").concat(_this7.port_param, "/").concat(_this7.boatParam);
+                })["catch"]( /*#__PURE__*/function () {
+                  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(err) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+                      while (1) {
+                        switch (_context8.prev = _context8.next) {
+                          case 0:
+                            if (!err.response) {
+                              _context8.next = 4;
+                              break;
+                            }
+
+                            _context8.next = 3;
+                            return _this7.$errHandling.adminCatch(err.response.status);
+
+                          case 3:
+                            return _context8.abrupt("return");
+
+                          case 4:
+                            _this7.$toast.errorToast();
+
+                          case 5:
+                          case "end":
+                            return _context8.stop();
+                        }
+                      }
+                    }, _callee8);
+                  }));
+
+                  return function (_x2) {
+                    return _ref2.apply(this, arguments);
+                  };
+                }());
+
+              case 2:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }))();
+    },
+    onSearchList: function onSearchList(cityParam) {
+      window.location.href = "/boat/".concat(this.prefecture_param, "/").concat(cityParam);
+    },
+    getPaginationResults: function getPaginationResults(page) {
+      var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                _this8.page = page;
+
+                _this8.showLoader();
+
+                _context10.next = 4;
+                return _this8.fetchLenderPostIndex();
 
               case 4:
-                _this7.hideLoader();
+                _this8.hideLoader();
 
               case 5:
               case "end":
-                return _context8.stop();
+                return _context10.stop();
             }
           }
-        }, _callee8);
+        }, _callee10);
       }))();
     }
   }
@@ -18082,6 +18164,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -18097,6 +18181,7 @@ var cityRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10
 var boatRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10__["RepositoryFactory"].get('boats');
 var prefectureRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10__["RepositoryFactory"].get('prefectures');
 var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10__["RepositoryFactory"].get('calls');
+var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10__["RepositoryFactory"].get('ports');
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     MHeader: _views_viewer_components_MHeader_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -18137,7 +18222,8 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
       copy_cityParam: '',
       copy_portParam: '',
       port_param: '',
-      boat_param: ''
+      boat_param: '',
+      isError: false
     };
   },
   watch: {
@@ -18284,6 +18370,7 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
 
                   _this5.paginationData = res.data;
                   _this5.boatIndexData = res.data.data;
+                  console.log(_this5.boatIndexData);
 
                   _this5.boatIndexData.forEach(function (x) {
                     if (x.created_at) x.created_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(x.created_at).format('YYYY-MM-DD');
@@ -18448,10 +18535,68 @@ var callRankingRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MO
             this.port_param = "p".concat(boatData.port_id.toString());
           }
 
-          window.location.href = "/boat/".concat(boatData.prefecture_url_param, "/").concat(boatData.city_url_param, "/").concat(this.port_param, "/").concat(this.boat_param);
+          this.fetchCityParmByPortId(boatData.port_id, boatData.prefecture_url_param);
           break;
         }
       }
+    },
+    fetchCityParmByPortId: function fetchCityParmByPortId(portId, prefectureUrl) {
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                _context10.next = 2;
+                return portRepository.fetchCityParmByPortId(portId).then(function (res) {
+                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_8__["default"].OK) {
+                    _this9.$toast.errorToast();
+
+                    return;
+                  }
+
+                  window.location.href = "/boat/".concat(prefectureUrl, "/").concat(res.data.city_url_param, "/").concat(_this9.port_param, "/").concat(_this9.boat_param);
+                })["catch"]( /*#__PURE__*/function () {
+                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(err) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+                      while (1) {
+                        switch (_context9.prev = _context9.next) {
+                          case 0:
+                            if (!err.response) {
+                              _context9.next = 4;
+                              break;
+                            }
+
+                            _context9.next = 3;
+                            return _this9.$errHandling.adminCatch(err.response.status);
+
+                          case 3:
+                            return _context9.abrupt("return");
+
+                          case 4:
+                            _this9.$toast.errorToast();
+
+                          case 5:
+                          case "end":
+                            return _context9.stop();
+                        }
+                      }
+                    }, _callee9);
+                  }));
+
+                  return function (_x) {
+                    return _ref.apply(this, arguments);
+                  };
+                }());
+
+              case 2:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
+      }))();
     },
     onSearchList: function onSearchList(cityParam, isPort) {
       if (isPort) {
@@ -18830,6 +18975,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9__["RepositoryFactory"].get('lenderPosts');
 var newsRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9__["RepositoryFactory"].get('news');
+var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9__["RepositoryFactory"].get('ports');
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     ONavbar: _views_viewer_components_ONavbar_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
@@ -18956,6 +19102,8 @@ var newsRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9_
                   }
 
                   _this2.postList = res.data;
+                  console.log(new Date());
+                  console.log(Math.abs(new Date() - new Date()) / 36e5);
                 })["catch"](function () {
                   _this2.$toast.errorToast();
                 });
@@ -18985,14 +19133,11 @@ var newsRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9_
         this.boat_param = "p".concat(boatId.toString());
       }
 
+      console.log(portId);
+      this.fetchCityParmByPortId(portId, prefectureUrlParam);
       window.location.href = "/boat/".concat(prefectureUrlParam, "/").concat(cityUrlParam, "/").concat(this.port_param, "/").concat(this.boat_param);
     },
-
-    /*-------------------------------------------*/
-
-    /* ニュースリスト取得
-    /*-------------------------------------------*/
-    fetchNewsIndex: function fetchNewsIndex() {
+    fetchCityParmByPortId: function fetchCityParmByPortId(portId, prefectureUrlParam) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
@@ -19001,18 +19146,15 @@ var newsRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9_
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return newsRepository.fetchNewsIndex('created_at', 'desc').then(function (res) {
+                return portRepository.fetchCityParmByPortId(portId).then(function (res) {
                   if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_5__["default"].OK) {
                     _this3.$toast.errorToast();
 
                     return;
                   }
 
-                  _this3.news = res.data;
-
-                  _this3.news.forEach(function (x) {
-                    if (x.created_at) x.created_at = moment__WEBPACK_IMPORTED_MODULE_2___default()(x.created_at).format('YYYY.MM.DD');
-                  });
+                  console.log(res);
+                  window.location.href = "/boat/".concat(prefectureUrlParam, "/").concat(res.data.url_param, "/").concat(_this3.port_param, "/").concat(_this3.boat_param);
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -19054,6 +19196,73 @@ var newsRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_9_
         }, _callee4);
       }))();
     },
+
+    /*-------------------------------------------*/
+
+    /* ニュースリスト取得
+    /*-------------------------------------------*/
+    fetchNewsIndex: function fetchNewsIndex() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return newsRepository.fetchNewsIndex('created_at', 'desc').then(function (res) {
+                  if (res.status !== _consts_httpStatus__WEBPACK_IMPORTED_MODULE_5__["default"].OK) {
+                    _this4.$toast.errorToast();
+
+                    return;
+                  }
+
+                  _this4.news = res.data;
+
+                  _this4.news.forEach(function (x) {
+                    if (x.created_at) x.created_at = moment__WEBPACK_IMPORTED_MODULE_2___default()(x.created_at).format('YYYY.MM.DD');
+                  });
+                })["catch"]( /*#__PURE__*/function () {
+                  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(err) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+                      while (1) {
+                        switch (_context5.prev = _context5.next) {
+                          case 0:
+                            if (!err.response) {
+                              _context5.next = 4;
+                              break;
+                            }
+
+                            _context5.next = 3;
+                            return _this4.$errHandling.adminCatch(err.response.status);
+
+                          case 3:
+                            return _context5.abrupt("return");
+
+                          case 4:
+                            _this4.$toast.errorToast();
+
+                          case 5:
+                          case "end":
+                            return _context5.stop();
+                        }
+                      }
+                    }, _callee5);
+                  }));
+
+                  return function (_x2) {
+                    return _ref2.apply(this, arguments);
+                  };
+                }());
+
+              case 2:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
     onDetailNews: function onDetailNews(id) {
       window.location.href = "/news/".concat(id);
     }
@@ -19086,6 +19295,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -34718,6 +34931,17 @@ module.exports = path;
 
 /***/ }),
 
+/***/ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/viewer/BoatList.vue?vue&type=style&index=0&id=69591968&lang=scss&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-3!./node_modules/sass-loader/dist/cjs.js??ref--7-4!./node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/viewer/BoatList.vue?vue&type=style&index=0&id=69591968&lang=scss&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/lender/basicInfo.scss?vue&type=style&index=1&lang=scss&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-3!./node_modules/sass-loader/dist/cjs.js??ref--7-4!./node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./resources/sass/lender/basicInfo.scss?vue&type=style&index=1&lang=scss& ***!
@@ -34806,9 +35030,9 @@ module.exports = path;
 
 /***/ }),
 
-/***/ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/boatList.scss?vue&type=style&index=2&lang=scss&":
+/***/ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/boatList.scss?vue&type=style&index=3&lang=scss&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-3!./node_modules/sass-loader/dist/cjs.js??ref--7-4!./node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./resources/sass/viewer/boatList.scss?vue&type=style&index=2&lang=scss& ***!
+  !*** ./node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-3!./node_modules/sass-loader/dist/cjs.js??ref--7-4!./node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./resources/sass/viewer/boatList.scss?vue&type=style&index=3&lang=scss& ***!
   \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -34820,6 +35044,17 @@ module.exports = path;
 /***/ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/common.scss?vue&type=style&index=0&lang=scss&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-3!./node_modules/sass-loader/dist/cjs.js??ref--7-4!./node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./resources/sass/viewer/common.scss?vue&type=style&index=0&lang=scss& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/common.scss?vue&type=style&index=1&lang=scss&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-3!./node_modules/sass-loader/dist/cjs.js??ref--7-4!./node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./resources/sass/viewer/common.scss?vue&type=style&index=1&lang=scss& ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -34842,6 +35077,17 @@ module.exports = path;
 /***/ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/extra.scss?vue&type=style&index=1&lang=scss&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-3!./node_modules/sass-loader/dist/cjs.js??ref--7-4!./node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./resources/sass/viewer/extra.scss?vue&type=style&index=1&lang=scss& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/extra.scss?vue&type=style&index=2&lang=scss&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-3!./node_modules/sass-loader/dist/cjs.js??ref--7-4!./node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./resources/sass/viewer/extra.scss?vue&type=style&index=2&lang=scss& ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -61718,6 +61964,12 @@ var render = function() {
                     _c(
                       "th",
                       { staticClass: "sort-header", attrs: { scope: "col" } },
+                      [_vm._v("email")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      { staticClass: "sort-header", attrs: { scope: "col" } },
                       [_vm._v("アクション")]
                     )
                   ])
@@ -61912,6 +62164,25 @@ var render = function() {
                           _vm._v(
                             "\n              " +
                               _vm._s(lender.updated_user_name) +
+                              "\n            "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        {
+                          staticClass: "align-middle py-1 pointer",
+                          on: {
+                            click: function($event) {
+                              return _vm.onDetail(lender.id)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(lender.email) +
                               "\n            "
                           )
                         ]
@@ -68175,763 +68446,1098 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "provider container-fluid", attrs: { id: "Wrapper" } },
-    [
-      _c("MHeader"),
-      _vm._v(" "),
-      _c("ONavbar"),
-      _vm._v(" "),
-      _c("main", { staticClass: "main" }, [
-        _c(
-          "nav",
-          { staticClass: "main-navi", attrs: { "aria-label": "breadcrumb" } },
-          [
-            _c("ol", { staticClass: "main-navi-breadcrumbs breadcrumb" }, [
-              _c(
-                "li",
-                { staticClass: "main-navi-breadcrumbs-item breadcrumb-item" },
-                [
+  return !_vm.isError
+    ? _c(
+        "div",
+        { staticClass: "provider container-fluid", attrs: { id: "Wrapper" } },
+        [
+          _c("MHeader"),
+          _vm._v(" "),
+          _c("ONavbar"),
+          _vm._v(" "),
+          _c("main", { staticClass: "main" }, [
+            _c(
+              "nav",
+              {
+                staticClass: "main-navi",
+                attrs: { "aria-label": "breadcrumb" }
+              },
+              [
+                _c("ol", { staticClass: "main-navi-breadcrumbs breadcrumb" }, [
                   _c(
-                    "router-link",
-                    { attrs: { to: { name: _vm.ROUTE.VIEWER.HOME.name } } },
-                    [_vm._v("遊漁船サーチ")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                { staticClass: "main-navi-breadcrumbs-item breadcrumb-item" },
-                [
-                  _c("a", { attrs: { href: "/boat/" + _vm.prefectureParam } }, [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(
-                          _vm.boatDetail.lender.prefecture.prefecture_name
-                        ) +
-                        "\n          "
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _vm.boatDetail.lender.port !== null
-                ? _c(
                     "li",
                     {
-                      staticClass:
-                        "main-navi-breadcrumbs-item breadcrumb-item active"
+                      staticClass: "main-navi-breadcrumbs-item breadcrumb-item"
                     },
                     [
-                      _vm._v(
-                        "\n          " +
-                          _vm._s(_vm.boatDetail.lender.port.port_name) +
-                          "\n        "
+                      _c(
+                        "router-link",
+                        { attrs: { to: { name: _vm.ROUTE.VIEWER.HOME.name } } },
+                        [_vm._v("遊漁船サーチ")]
                       )
-                    ]
-                  )
-                : _vm._e()
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("section", { staticClass: "main-summary" }, [
-          _c("dl", { staticClass: "main-summary-overview" }, [
-            _c("dt", { staticClass: "main-summary-overview-name" }, [
-              _vm._v(_vm._s(_vm.boatDetail.boat_name))
-            ]),
-            _vm._v(" "),
-            _c("dd", { staticClass: "main-summary-overview-port" }, [
-              _vm._v(
-                "\n          " +
-                  _vm._s(
-                    _vm.boatDetail.lender.port === null
-                      ? ""
-                      : _vm.boatDetail.lender.port.port_name
-                  ) +
-                  "\n          "
-              ),
-              _c(
-                "span",
-                { staticClass: "main-summary-overview-port-address" },
-                [_vm._v(_vm._s(_vm.boatDetail.lender.address))]
-              )
-            ]),
-            _vm._v(" "),
-            _c("dd", { staticClass: "main-summary-overview-review" }, [
-              _vm._v("★★★★☆")
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "main-summary-slides carousel slide",
-              attrs: {
-                id: "OverviewImages",
-                "data-ride": "carousel",
-                "data-touch": "true",
-                "data-wrap": "true"
-              }
-            },
-            [
-              _vm.imageList.length
-                ? _c(
-                    "div",
-                    { staticClass: "carousel-inner" },
-                    _vm._l(_vm.imageList, function(image, index) {
-                      return _c(
-                        "div",
-                        {
-                          key: index,
-                          staticClass: "main-summary-slide carousel-item",
-                          class: { active: index == 0 }
-                        },
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      staticClass: "main-navi-breadcrumbs-item breadcrumb-item"
+                    },
+                    [
+                      _c(
+                        "a",
+                        { attrs: { href: "/boat/" + _vm.prefecture_param } },
                         [
-                          _c(
-                            "div",
-                            { staticClass: "main-summary-slide-item" },
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "main-summary-slide-item-inner"
-                                },
-                                [_c("img", { attrs: { src: image } })]
-                              )
-                            ]
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(
+                                _vm.boatDetail.lender.prefecture.prefecture_name
+                              ) +
+                              "\n          "
                           )
                         ]
                       )
-                    }),
-                    0
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.imageList.length >= 2
-                ? _c(
-                    "span",
-                    {
-                      staticClass:
-                        "main-summary-slides-arrow ex-prev carousel-control-prev",
-                      attrs: {
-                        "data-target": "#OverviewImages",
-                        role: "button",
-                        "data-slide": "prev"
-                      }
-                    },
-                    [
-                      _c("span", { staticClass: "sr-only" }, [
-                        _vm._v("Previous")
-                      ])
                     ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.imageList.length >= 2
-                ? _c(
-                    "span",
-                    {
-                      staticClass:
-                        "main-summary-slides-arrow ex-next carousel-control-next",
-                      attrs: {
-                        "data-target": "#OverviewImages",
-                        role: "button",
-                        "data-slide": "next"
-                      }
-                    },
-                    [_c("span", { staticClass: "sr-only" }, [_vm._v("Next")])]
-                  )
-                : _vm._e()
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "main-summary-facilities" }, [
-            _c(
-              "div",
-              { staticClass: "row", staticStyle: { "flex-wrap": "inherit" } },
-              _vm._l(_vm.boatDetail.all_facilities, function(facility, fIndex) {
-                return _c(
-                  "dl",
-                  { key: fIndex, staticClass: "main-summary-facility col" },
-                  [
-                    _c("dd", { staticClass: "main-summary-facility-icon" }, [
-                      _c("img", {
-                        style: [
-                          _vm.fittedFacilitiesIds.indexOf(facility.id) !== -1
-                            ? {}
-                            : { filter: "grayscale(1)" }
-                        ],
-                        attrs: {
-                          src: facility.icon_img,
-                          alt: facility.facility_name
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("dt", { staticClass: "main-summary-facility-name" }, [
-                      _vm._v(_vm._s(facility.facility_name))
-                    ])
-                  ]
-                )
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "main-summary-information" }, [
-            _c(
-              "div",
-              { staticClass: "main-summary-information-items container-fluid" },
-              [
-                _c("dl", { staticClass: "main-summary-information-item row" }, [
-                  _c("dt", { staticClass: "col-3" }, [_vm._v("業種")]),
+                  ),
                   _vm._v(" "),
-                  _c("dd", { staticClass: "col-9" }, [
-                    _vm._v(_vm._s(_vm.operations))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("dl", { staticClass: "main-summary-information-item row" }, [
-                  _c("dt", { staticClass: "col-3" }, [_vm._v("所在地")]),
-                  _vm._v(" "),
-                  _c("dd", { staticClass: "col-9" }, [
-                    _vm._v(
-                      "\n              〒 " +
-                        _vm._s(_vm.boatDetail.lender.zip_code)
-                    ),
-                    _c("br"),
-                    _vm._v(
-                      _vm._s(_vm.boatDetail.lender.prefecture.prefecture_name) +
-                        _vm._s(_vm.boatDetail.lender.city.city_name) +
-                        _vm._s(_vm.boatDetail.lender.address) +
-                        "\n            "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("dl", { staticClass: "main-summary-information-item row" }, [
-                  _c("dt", { staticClass: "col-3" }, [_vm._v("代表者名")]),
-                  _vm._v(" "),
-                  _c("dd", { staticClass: "col-9" }, [
-                    _vm._v(_vm._s(_vm.boatDetail.lender.user.name))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("dl", { staticClass: "main-summary-information-item row" }, [
-                  _c("dt", { staticClass: "col-3" }, [_vm._v("電話番号")]),
-                  _vm._v(" "),
-                  _c("dd", { staticClass: "col-9" }, [
-                    _c(
-                      "a",
-                      { attrs: { href: "tel:" + _vm.boatDetail.lender.phone } },
-                      [_vm._v(_vm._s(_vm.boatDetail.lender.phone))]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "main-summary-information-tell" }, [
-                  _vm._v("「遊漁船サーチをみた」とお伝えください")
+                  _vm.boatDetail.lender.port !== null
+                    ? _c(
+                        "li",
+                        {
+                          staticClass:
+                            "main-navi-breadcrumbs-item breadcrumb-item active"
+                        },
+                        [
+                          _vm._v(
+                            "\n          " +
+                              _vm._s(_vm.boatDetail.lender.port.port_name) +
+                              "\n        "
+                          )
+                        ]
+                      )
+                    : _vm._e()
                 ])
               ]
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "main-summary-information-call",
-                on: {
-                  click: function($event) {
-                    return _vm.increCallCount(_vm.boatDetail.id)
-                  }
-                }
-              },
-              [
-                _c(
-                  "a",
-                  { attrs: { href: "tel:" + _vm.boatDetail.lender.phone } },
-                  [
-                    _c("img", {
-                      attrs: {
-                        src: "/images/common/icon_call.svg",
-                        alt: "電話をかける"
-                      }
-                    })
-                  ]
-                )
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "main-tab tab-content" }, [
-          _c(
-            "section",
-            {
-              staticClass: "main-tab-information tab-pane fade show active",
-              attrs: { id: "Information" }
-            },
-            [
-              _c("dl", { staticClass: "main-tab-information-comment" }, [
-                _vm._m(1),
+            _c("section", { staticClass: "main-summary" }, [
+              _c("dl", { staticClass: "main-summary-overview" }, [
+                _c("dt", { staticClass: "main-summary-overview-name" }, [
+                  _vm._v(_vm._s(_vm.boatDetail.boat_name))
+                ]),
                 _vm._v(" "),
-                _c(
-                  "dd",
-                  { staticClass: "main-tab-information-comment-content" },
-                  [_vm._v(_vm._s(_vm.boatDetail.caption_comment))]
-                )
+                _c("dd", { staticClass: "main-summary-overview-port" }, [
+                  _vm._v(
+                    "\n          " +
+                      _vm._s(
+                        _vm.boatDetail.lender.port === null
+                          ? ""
+                          : _vm.boatDetail.lender.port.port_name
+                      ) +
+                      "\n          "
+                  ),
+                  _c(
+                    "span",
+                    { staticClass: "main-summary-overview-port-address" },
+                    [_vm._v(_vm._s(_vm.boatDetail.lender.address))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("dd", { staticClass: "main-summary-overview-review" }, [
+                  _vm._v("★★★★☆")
+                ])
               ]),
               _vm._v(" "),
-              _c("dl", { staticClass: "main-tab-information-target" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c(
-                  "dd",
-                  {
-                    staticClass:
-                      "main-tab-information-target-items container-fluid"
-                  },
-                  [
-                    _vm._l(_vm.targetAllSeasonList, function(target, tIndex) {
-                      return _c(
-                        "dl",
-                        {
-                          key: tIndex,
-                          staticClass: "main-tab-information-target-item row"
-                        },
-                        [
-                          tIndex !== 0
-                            ? _c(
-                                "dt",
-                                {
-                                  staticClass:
-                                    "main-tab-information-target-item-index col-1"
-                                },
+              _c(
+                "div",
+                {
+                  staticClass: "main-summary-slides carousel slide",
+                  attrs: {
+                    id: "OverviewImages",
+                    "data-ride": "carousel",
+                    "data-touch": "true",
+                    "data-wrap": "true"
+                  }
+                },
+                [
+                  _vm.imageList.length
+                    ? _c(
+                        "div",
+                        { staticClass: "carousel-inner" },
+                        _vm._l(_vm.imageList, function(image, index) {
+                          return _c(
+                            "div",
+                            {
+                              key: index,
+                              staticClass: "main-summary-slide carousel-item",
+                              class: { active: index == 0 }
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "main-summary-slide-item" },
                                 [
-                                  _vm._v(
-                                    "\n                " +
-                                      _vm._s(_vm.SEASON.NAME[tIndex]) +
-                                      "\n              "
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "main-summary-slide-item-inner"
+                                    },
+                                    [_c("img", { attrs: { src: image } })]
                                   )
                                 ]
                               )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "dd",
-                            {
-                              staticClass:
-                                "main-tab-information-target-item-value col-11"
-                            },
-                            [_vm._v(_vm._s(target))]
+                            ]
                           )
+                        }),
+                        0
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.imageList.length >= 2
+                    ? _c(
+                        "span",
+                        {
+                          staticClass:
+                            "main-summary-slides-arrow ex-prev carousel-control-prev",
+                          attrs: {
+                            "data-target": "#OverviewImages",
+                            role: "button",
+                            "data-slide": "prev"
+                          }
+                        },
+                        [
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Previous")
+                          ])
                         ]
                       )
-                    }),
-                    _vm._v(" "),
-                    _c("dl")
-                  ],
-                  2
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.imageList.length >= 2
+                    ? _c(
+                        "span",
+                        {
+                          staticClass:
+                            "main-summary-slides-arrow ex-next carousel-control-next",
+                          attrs: {
+                            "data-target": "#OverviewImages",
+                            role: "button",
+                            "data-slide": "next"
+                          }
+                        },
+                        [
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Next")
+                          ])
+                        ]
+                      )
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "main-summary-facilities" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "row",
+                    staticStyle: { "flex-wrap": "inherit" }
+                  },
+                  _vm._l(_vm.boatDetail.all_facilities, function(
+                    facility,
+                    fIndex
+                  ) {
+                    return _c(
+                      "dl",
+                      { key: fIndex, staticClass: "main-summary-facility col" },
+                      [
+                        _c(
+                          "dd",
+                          { staticClass: "main-summary-facility-icon" },
+                          [
+                            _c("img", {
+                              style: [
+                                _vm.fittedFacilitiesIds.indexOf(facility.id) !==
+                                -1
+                                  ? {}
+                                  : { filter: "grayscale(1)" }
+                              ],
+                              attrs: {
+                                src: facility.icon_img,
+                                alt: facility.facility_name
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "dt",
+                          { staticClass: "main-summary-facility-name" },
+                          [_vm._v(_vm._s(facility.facility_name))]
+                        )
+                      ]
+                    )
+                  }),
+                  0
                 )
               ]),
               _vm._v(" "),
-              _c("dl", { staticClass: "main-tab-information-other" }, [
-                _vm._m(3),
-                _vm._v(" "),
+              _c("div", { staticClass: "main-summary-information" }, [
                 _c(
-                  "dd",
+                  "div",
                   {
                     staticClass:
-                      "main-tab-information-other-items container-fluid"
+                      "main-summary-information-items container-fluid"
                   },
                   [
                     _c(
                       "dl",
-                      { staticClass: "main-tab-information-other-item row" },
+                      { staticClass: "main-summary-information-item row" },
                       [
-                        _c(
-                          "dt",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-index col-4"
-                          },
-                          [_vm._v("対応エリア")]
-                        ),
+                        _c("dt", { staticClass: "col-3" }, [_vm._v("業種")]),
                         _vm._v(" "),
-                        _c(
-                          "dd",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-value col-8"
-                          },
-                          [
-                            _vm._v(
-                              "\n                " +
-                                _vm._s(_vm.boatDetail.fishing_area) +
-                                "\n              "
-                            )
-                          ]
-                        )
+                        _c("dd", { staticClass: "col-9" }, [
+                          _vm._v(_vm._s(_vm.operations))
+                        ])
                       ]
                     ),
                     _vm._v(" "),
                     _c(
                       "dl",
-                      { staticClass: "main-tab-information-other-item row" },
+                      { staticClass: "main-summary-information-item row" },
                       [
-                        _c(
-                          "dt",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-index col-4"
-                          },
-                          [_vm._v("最大定員")]
-                        ),
+                        _c("dt", { staticClass: "col-3" }, [_vm._v("所在地")]),
                         _vm._v(" "),
-                        _c(
-                          "dd",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-value col-8"
-                          },
-                          [
-                            _vm._v(
-                              "\n                " +
-                                _vm._s(_vm.boatDetail.capacity) +
-                                "名\n              "
-                            )
-                          ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "dl",
-                      { staticClass: "main-tab-information-other-item row" },
-                      [
-                        _c(
-                          "dt",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-index col-4"
-                          },
-                          [_vm._v("出港時間")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "dd",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-value col-8"
-                          },
-                          [
-                            _vm._v(
-                              "\n                " +
-                                _vm._s(_vm.boatDetail.departure) +
-                                "\n              "
-                            )
-                          ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "dl",
-                      { staticClass: "main-tab-information-other-item row" },
-                      [
-                        _c(
-                          "dt",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-index col-4"
-                          },
-                          [_vm._v("釣り座の決め方")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "dd",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-value col-8"
-                          },
-                          [
-                            _vm._v(
-                              "\n                " +
-                                _vm._s(_vm.boatDetail.fishing_point) +
-                                "\n              "
-                            )
-                          ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "dl",
-                      { staticClass: "main-tab-information-other-item row" },
-                      [
-                        _c(
-                          "dt",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-index col-4"
-                          },
-                          [_vm._v("料金")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "dd",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-value col-8"
-                          },
-                          [
-                            _vm._v(
-                              "\n                " +
-                                _vm._s(_vm.boatDetail.lender.price) +
-                                "\n              "
-                            )
-                          ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "dl",
-                      { staticClass: "main-tab-information-other-item row" },
-                      [
-                        _c(
-                          "dt",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-index col-4"
-                          },
-                          [_vm._v("支払方法")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "dd",
-                          {
-                            staticClass:
-                              "main-tab-information-other-item-value col-8"
-                          },
-                          [_vm._v(_vm._s(_vm.paymentOptions))]
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "section",
-            {
-              staticClass: "main-tab-plan tab-pane fade",
-              attrs: { id: "Plan" }
-            },
-            [
-              _vm.boatDetail.plan === null
-                ? _c(
-                    "div",
-                    {
-                      staticClass:
-                        "mx-5 font-weight-bold d-flex justify-content-center align-items-center"
-                    },
-                    [
-                      _vm._v(
-                        "\n          プラン情報は投稿されておりません。\n        "
-                      )
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.boatDetail.plan !== null
-                ? _c("div", { staticClass: "main-tab-plan-inner" }, [
-                    _c("h3", { staticClass: "ex-headline" }, [
-                      _c("span", [
-                        _vm._v(_vm._s(_vm.boatDetail.plan.plan_name))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "main-tab-plan-items container-fluid" },
-                      [
-                        _c("dl", { staticClass: "main-tab-plan-item row" }, [
-                          _c("dt", { staticClass: "col-3" }, [
-                            _vm._v("ターゲット")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "dd",
-                            { staticClass: "col-9" },
-                            _vm._l(_vm.targetAllSeasonList, function(
-                              target,
-                              tIndex
-                            ) {
-                              return _c("span", { key: tIndex }, [
-                                _vm.targetAllSeasonList.length - 1 !== tIndex
-                                  ? _c("span", [
-                                      _vm._v(
-                                        "\n                    " +
-                                          _vm._s(
-                                            tIndex === 0 ? "" : target + "、"
-                                          ) +
-                                          "\n                  "
-                                      )
-                                    ])
-                                  : _c("span", [
-                                      _vm._v(
-                                        "\n                    " +
-                                          _vm._s(target) +
-                                          "\n                  "
-                                      )
-                                    ])
-                              ])
-                            }),
-                            0
+                        _c("dd", { staticClass: "col-9" }, [
+                          _vm._v(
+                            "\n              〒 " +
+                              _vm._s(_vm.boatDetail.lender.zip_code)
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            _vm._s(
+                              _vm.boatDetail.lender.prefecture.prefecture_name
+                            ) +
+                              _vm._s(_vm.boatDetail.lender.city.city_name) +
+                              _vm._s(_vm.boatDetail.lender.address) +
+                              "\n            "
                           )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "dl",
+                      { staticClass: "main-summary-information-item row" },
+                      [
+                        _c("dt", { staticClass: "col-3" }, [
+                          _vm._v("代表者名")
                         ]),
                         _vm._v(" "),
-                        _c("dl", { staticClass: "main-tab-plan-item row" }, [
-                          _c("dt", { staticClass: "col-3" }, [_vm._v("時期")]),
-                          _vm._v(" "),
-                          _c("dd", { staticClass: "col-9" }, [
-                            _vm._v(_vm._s(_vm.boatDetail.plan.delay))
-                          ])
+                        _c("dd", { staticClass: "col-9" }, [
+                          _vm._v(_vm._s(_vm.boatDetail.lender.user.name))
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "dl",
+                      { staticClass: "main-summary-information-item row" },
+                      [
+                        _c("dt", { staticClass: "col-3" }, [
+                          _vm._v("電話番号")
                         ]),
                         _vm._v(" "),
-                        _c("dl", { staticClass: "main-tab-plan-item row" }, [
-                          _c("dt", { staticClass: "col-3" }, [_vm._v("業種")]),
-                          _vm._v(" "),
-                          _c("dd", { staticClass: "col-9" }, [
-                            _vm._v(_vm._s(_vm.operations))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("dl", { staticClass: "main-tab-plan-item row" }, [
-                          _c("dt", { staticClass: "col-3" }, [_vm._v("料金")]),
-                          _vm._v(" "),
-                          _c("dd", { staticClass: "col-9" }, [
-                            _vm._v(_vm._s(_vm.boatDetail.lender.price))
-                          ])
+                        _c("dd", { staticClass: "col-9" }, [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "tel:" + _vm.boatDetail.lender.phone
+                              }
+                            },
+                            [_vm._v(_vm._s(_vm.boatDetail.lender.phone))]
+                          )
                         ])
                       ]
                     ),
                     _vm._v(" "),
                     _c(
                       "div",
-                      {
-                        staticClass: "main-tab-plan-view",
-                        attrs: {
-                          "data-toggle": "modal",
-                          "data-target": "#Plan" + 1
-                        }
-                      },
-                      [_vm._v("\n            このプランを見る\n          ")]
-                    ),
+                      { staticClass: "main-summary-information-tell" },
+                      [_vm._v("「遊漁船サーチをみた」とお伝えください")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "main-summary-information-call",
+                    on: {
+                      click: function($event) {
+                        return _vm.increCallCount(_vm.boatDetail.id)
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "a",
+                      { attrs: { href: "tel:" + _vm.boatDetail.lender.phone } },
+                      [
+                        _c("img", {
+                          attrs: {
+                            src: "/images/common/icon_call.svg",
+                            alt: "電話をかける"
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "main-tab tab-content" }, [
+              _c(
+                "section",
+                {
+                  staticClass: "main-tab-information tab-pane fade show active",
+                  attrs: { id: "Information" }
+                },
+                [
+                  _c("dl", { staticClass: "main-tab-information-comment" }, [
+                    _vm._m(1),
                     _vm._v(" "),
                     _c(
-                      "div",
+                      "dd",
+                      { staticClass: "main-tab-information-comment-content" },
+                      [_vm._v(_vm._s(_vm.boatDetail.caption_comment))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("dl", { staticClass: "main-tab-information-target" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "dd",
                       {
-                        staticClass: "main-tab-plan-modal modal fade",
-                        attrs: { id: "Plan" + 1, role: "dialog" }
+                        staticClass:
+                          "main-tab-information-target-items container-fluid"
+                      },
+                      [
+                        _vm._l(_vm.targetAllSeasonList, function(
+                          target,
+                          tIndex
+                        ) {
+                          return _c(
+                            "dl",
+                            {
+                              key: tIndex,
+                              staticClass:
+                                "main-tab-information-target-item row"
+                            },
+                            [
+                              tIndex !== 0
+                                ? _c(
+                                    "dt",
+                                    {
+                                      staticClass:
+                                        "main-tab-information-target-item-index col-1"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                " +
+                                          _vm._s(_vm.SEASON.NAME[tIndex]) +
+                                          "\n              "
+                                      )
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c(
+                                "dd",
+                                {
+                                  staticClass:
+                                    "main-tab-information-target-item-value col-11"
+                                },
+                                [_vm._v(_vm._s(target))]
+                              )
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c("dl")
+                      ],
+                      2
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("dl", { staticClass: "main-tab-information-other" }, [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c(
+                      "dd",
+                      {
+                        staticClass:
+                          "main-tab-information-other-items container-fluid"
                       },
                       [
                         _c(
+                          "dl",
+                          {
+                            staticClass: "main-tab-information-other-item row"
+                          },
+                          [
+                            _c(
+                              "dt",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-index col-4"
+                              },
+                              [_vm._v("対応エリア")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dd",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-value col-8"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(_vm.boatDetail.fishing_area) +
+                                    "\n              "
+                                )
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "dl",
+                          {
+                            staticClass: "main-tab-information-other-item row"
+                          },
+                          [
+                            _c(
+                              "dt",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-index col-4"
+                              },
+                              [_vm._v("最大定員")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dd",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-value col-8"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(_vm.boatDetail.capacity) +
+                                    "名\n              "
+                                )
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "dl",
+                          {
+                            staticClass: "main-tab-information-other-item row"
+                          },
+                          [
+                            _c(
+                              "dt",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-index col-4"
+                              },
+                              [_vm._v("出港時間")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dd",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-value col-8"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(_vm.boatDetail.departure) +
+                                    "\n              "
+                                )
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "dl",
+                          {
+                            staticClass: "main-tab-information-other-item row"
+                          },
+                          [
+                            _c(
+                              "dt",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-index col-4"
+                              },
+                              [_vm._v("釣り座の決め方")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dd",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-value col-8"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(_vm.boatDetail.fishing_point) +
+                                    "\n              "
+                                )
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "dl",
+                          {
+                            staticClass: "main-tab-information-other-item row"
+                          },
+                          [
+                            _c(
+                              "dt",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-index col-4"
+                              },
+                              [_vm._v("料金")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dd",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-value col-8"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(_vm.boatDetail.lender.price) +
+                                    "\n              "
+                                )
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "dl",
+                          {
+                            staticClass: "main-tab-information-other-item row"
+                          },
+                          [
+                            _c(
+                              "dt",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-index col-4"
+                              },
+                              [_vm._v("支払方法")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dd",
+                              {
+                                staticClass:
+                                  "main-tab-information-other-item-value col-8"
+                              },
+                              [_vm._v(_vm._s(_vm.paymentOptions))]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "section",
+                {
+                  staticClass: "main-tab-plan tab-pane fade",
+                  attrs: { id: "Plan" }
+                },
+                [
+                  _vm.boatDetail.plan === null
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "mx-5 font-weight-bold d-flex justify-content-center align-items-center"
+                        },
+                        [
+                          _vm._v(
+                            "\n          プラン情報は投稿されておりません。\n        "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.boatDetail.plan !== null
+                    ? _c("div", { staticClass: "main-tab-plan-inner" }, [
+                        _c("h3", { staticClass: "ex-headline" }, [
+                          _c("span", [
+                            _vm._v(_vm._s(_vm.boatDetail.plan.plan_name))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
                           "div",
                           {
-                            staticClass: "modal-dialog",
-                            attrs: { role: "document" }
+                            staticClass: "main-tab-plan-items container-fluid"
+                          },
+                          [
+                            _c(
+                              "dl",
+                              { staticClass: "main-tab-plan-item row" },
+                              [
+                                _c("dt", { staticClass: "col-3" }, [
+                                  _vm._v("ターゲット")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "dd",
+                                  { staticClass: "col-9" },
+                                  _vm._l(_vm.targetAllSeasonList, function(
+                                    target,
+                                    tIndex
+                                  ) {
+                                    return _c("span", { key: tIndex }, [
+                                      _vm.targetAllSeasonList.length - 1 !==
+                                      tIndex
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                    " +
+                                                _vm._s(
+                                                  tIndex === 0
+                                                    ? ""
+                                                    : target + "、"
+                                                ) +
+                                                "\n                  "
+                                            )
+                                          ])
+                                        : _c("span", [
+                                            _vm._v(
+                                              "\n                    " +
+                                                _vm._s(target) +
+                                                "\n                  "
+                                            )
+                                          ])
+                                    ])
+                                  }),
+                                  0
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dl",
+                              { staticClass: "main-tab-plan-item row" },
+                              [
+                                _c("dt", { staticClass: "col-3" }, [
+                                  _vm._v("時期")
+                                ]),
+                                _vm._v(" "),
+                                _c("dd", { staticClass: "col-9" }, [
+                                  _vm._v(_vm._s(_vm.boatDetail.plan.delay))
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dl",
+                              { staticClass: "main-tab-plan-item row" },
+                              [
+                                _c("dt", { staticClass: "col-3" }, [
+                                  _vm._v("業種")
+                                ]),
+                                _vm._v(" "),
+                                _c("dd", { staticClass: "col-9" }, [
+                                  _vm._v(_vm._s(_vm.operations))
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dl",
+                              { staticClass: "main-tab-plan-item row" },
+                              [
+                                _c("dt", { staticClass: "col-3" }, [
+                                  _vm._v("料金")
+                                ]),
+                                _vm._v(" "),
+                                _c("dd", { staticClass: "col-9" }, [
+                                  _vm._v(_vm._s(_vm.boatDetail.lender.price))
+                                ])
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "main-tab-plan-view",
+                            attrs: {
+                              "data-toggle": "modal",
+                              "data-target": "#Plan" + 1
+                            }
+                          },
+                          [_vm._v("\n            このプランを見る\n          ")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "main-tab-plan-modal modal fade",
+                            attrs: { id: "Plan" + 1, role: "dialog" }
                           },
                           [
                             _c(
                               "div",
                               {
-                                staticClass:
-                                  "main-tab-plan-modal-content modal-body"
+                                staticClass: "modal-dialog",
+                                attrs: { role: "document" }
                               },
                               [
-                                _vm._m(4),
-                                _vm._v(" "),
-                                _c(
-                                  "p",
-                                  {
-                                    staticClass:
-                                      "main-tab-plan-modal-content-explain"
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                  " +
-                                        _vm._s(
-                                          _vm.boatDetail.plan.plan_description
-                                        ) +
-                                        "\n                "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
                                 _c(
                                   "div",
                                   {
                                     staticClass:
-                                      "main-tab-plan-modal-content-items container-fluid"
+                                      "main-tab-plan-modal-content modal-body"
                                   },
                                   [
+                                    _vm._m(4),
+                                    _vm._v(" "),
                                     _c(
-                                      "dl",
+                                      "p",
                                       {
                                         staticClass:
-                                          "main-tab-plan-modal-content-item row"
+                                          "main-tab-plan-modal-content-explain"
                                       },
                                       [
-                                        _c("dt", { staticClass: "col-12" }, [
-                                          _vm._v("ターゲット")
-                                        ]),
+                                        _vm._v(
+                                          "\n                  " +
+                                            _vm._s(
+                                              _vm.boatDetail.plan
+                                                .plan_description
+                                            ) +
+                                            "\n                "
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "main-tab-plan-modal-content-items container-fluid"
+                                      },
+                                      [
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c(
+                                              "dt",
+                                              { staticClass: "col-12" },
+                                              [_vm._v("ターゲット")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "dd",
+                                              { staticClass: "col-12" },
+                                              _vm._l(
+                                                _vm.targetAllSeasonList,
+                                                function(target, tIndex) {
+                                                  return _c(
+                                                    "span",
+                                                    { key: tIndex },
+                                                    [
+                                                      _vm.targetAllSeasonList
+                                                        .length -
+                                                        1 !==
+                                                      tIndex
+                                                        ? _c("span", [
+                                                            _vm._v(
+                                                              "\n                          " +
+                                                                _vm._s(
+                                                                  tIndex === 0
+                                                                    ? ""
+                                                                    : target +
+                                                                        "、"
+                                                                ) +
+                                                                "\n                        "
+                                                            )
+                                                          ])
+                                                        : _c("span", [
+                                                            _vm._v(
+                                                              "\n                          " +
+                                                                _vm._s(target) +
+                                                                "\n                        "
+                                                            )
+                                                          ])
+                                                    ]
+                                                  )
+                                                }
+                                              ),
+                                              0
+                                            )
+                                          ]
+                                        ),
                                         _vm._v(" "),
                                         _c(
-                                          "dd",
-                                          { staticClass: "col-12" },
-                                          _vm._l(
-                                            _vm.targetAllSeasonList,
-                                            function(target, tIndex) {
-                                              return _c(
-                                                "span",
-                                                { key: tIndex },
-                                                [
-                                                  _vm.targetAllSeasonList
-                                                    .length -
-                                                    1 !==
-                                                  tIndex
-                                                    ? _c("span", [
-                                                        _vm._v(
-                                                          "\n                          " +
-                                                            _vm._s(
-                                                              tIndex === 0
-                                                                ? ""
-                                                                : target + "、"
-                                                            ) +
-                                                            "\n                        "
-                                                        )
-                                                      ])
-                                                    : _c("span", [
-                                                        _vm._v(
-                                                          "\n                          " +
-                                                            _vm._s(target) +
-                                                            "\n                        "
-                                                        )
-                                                      ])
-                                                ]
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c("dt", { staticClass: "col-4" }, [
+                                              _vm._v("時期")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("dd", { staticClass: "col-8" }, [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm.boatDetail.plan.delay
+                                                )
                                               )
-                                            }
-                                          ),
-                                          0
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c("dt", { staticClass: "col-4" }, [
+                                              _vm._v("業種")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("dd", { staticClass: "col-8" }, [
+                                              _vm._v(_vm._s(_vm.operations))
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c("dt", { staticClass: "col-4" }, [
+                                              _vm._v("料金")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("dd", { staticClass: "col-8" }, [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm.boatDetail.lender.price
+                                                )
+                                              )
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c("dt", { staticClass: "col-4" }, [
+                                              _vm._v("料金に含まれるもの")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("dd", { staticClass: "col-8" }, [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm.boatDetail.plan
+                                                    .price_includes
+                                                )
+                                              )
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c("dt", { staticClass: "col-4" }, [
+                                              _vm._v("準備が必要なもの")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("dd", { staticClass: "col-8" }, [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm.boatDetail.plan.to_prepare
+                                                )
+                                              )
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c("dt", { staticClass: "col-4" }, [
+                                              _vm._v("出航時間")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("dd", { staticClass: "col-8" }, [
+                                              _vm._v(
+                                                _vm._s(_vm.boatDetail.departure)
+                                              )
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c("dt", { staticClass: "col-4" }, [
+                                              _vm._v("集合時間")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("dd", { staticClass: "col-8" }, [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm.boatDetail.plan.collection
+                                                )
+                                              )
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c("dt", { staticClass: "col-4" }, [
+                                              _vm._v("帰港時間")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("dd", { staticClass: "col-8" }, [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm.boatDetail.plan.return
+                                                )
+                                              )
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c("dt", { staticClass: "col-4" }, [
+                                              _vm._v("予約方法")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("dd", { staticClass: "col-8" }, [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm.boatDetail.plan
+                                                    .reservation
+                                                )
+                                              )
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c("dt", { staticClass: "col-4" }, [
+                                              _vm._v("支払い方法")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("dd", { staticClass: "col-8" }, [
+                                              _vm._v(_vm._s(_vm.paymentOptions))
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "main-tab-plan-modal-content-item row"
+                                          },
+                                          [
+                                            _c("dt", { staticClass: "col-4" }, [
+                                              _vm._v("釣り方")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("dd", { staticClass: "col-8" }, [
+                                              _vm._v(
+                                                "\n                      " +
+                                                  _vm._s(
+                                                    _vm.boatDetail.fishing_point
+                                                  ) +
+                                                  "\n                    "
+                                              )
+                                            ])
+                                          ]
                                         )
                                       ]
                                     ),
@@ -68940,224 +69546,344 @@ var render = function() {
                                       "dl",
                                       {
                                         staticClass:
-                                          "main-tab-plan-modal-content-item row"
+                                          "main-tab-plan-modal-content-note"
                                       },
                                       [
-                                        _c("dt", { staticClass: "col-4" }, [
-                                          _vm._v("時期")
-                                        ]),
+                                        _c("dt", [_vm._v("備考")]),
                                         _vm._v(" "),
-                                        _c("dd", { staticClass: "col-8" }, [
+                                        _c("dd", [
                                           _vm._v(
-                                            _vm._s(_vm.boatDetail.plan.delay)
-                                          )
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "dl",
-                                      {
-                                        staticClass:
-                                          "main-tab-plan-modal-content-item row"
-                                      },
-                                      [
-                                        _c("dt", { staticClass: "col-4" }, [
-                                          _vm._v("業種")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("dd", { staticClass: "col-8" }, [
-                                          _vm._v(_vm._s(_vm.operations))
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "dl",
-                                      {
-                                        staticClass:
-                                          "main-tab-plan-modal-content-item row"
-                                      },
-                                      [
-                                        _c("dt", { staticClass: "col-4" }, [
-                                          _vm._v("料金")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("dd", { staticClass: "col-8" }, [
-                                          _vm._v(
-                                            _vm._s(_vm.boatDetail.lender.price)
-                                          )
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "dl",
-                                      {
-                                        staticClass:
-                                          "main-tab-plan-modal-content-item row"
-                                      },
-                                      [
-                                        _c("dt", { staticClass: "col-4" }, [
-                                          _vm._v("料金に含まれるもの")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("dd", { staticClass: "col-8" }, [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.boatDetail.plan.price_includes
-                                            )
-                                          )
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "dl",
-                                      {
-                                        staticClass:
-                                          "main-tab-plan-modal-content-item row"
-                                      },
-                                      [
-                                        _c("dt", { staticClass: "col-4" }, [
-                                          _vm._v("準備が必要なもの")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("dd", { staticClass: "col-8" }, [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.boatDetail.plan.to_prepare
-                                            )
-                                          )
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "dl",
-                                      {
-                                        staticClass:
-                                          "main-tab-plan-modal-content-item row"
-                                      },
-                                      [
-                                        _c("dt", { staticClass: "col-4" }, [
-                                          _vm._v("出航時間")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("dd", { staticClass: "col-8" }, [
-                                          _vm._v(
-                                            _vm._s(_vm.boatDetail.departure)
-                                          )
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "dl",
-                                      {
-                                        staticClass:
-                                          "main-tab-plan-modal-content-item row"
-                                      },
-                                      [
-                                        _c("dt", { staticClass: "col-4" }, [
-                                          _vm._v("集合時間")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("dd", { staticClass: "col-8" }, [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.boatDetail.plan.collection
-                                            )
-                                          )
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "dl",
-                                      {
-                                        staticClass:
-                                          "main-tab-plan-modal-content-item row"
-                                      },
-                                      [
-                                        _c("dt", { staticClass: "col-4" }, [
-                                          _vm._v("帰港時間")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("dd", { staticClass: "col-8" }, [
-                                          _vm._v(
-                                            _vm._s(_vm.boatDetail.plan.return)
-                                          )
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "dl",
-                                      {
-                                        staticClass:
-                                          "main-tab-plan-modal-content-item row"
-                                      },
-                                      [
-                                        _c("dt", { staticClass: "col-4" }, [
-                                          _vm._v("予約方法")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("dd", { staticClass: "col-8" }, [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.boatDetail.plan.reservation
-                                            )
-                                          )
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "dl",
-                                      {
-                                        staticClass:
-                                          "main-tab-plan-modal-content-item row"
-                                      },
-                                      [
-                                        _c("dt", { staticClass: "col-4" }, [
-                                          _vm._v("支払い方法")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("dd", { staticClass: "col-8" }, [
-                                          _vm._v(_vm._s(_vm.paymentOptions))
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "dl",
-                                      {
-                                        staticClass:
-                                          "main-tab-plan-modal-content-item row"
-                                      },
-                                      [
-                                        _c("dt", { staticClass: "col-4" }, [
-                                          _vm._v("釣り方")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("dd", { staticClass: "col-8" }, [
-                                          _vm._v(
-                                            "\n                      " +
+                                            "\n                    " +
                                               _vm._s(
-                                                _vm.boatDetail
-                                                  .fishing_options[0] ===
-                                                  undefined
-                                                  ? ""
-                                                  : _vm.boatDetail
-                                                      .fishing_options[0]
-                                                      .fishing_option_name
+                                                _vm.boatDetail.plan.other
                                               ) +
-                                              "\n                    "
+                                              "\n                  "
                                           )
                                         ])
                                       ]
                                     )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "section",
+                {
+                  staticClass: "main-tab-result tab-pane fade",
+                  attrs: { id: "Result" }
+                },
+                [
+                  _vm.lenderPostIndex.length === 0
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "mx-5 font-weight-bold d-flex justify-content-center align-items-center"
+                        },
+                        [
+                          _vm._v(
+                            "\n          釣果情報は投稿されておりません。\n        "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.lenderPostIndex, function(result, rIndex) {
+                    return _c(
+                      "div",
+                      { key: rIndex, staticClass: "main-tab-result-inner" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "main-tab-result-items container-fluid"
+                          },
+                          [
+                            _c(
+                              "dl",
+                              { staticClass: "main-tab-result-date row" },
+                              [
+                                _c("dt", { staticClass: "col-2" }, [
+                                  _vm._v("日時：")
+                                ]),
+                                _vm._v(" "),
+                                _c("dd", { staticClass: "col-10" }, [
+                                  _vm._v(_vm._s(result.updated_at))
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "h3",
+                              {
+                                staticClass: "main-tab-result-headline col-12"
+                              },
+                              [_vm._v(_vm._s(result.title))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dl",
+                              { staticClass: "main-tab-result-item row" },
+                              [
+                                _c("dt", { staticClass: "col-2" }, [
+                                  _vm._v("釣り方")
+                                ]),
+                                _vm._v(" "),
+                                _c("dd", { staticClass: "col-10" }, [
+                                  _vm._v(_vm._s(result.fishing_point))
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dl",
+                              { staticClass: "main-tab-result-item row" },
+                              [
+                                _c("dt", { staticClass: "col-2" }, [
+                                  _vm._v("魚種")
+                                ]),
+                                _vm._v(" "),
+                                _c("dd", { staticClass: "col-10" }, [
+                                  _vm._v(_vm._s(result.target_names))
+                                ])
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(result.comment) +
+                              "\n          "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "main-tab-result-slides carousel slide",
+                            attrs: {
+                              id: "ResultImages" + rIndex,
+                              "data-ride": "carousel",
+                              "data-touch": "true",
+                              "data-wrap": "true"
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "carousel-inner" },
+                              _vm._l(result.post_images, function(
+                                image,
+                                iIndex
+                              ) {
+                                return _c(
+                                  "div",
+                                  {
+                                    key: iIndex,
+                                    staticClass:
+                                      "main-tab-result-slide carousel-item",
+                                    class: { active: iIndex === 0 }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "main-tab-result-slide-item"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "main-tab-result-slide-item-inner"
+                                          },
+                                          [_c("img", { attrs: { src: image } })]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              }),
+                              0
+                            ),
+                            _vm._v(" "),
+                            result.post_images.length >= 2
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "main-tab-result-slides-arrow ex-prev carousel-control-prev",
+                                    attrs: {
+                                      "data-target": "#ResultImages" + rIndex,
+                                      role: "button",
+                                      "data-slide": "prev"
+                                    }
+                                  },
+                                  [
+                                    _c("span", { staticClass: "sr-only" }, [
+                                      _vm._v("Previous")
+                                    ])
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            result.post_images.length >= 2
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "main-tab-result-slides-arrow ex-next carousel-control-next",
+                                    attrs: {
+                                      "data-target": "#ResultImages" + rIndex,
+                                      role: "button",
+                                      "data-slide": "next"
+                                    }
+                                  },
+                                  [
+                                    _c("span", { staticClass: "sr-only" }, [
+                                      _vm._v("Next")
+                                    ])
+                                  ]
+                                )
+                              : _vm._e()
+                          ]
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c("MPagination", {
+                    attrs: { "pagination-data": _vm.paginationData },
+                    on: { getPaginationResults: _vm.getPaginationResults }
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "section",
+                {
+                  staticClass: "main-tab-access tab-pane fade",
+                  attrs: { id: "Access" }
+                },
+                [
+                  _c("p", { staticClass: "main-tab-access-explain" }, [
+                    _vm._v(
+                      "\n          " + _vm._s(_vm.boatDetail.lender.zip_code)
+                    ),
+                    _c("br"),
+                    _vm._v(
+                      _vm._s(_vm.boatDetail.lender.prefecture.prefecture_name) +
+                        _vm._s(_vm.boatDetail.lender.city.city_name) +
+                        _vm._s(_vm.boatDetail.lender.address) +
+                        "\n        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "main-tab-access-map" }, [
+                    _c("iframe", {
+                      staticStyle: { border: "0" },
+                      attrs: {
+                        src: _vm.boatDetail.lender.map_url,
+                        width: "600",
+                        height: "450",
+                        allowfullscreen: "",
+                        loading: "lazy"
+                      }
+                    })
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "section",
+              { staticClass: "ex-recommend" },
+              [
+                _vm._m(5),
+                _vm._v(" "),
+                _vm.boatIndexDataPaidMember.length !== 0
+                  ? _c("MRecommend", {
+                      attrs: {
+                        "paid-members-data": _vm.boatIndexDataPaidMember
+                      },
+                      on: {
+                        onDetail: _vm.onDetail,
+                        increCallCount: _vm.increCallCount
+                      }
+                    })
+                  : _vm._e()
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _vm.boatIndexDataPaidMember.length === 0
+              ? _c(
+                  "section",
+                  { staticClass: "main-boat" },
+                  _vm._l(_vm.boatIndexDataFreeMember, function(item, index) {
+                    return _c(
+                      "div",
+                      { key: index, staticClass: "main-boat-free" },
+                      [
+                        _c("div", { staticClass: "main-boat-free-summary" }, [
+                          _c("dl", [
+                            _c(
+                              "dt",
+                              { staticClass: "main-boat-free-summary-name" },
+                              [_vm._v(_vm._s(item.boat_name))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dd",
+                              { staticClass: "main-boat-free-summary-port" },
+                              [_vm._v(_vm._s(item.port_name))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "dd",
+                              { staticClass: "main-boat-free-summary-review" },
+                              [_vm._v(_vm._s(item.review))]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "main-boat-free-information" },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "main-boat-free-information-items container-fluid"
+                              },
+                              [
+                                _c(
+                                  "dl",
+                                  {
+                                    staticClass:
+                                      "main-boat-free-information-item row"
+                                  },
+                                  [
+                                    _c("dt", { staticClass: "col-3" }, [
+                                      _vm._v("業種")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("dd", { staticClass: "col-9" }, [
+                                      _vm._v(_vm._s(item.operation_names))
+                                    ])
                                   ]
                                 ),
                                 _vm._v(" "),
@@ -69165,400 +69891,95 @@ var render = function() {
                                   "dl",
                                   {
                                     staticClass:
-                                      "main-tab-plan-modal-content-note"
+                                      "main-boat-free-information-item row"
                                   },
                                   [
-                                    _c("dt", [_vm._v("備考")]),
+                                    _c("dt", { staticClass: "col-3" }, [
+                                      _vm._v("所在地")
+                                    ]),
                                     _vm._v(" "),
-                                    _c("dd", [
+                                    _c("dd", { staticClass: "col-9" }, [
                                       _vm._v(
-                                        "\n                    " +
-                                          _vm._s(_vm.boatDetail.plan.other) +
-                                          "\n                  "
+                                        "\n                〒" +
+                                          _vm._s(item.zip_code)
+                                      ),
+                                      _c("br"),
+                                      _vm._v(
+                                        _vm._s(item.prefecture_name) +
+                                          " " +
+                                          _vm._s(item.city_name) +
+                                          "\n                " +
+                                          _vm._s(item.address) +
+                                          "\n              "
                                       )
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "dl",
+                                  {
+                                    staticClass:
+                                      "main-boat-free-information-item row"
+                                  },
+                                  [
+                                    _c("dt", { staticClass: "col-3" }, [
+                                      _vm._v("釣り方")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("dd", { staticClass: "col-9" }, [
+                                      _vm._v(_vm._s(item.fishing_point))
                                     ])
                                   ]
                                 )
                               ]
                             )
                           ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "main-boat-free-detail",
+                            on: {
+                              click: function($event) {
+                                return _vm.onDetail(item.id)
+                              }
+                            }
+                          },
+                          [_vm._v("\n          詳細を見る\n        ")]
                         )
                       ]
                     )
-                  ])
-                : _vm._e()
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "section",
-            {
-              staticClass: "main-tab-result tab-pane fade",
-              attrs: { id: "Result" }
-            },
-            [
-              _vm.lenderPostIndex.length === 0
-                ? _c(
-                    "div",
-                    {
-                      staticClass:
-                        "mx-5 font-weight-bold d-flex justify-content-center align-items-center"
-                    },
-                    [
-                      _vm._v(
-                        "\n          釣果情報は投稿されておりません。\n        "
-                      )
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._l(_vm.lenderPostIndex, function(result, rIndex) {
-                return _c(
-                  "div",
-                  { key: rIndex, staticClass: "main-tab-result-inner" },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "main-tab-result-items container-fluid" },
-                      [
-                        _c("dl", { staticClass: "main-tab-result-date row" }, [
-                          _c("dt", { staticClass: "col-2" }, [
-                            _vm._v("日時：")
-                          ]),
-                          _vm._v(" "),
-                          _c("dd", { staticClass: "col-10" }, [
-                            _vm._v(_vm._s(result.updated_at))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "h3",
-                          { staticClass: "main-tab-result-headline col-12" },
-                          [_vm._v(_vm._s(result.title))]
-                        ),
-                        _vm._v(" "),
-                        _c("dl", { staticClass: "main-tab-result-item row" }, [
-                          _c("dt", { staticClass: "col-2" }, [
-                            _vm._v("釣り方")
-                          ]),
-                          _vm._v(" "),
-                          _c("dd", { staticClass: "col-10" }, [
-                            _vm._v(_vm._s(result.fishing_option_names))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("dl", { staticClass: "main-tab-result-item row" }, [
-                          _c("dt", { staticClass: "col-2" }, [_vm._v("魚種")]),
-                          _vm._v(" "),
-                          _c("dd", { staticClass: "col-10" }, [
-                            _vm._v(_vm._s(result.target_names))
-                          ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(result.comment) +
-                          "\n          "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "main-tab-result-slides carousel slide",
-                        attrs: {
-                          id: "ResultImages" + rIndex,
-                          "data-ride": "carousel",
-                          "data-touch": "true",
-                          "data-wrap": "true"
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "carousel-inner" },
-                          _vm._l(result.post_images, function(image, iIndex) {
-                            return _c(
-                              "div",
-                              {
-                                key: iIndex,
-                                staticClass:
-                                  "main-tab-result-slide carousel-item",
-                                class: { active: iIndex === 0 }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { staticClass: "main-tab-result-slide-item" },
-                                  [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "main-tab-result-slide-item-inner"
-                                      },
-                                      [_c("img", { attrs: { src: image } })]
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        ),
-                        _vm._v(" "),
-                        result.post_images.length >= 2
-                          ? _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "main-tab-result-slides-arrow ex-prev carousel-control-prev",
-                                attrs: {
-                                  "data-target": "#ResultImages" + rIndex,
-                                  role: "button",
-                                  "data-slide": "prev"
-                                }
-                              },
-                              [
-                                _c("span", { staticClass: "sr-only" }, [
-                                  _vm._v("Previous")
-                                ])
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        result.post_images.length >= 2
-                          ? _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "main-tab-result-slides-arrow ex-next carousel-control-next",
-                                attrs: {
-                                  "data-target": "#ResultImages" + rIndex,
-                                  role: "button",
-                                  "data-slide": "next"
-                                }
-                              },
-                              [
-                                _c("span", { staticClass: "sr-only" }, [
-                                  _vm._v("Next")
-                                ])
-                              ]
-                            )
-                          : _vm._e()
-                      ]
-                    )
-                  ]
+                  }),
+                  0
                 )
-              }),
-              _vm._v(" "),
-              _c("MPagination", {
-                attrs: { "pagination-data": _vm.paginationData },
-                on: { getPaginationResults: _vm.getPaginationResults }
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "section",
-            {
-              staticClass: "main-tab-access tab-pane fade",
-              attrs: { id: "Access" }
-            },
-            [
-              _c("p", { staticClass: "main-tab-access-explain" }, [
-                _vm._v("\n          " + _vm._s(_vm.boatDetail.lender.zip_code)),
-                _c("br"),
-                _vm._v(
-                  _vm._s(_vm.boatDetail.lender.prefecture.prefecture_name) +
-                    _vm._s(_vm.boatDetail.lender.city.city_name) +
-                    _vm._s(_vm.boatDetail.lender.address) +
-                    "\n        "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "main-tab-access-map" }, [
-                _c("iframe", {
-                  staticStyle: { border: "0" },
-                  attrs: {
-                    src: _vm.boatDetail.lender.map_url,
-                    width: "600",
-                    height: "450",
-                    allowfullscreen: "",
-                    loading: "lazy"
-                  }
-                })
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "section",
-          { staticClass: "ex-recommend" },
-          [
-            _vm._m(5),
+              : _vm._e(),
             _vm._v(" "),
-            _vm.boatIndexDataPaidMember.length !== 0
-              ? _c("MRecommend", {
-                  attrs: { "paid-members-data": _vm.boatIndexDataPaidMember },
-                  on: {
-                    onDetail: _vm.onDetail,
-                    increCallCount: _vm.increCallCount
-                  }
-                })
-              : _vm._e()
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm.boatIndexDataPaidMember.length === 0
-          ? _c(
+            _c(
               "section",
-              { staticClass: "main-boat" },
-              _vm._l(_vm.boatIndexDataFreeMember, function(item, index) {
-                return _c(
-                  "div",
-                  { key: index, staticClass: "main-boat-free" },
-                  [
-                    _c("div", { staticClass: "main-boat-free-summary" }, [
-                      _c("dl", [
-                        _c(
-                          "dt",
-                          { staticClass: "main-boat-free-summary-name" },
-                          [_vm._v(_vm._s(item.boat_name))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "dd",
-                          { staticClass: "main-boat-free-summary-port" },
-                          [_vm._v(_vm._s(item.port_name))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "dd",
-                          { staticClass: "main-boat-free-summary-review" },
-                          [_vm._v(_vm._s(item.review))]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "main-boat-free-information" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "main-boat-free-information-items container-fluid"
-                        },
-                        [
-                          _c(
-                            "dl",
-                            {
-                              staticClass: "main-boat-free-information-item row"
-                            },
-                            [
-                              _c("dt", { staticClass: "col-3" }, [
-                                _vm._v("業種")
-                              ]),
-                              _vm._v(" "),
-                              _c("dd", { staticClass: "col-9" }, [
-                                _vm._v(_vm._s(item.operation_names))
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "dl",
-                            {
-                              staticClass: "main-boat-free-information-item row"
-                            },
-                            [
-                              _c("dt", { staticClass: "col-3" }, [
-                                _vm._v("所在地")
-                              ]),
-                              _vm._v(" "),
-                              _c("dd", { staticClass: "col-9" }, [
-                                _vm._v(
-                                  "\n                〒" + _vm._s(item.zip_code)
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  _vm._s(item.prefecture_name) +
-                                    " " +
-                                    _vm._s(item.city_name) +
-                                    "\n                " +
-                                    _vm._s(item.address) +
-                                    "\n              "
-                                )
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "dl",
-                            {
-                              staticClass: "main-boat-free-information-item row"
-                            },
-                            [
-                              _c("dt", { staticClass: "col-3" }, [
-                                _vm._v("釣り方")
-                              ]),
-                              _vm._v(" "),
-                              _c("dd", { staticClass: "col-9" }, [
-                                _vm._v(_vm._s(item.fishing_point))
-                              ])
-                            ]
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "main-boat-free-detail",
-                        on: {
-                          click: function($event) {
-                            return _vm.onDetail(item.id)
-                          }
-                        }
-                      },
-                      [_vm._v("\n          詳細を見る\n        ")]
-                    )
-                  ]
-                )
-              }),
-              0
+              { staticClass: "ex-search ex-bottom" },
+              [
+                _c("ASelectArea", {
+                  attrs: {
+                    id: "AreaChoice",
+                    label:
+                      _vm.boatDetail.lender.prefecture.prefecture_name +
+                      "のエリアで絞り込む",
+                    "city-list": _vm.cityList
+                  },
+                  on: { onList: _vm.onSearchList }
+                })
+              ],
+              1
             )
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "section",
-          { staticClass: "ex-search ex-bottom" },
-          [
-            _c("ASelectArea", {
-              attrs: {
-                id: "AreaChoice",
-                label:
-                  _vm.boatDetail.lender.prefecture.prefecture_name +
-                  "のエリアで絞り込む",
-                "city-list": _vm.cityList
-              },
-              on: { onList: _vm.onSearchList }
-            })
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _c("MFooter")
-    ],
-    1
-  )
+          ]),
+          _vm._v(" "),
+          _c("MFooter")
+        ],
+        1
+      )
+    : _c("div", [_c("NotFound")], 1)
 }
 var staticRenderFns = [
   function() {
@@ -69669,10 +70090,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968&":
-/*!*************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968& ***!
-  \*************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -69692,7 +70113,7 @@ var render = function() {
       _vm._v(" "),
       _c("ONavbar"),
       _vm._v(" "),
-      _c("main", { staticClass: "main" }, [
+      _c("main", { staticClass: "main main main_box_main" }, [
         _c(
           "nav",
           { staticClass: "main-navi", attrs: { "aria-label": "breadcrumb" } },
@@ -69853,6 +70274,8 @@ var render = function() {
           1
         ),
         _vm._v(" "),
+        _c("br", { attrs: { clear: "all" } }),
+        _vm._v(" "),
         _vm.boatIndexDataPaidMember
           ? _c(
               "section",
@@ -69937,14 +70360,9 @@ var render = function() {
                               _vm._v(" "),
                               _c("dd", { staticClass: "col-9" }, [
                                 _vm._v(
-                                  "\n                〒" + _vm._s(item.zip_code)
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  _vm._s(item.prefecture_name) +
-                                    " " +
+                                  "\n                " +
+                                    _vm._s(item.prefecture_name) +
                                     _vm._s(item.city_name) +
-                                    "\n                " +
                                     _vm._s(item.address) +
                                     "\n              "
                                 )
@@ -69963,7 +70381,7 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("dd", { staticClass: "col-9" }, [
-                                _vm._v(_vm._s(item.fishing_point))
+                                _vm._v(_vm._s(item.fishing_option_name))
                               ])
                             ]
                           )
@@ -70067,13 +70485,20 @@ var render = function() {
           ]),
           _vm._v(" "),
           _vm.copy_cityParam === "all"
-            ? _c("p", { staticClass: "main-condition-explain" }, [
-                _vm._v(
-                  "\n        " +
-                    _vm._s(_vm.prefectureDetail.comment) +
-                    "\n      "
-                )
-              ])
+            ? _c(
+                "p",
+                {
+                  staticClass: "main-condition-explain",
+                  domProps: { innerHTML: _vm._s(_vm.prefectureDetail.comment) }
+                },
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.prefectureDetail.comment) +
+                      "\n      "
+                  )
+                ]
+              )
             : _vm._e(),
           _vm._v(" "),
           _vm.copy_cityParam !== "all"
@@ -70975,8 +71400,19 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "dd",
-                  { staticClass: "main-tab-information-comment-content" },
-                  [_vm._v(_vm._s(_vm.newDetailIndex.news_content))]
+                  {
+                    staticClass: "main-tab-information-comment-content",
+                    domProps: {
+                      innerHTML: _vm._s(_vm.newDetailIndex.news_content)
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(_vm.newDetailIndex.news_content) +
+                        "\n          "
+                    )
+                  ]
                 )
               ])
             ]
@@ -90151,6 +90587,9 @@ var resource = '/ports';
   },
   deletePort: function deletePort(id) {
     return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("".concat(resource, "/").concat(id));
+  },
+  fetchCityParmByPortId: function fetchCityParmByPortId(id) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("".concat(resource, "/get-city-param/").concat(id));
   }
 });
 
@@ -90456,7 +90895,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
 var routes = [{
   path: '*',
-  component: _views_error_NotFound_vue__WEBPACK_IMPORTED_MODULE_33__["default"]
+  component: _views_error_NotFound_vue__WEBPACK_IMPORTED_MODULE_33__["default"],
+  name: 'error'
 },
 /*-------------------------------------------*/
 
@@ -94733,12 +95173,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _BoatList_vue_vue_type_template_id_69591968___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BoatList.vue?vue&type=template&id=69591968& */ "./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968&");
+/* harmony import */ var _BoatList_vue_vue_type_template_id_69591968_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BoatList.vue?vue&type=template&id=69591968&scoped=true& */ "./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968&scoped=true&");
 /* harmony import */ var _BoatList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BoatList.vue?vue&type=script&lang=js& */ "./resources/js/views/viewer/BoatList.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _sass_viewer_common_scss_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/../sass/viewer/common.scss?vue&type=style&index=0&lang=scss& */ "./resources/sass/viewer/common.scss?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _sass_viewer_extra_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/../sass/viewer/extra.scss?vue&type=style&index=1&lang=scss& */ "./resources/sass/viewer/extra.scss?vue&type=style&index=1&lang=scss&");
-/* harmony import */ var _sass_viewer_boatList_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/../sass/viewer/boatList.scss?vue&type=style&index=2&lang=scss& */ "./resources/sass/viewer/boatList.scss?vue&type=style&index=2&lang=scss&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _BoatList_vue_vue_type_style_index_0_id_69591968_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BoatList.vue?vue&type=style&index=0&id=69591968&lang=scss&scoped=true& */ "./resources/js/views/viewer/BoatList.vue?vue&type=style&index=0&id=69591968&lang=scss&scoped=true&");
+/* harmony import */ var _sass_viewer_common_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/../sass/viewer/common.scss?vue&type=style&index=1&lang=scss& */ "./resources/sass/viewer/common.scss?vue&type=style&index=1&lang=scss&");
+/* harmony import */ var _sass_viewer_extra_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/../sass/viewer/extra.scss?vue&type=style&index=2&lang=scss& */ "./resources/sass/viewer/extra.scss?vue&type=style&index=2&lang=scss&");
+/* harmony import */ var _sass_viewer_boatList_scss_vue_type_style_index_3_lang_scss___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/../sass/viewer/boatList.scss?vue&type=style&index=3&lang=scss& */ "./resources/sass/viewer/boatList.scss?vue&type=style&index=3&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -94749,13 +95191,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_5__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_6__["default"])(
   _BoatList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _BoatList_vue_vue_type_template_id_69591968___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _BoatList_vue_vue_type_template_id_69591968___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _BoatList_vue_vue_type_template_id_69591968_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BoatList_vue_vue_type_template_id_69591968_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "69591968",
   null
   
 )
@@ -94781,19 +95223,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968& ***!
-  \*******************************************************************************/
+/***/ "./resources/js/views/viewer/BoatList.vue?vue&type=style&index=0&id=69591968&lang=scss&scoped=true&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/views/viewer/BoatList.vue?vue&type=style&index=0&id=69591968&lang=scss&scoped=true& ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_style_index_0_id_69591968_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!../../../../node_modules/style-loader!../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-3!../../../../node_modules/sass-loader/dist/cjs.js??ref--7-4!../../../../node_modules/sass-resources-loader/lib/loader.js??ref--7-5!../../../../node_modules/vue-loader/lib??vue-loader-options!./BoatList.vue?vue&type=style&index=0&id=69591968&lang=scss&scoped=true& */ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/viewer/BoatList.vue?vue&type=style&index=0&id=69591968&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_style_index_0_id_69591968_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_style_index_0_id_69591968_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_style_index_0_id_69591968_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_style_index_0_id_69591968_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968&scoped=true&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968&scoped=true& ***!
+  \*******************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_template_id_69591968___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./BoatList.vue?vue&type=template&id=69591968& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_template_id_69591968___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_template_id_69591968_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./BoatList.vue?vue&type=template&id=69591968&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/viewer/BoatList.vue?vue&type=template&id=69591968&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_template_id_69591968_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_template_id_69591968___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_template_id_69591968_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -95569,18 +96027,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/sass/viewer/boatList.scss?vue&type=style&index=2&lang=scss&":
+/***/ "./resources/sass/viewer/boatList.scss?vue&type=style&index=3&lang=scss&":
 /*!*******************************************************************************!*\
-  !*** ./resources/sass/viewer/boatList.scss?vue&type=style&index=2&lang=scss& ***!
+  !*** ./resources/sass/viewer/boatList.scss?vue&type=style&index=3&lang=scss& ***!
   \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_boatList_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-3!../../../node_modules/sass-loader/dist/cjs.js??ref--7-4!../../../node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./boatList.scss?vue&type=style&index=2&lang=scss& */ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/boatList.scss?vue&type=style&index=2&lang=scss&");
-/* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_boatList_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_boatList_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_boatList_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_boatList_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_boatList_scss_vue_type_style_index_3_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-3!../../../node_modules/sass-loader/dist/cjs.js??ref--7-4!../../../node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./boatList.scss?vue&type=style&index=3&lang=scss& */ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/boatList.scss?vue&type=style&index=3&lang=scss&");
+/* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_boatList_scss_vue_type_style_index_3_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_boatList_scss_vue_type_style_index_3_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_boatList_scss_vue_type_style_index_3_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_boatList_scss_vue_type_style_index_3_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -95597,6 +96055,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_common_scss_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-3!../../../node_modules/sass-loader/dist/cjs.js??ref--7-4!../../../node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./common.scss?vue&type=style&index=0&lang=scss& */ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/common.scss?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_common_scss_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_common_scss_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_common_scss_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_common_scss_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/sass/viewer/common.scss?vue&type=style&index=1&lang=scss&":
+/*!*****************************************************************************!*\
+  !*** ./resources/sass/viewer/common.scss?vue&type=style&index=1&lang=scss& ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_common_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-3!../../../node_modules/sass-loader/dist/cjs.js??ref--7-4!../../../node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./common.scss?vue&type=style&index=1&lang=scss& */ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/common.scss?vue&type=style&index=1&lang=scss&");
+/* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_common_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_common_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_common_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_common_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -95629,6 +96103,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_extra_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-3!../../../node_modules/sass-loader/dist/cjs.js??ref--7-4!../../../node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./extra.scss?vue&type=style&index=1&lang=scss& */ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/extra.scss?vue&type=style&index=1&lang=scss&");
 /* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_extra_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_extra_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_extra_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_extra_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/sass/viewer/extra.scss?vue&type=style&index=2&lang=scss&":
+/*!****************************************************************************!*\
+  !*** ./resources/sass/viewer/extra.scss?vue&type=style&index=2&lang=scss& ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_extra_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/extract-text-webpack-plugin/dist/loader.js??ref--7-0!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-3!../../../node_modules/sass-loader/dist/cjs.js??ref--7-4!../../../node_modules/sass-resources-loader/lib/loader.js??ref--7-5!./extra.scss?vue&type=style&index=2&lang=scss& */ "./node_modules/extract-text-webpack-plugin/dist/loader.js?!./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/sass-resources-loader/lib/loader.js?!./resources/sass/viewer/extra.scss?vue&type=style&index=2&lang=scss&");
+/* harmony import */ var _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_extra_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_extra_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_extra_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_extract_text_webpack_plugin_dist_loader_js_ref_7_0_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_3_node_modules_sass_loader_dist_cjs_js_ref_7_4_node_modules_sass_resources_loader_lib_loader_js_ref_7_5_extra_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -95672,8 +96162,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Work\laravel+vue\Laravel-VueJS-yugyosen\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\Work\laravel+vue\Laravel-VueJS-yugyosen\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Work\4.laravel+vue\Laravel-VueJS-yugyosen\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Work\4.laravel+vue\Laravel-VueJS-yugyosen\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

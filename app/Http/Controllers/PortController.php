@@ -81,4 +81,9 @@ class PortController extends Controller
     {
         return $this->service->deletePort($id);
     }
+
+    public function fetchGetCityParm($id)
+    {
+        return $this->service->fetchGetCityParm($id);
+    }
 }

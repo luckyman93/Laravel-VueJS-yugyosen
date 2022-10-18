@@ -20,4 +20,7 @@ export default {
   deletePort(id) {
     return axios.delete(`${resource}/${id}`)
   },
+  fetchCityParmByPortId(id) {
+    return axios.post(`${resource}/get-city-param/${id}`)
+  },
 }

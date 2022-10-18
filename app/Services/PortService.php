@@ -54,4 +54,8 @@ class PortService
         return $this->repository->deletePort($id);
     }
 
+    public function fetchGetCityParm($id)
+    {
+        return $this->repository->fetchGetCityParm($id);
+    }
 }

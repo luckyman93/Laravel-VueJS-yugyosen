@@ -1,5 +1,5 @@
 <template>
-  <div id="Wrapper" class="provider container-fluid">
+  <div v-if="!isError" id="Wrapper" class="provider container-fluid">
     <MHeader />
     <ONavbar />
 
@@ -10,7 +10,7 @@
             <router-link :to="{ name: ROUTE.VIEWER.HOME.name }">遊漁船サーチ</router-link>
           </li>
           <li class="main-navi-breadcrumbs-item breadcrumb-item">
-            <a :href="'/boat/' + prefectureParam">
+            <a :href="'/boat/' + prefecture_param">
               {{ boatDetail.lender.prefecture.prefecture_name }}
             </a>
           </li>
@@ -338,11 +338,7 @@
                     <dl class="main-tab-plan-modal-content-item row">
                       <dt class="col-4">釣り方</dt>
                       <dd class="col-8">
-                        {{
-                          boatDetail.fishing_options[0] === undefined
-                            ? ''
-                            : boatDetail.fishing_options[0].fishing_option_name
-                        }}
+                        {{ boatDetail.fishing_point }}
                       </dd>
                     </dl>
                   </div>
@@ -380,7 +376,7 @@
               <h3 class="main-tab-result-headline col-12">{{ result.title }}</h3>
               <dl class="main-tab-result-item row">
                 <dt class="col-2">釣り方</dt>
-                <dd class="col-10">{{ result.fishing_option_names }}</dd>
+                <dd class="col-10">{{ result.fishing_point }}</dd>
               </dl>
               <dl class="main-tab-result-item row">
                 <dt class="col-2">魚種</dt>
@@ -513,6 +509,9 @@
     </main>
     <MFooter />
   </div>
+  <div v-else>
+    <NotFound />
+  </div>
 </template>
 
 <script>
@@ -525,6 +524,9 @@ import MFooter from '@/views/viewer/components/MFooter.vue'
 import MRecommend from '@/views/viewer/components/MRecommend.vue'
 import MPagination from '@/views/components/MPagination.vue'
 import ONavbar from '@/views/viewer/components/ONavbar.vue'
+// ERROR
+import NotFound from '@/views/error/NotFound.vue'
+
 // const
 import ROUTE from '@/consts/route'
 import HTTP_STATUS from '@/consts/httpStatus'
@@ -537,6 +539,7 @@ const boatRepository = RepositoryFactory.get('boats')
 const cityRepository = RepositoryFactory.get('cities')
 const lenderPostRepository = RepositoryFactory.get('lenderPosts')
 const callRankingRepository = RepositoryFactory.get('calls')
+const portRepository = RepositoryFactory.get('ports')
 
 export default {
   components: {
@@ -546,9 +549,25 @@ export default {
     MRecommend,
     MPagination,
     ONavbar,
+    NotFound,
   },
 
   props: {
+    prefectureParam: {
+      type: null,
+      required: true,
+      default: null,
+    },
+    cityParam: {
+      type: null,
+      required: true,
+      default: null,
+    },
+    portParam: {
+      type: null,
+      required: true,
+      default: null,
+    },
     boatId: {
       type: null,
       required: true,
@@ -582,9 +601,10 @@ export default {
       lenderPostIndex: [],
       paymentOptions: '',
       operations: '',
-      prefectureParam: null,
+      prefecture_param: null,
+      boatParam: '',
       port_param: '',
-      boat_param: '',
+      isError: false,
     }
   },
 
@@ -617,7 +637,7 @@ export default {
           const paymentOptionList = this.boatDetail.lender.payment_options
           const operationList = this.boatDetail.operations
           // 都道府県ID
-          this.prefectureParam = this.boatDetail.lender.prefecture.url_param
+          this.prefecture_param = this.boatDetail.lender.prefecture.url_param
           // 画像配列作成
           if (this.boatDetail.boat_img_1) this.imageList.push(this.boatDetail.boat_img_1)
           if (this.boatDetail.boat_img_2) this.imageList.push(this.boatDetail.boat_img_2)
@@ -768,11 +788,11 @@ export default {
         const boatData = this.boatIndexData[i]
         if (boatData.id === id) {
           if (boatData.id.toString().length === 1) {
-            this.boat_param = `b00${boatData.id.toString()}`
+            this.boatParam = `b00${boatData.id.toString()}`
           } else if (boatData.id.toString().length === 2) {
-            this.boat_param = `b0${boatData.id.toString()}`
+            this.boatParam = `b0${boatData.id.toString()}`
           } else {
-            this.boat_param = `b${boatData.id.toString()}`
+            this.boatParam = `b${boatData.id.toString()}`
           }
           if (boatData.port_id.toString().length === 1) {
             this.port_param = `p00${boatData.port_id.toString()}`
@@ -781,13 +801,31 @@ export default {
           } else {
             this.port_param = `p${boatData.port_id.toString()}`
           }
-          window.location.href = `/boat/${boatData.prefecture_url_param}/${boatData.city_url_param}/${this.port_param}/${this.boat_param}`
+          this.fetchCityParmByPortId(boatData.port_id, boatData.prefecture_url_param)
           break
         }
       }
     },
+    async fetchCityParmByPortId(portId, prefectureUrlParam) {
+      await portRepository
+        .fetchCityParmByPortId(portId)
+        .then(res => {
+          if (res.status !== HTTP_STATUS.OK) {
+            this.$toast.errorToast()
+            return
+          }
+          window.location.href = `/boat/${prefectureUrlParam}/${res.data.city_url_param}/${this.port_param}/${this.boatParam}`
+        })
+        .catch(async err => {
+          if (err.response) {
+            await this.$errHandling.adminCatch(err.response.status)
+            return
+          }
+          this.$toast.errorToast()
+        })
+    },
     onSearchList(cityParam) {
-      window.location.href = `/boat/${this.prefectureParam}/${cityParam}`
+      window.location.href = `/boat/${this.prefecture_param}/${cityParam}`
     },
     async getPaginationResults(page) {
       this.page = page

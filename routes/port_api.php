@@ -25,3 +25,4 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Route::get('prefectures/with-city-port/lists', [PrefectureController::class, 'fetchAreaLists']);
     // Route::get('ports/list', [PortController::class, 'fetchPortList']);
 });
+Route::post('ports/get-city-param/{id}', [PortController::class, 'fetchGetCityParm']);

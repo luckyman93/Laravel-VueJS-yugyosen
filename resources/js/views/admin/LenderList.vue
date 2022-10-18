@@ -35,6 +35,7 @@
               <th scope="col" class="sort-header" @click="onSort('updated_user_name')">
                 更新者
               </th>
+              <th scope="col" class="sort-header">email</th>
               <th scope="col" class="sort-header">アクション</th>
             </tr>
           </thead>
@@ -69,6 +70,9 @@
               </td>
               <td class="align-middle py-1 pointer" @click="onDetail(lender.id)">
                 {{ lender.updated_user_name }}
+              </td>
+              <td class="align-middle py-1 pointer" @click="onDetail(lender.id)">
+                {{ lender.email }}
               </td>
               <td class="d-flex justify-content-around align-middle py-1">
                 <AButton

@@ -57,6 +57,7 @@ class LenderRepository
                 'lenders.id',
                 'users.name',
                 'users.name_kana',
+                'users.email',
                 'prefectures.prefecture_name',
                 'cities.city_name',
                 'ports.port_name',

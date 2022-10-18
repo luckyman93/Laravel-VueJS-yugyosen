@@ -1,13 +1,34 @@
 @php
 $prefecture = \App\Models\Prefecture::where('url_param', $prefectureParam)->first();
-$prefecture_name = $prefecture['prefecture_name'];
 
 $city = \App\Models\City::where('url_param', $cityParam)->first();
-$city_name = $city['city_name'];
 
-$boatId = number_format(substr($boatParam, 1));
+$boatId = substr($boatParam, 1);
 $boat = \App\Models\Boat::where('id', $boatId)->first();
+$is_num_boatId = preg_match('/^[0-9]+$/', $boatId);
+
+$portId = substr($portParam, 1);
+$port = \App\Models\Port::where('id', $portId)->first();
+
+$activitedCityParam = \App\Models\City:: where('id', $port['city_id'])->first();
+$activitedPrefectureParam = \App\Models\Prefecture:: where('id', $activitedCityParam['prefecture_id'])->first();
+
+if ($activitedCityParam['url_param'] != $cityParam && $activitedPrefectureParam['url_param'] != $prefectureParam) {
+header("Location: localhost:8000");
+exit();
+}
+
+$is_num_portId = preg_match('/^[0-9]+$/', $portId);
+
+if ($prefecture && $city && $is_num_boatId && $boat && $port && $is_num_portId ) {
+$prefecture_name = $prefecture['prefecture_name'];
+$city_name = $city['city_name'];
 $boat_name = $boat['boat_name'];
+} else {
+header("Location: localhost:8000");
+exit();
+}
+
 $lender = \App\Models\Lender::where('id', $boat['lender_id'])->first();
 $user = \App\Models\User::where('id', $lender['user_id'])->first();
 $user_name = $user['name'];

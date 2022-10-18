@@ -1,9 +1,10 @@
+<!-- eslint-disable -->
 <template>
   <div id="Wrapper" class="list container-fluid">
     <MHeader />
     <ONavbar />
 
-    <main class="main">
+    <main class="main main main_box_main">
       <nav class="main-navi" aria-label="breadcrumb">
         <ol class="main-navi-breadcrumbs breadcrumb">
           <li class="main-navi-breadcrumbs-item breadcrumb-item">
@@ -62,7 +63,7 @@
           @onList="onSearchList"
         />
       </section>
-
+      <br clear="all">
       <!------------------>
       <!-- 船一覧表示箇所 -->
       <!------------------>
@@ -94,13 +95,12 @@
               <dl class="main-boat-free-information-item row">
                 <dt class="col-3">所在地</dt>
                 <dd class="col-9">
-                  〒{{ item.zip_code }}<br />{{ item.prefecture_name }} {{ item.city_name }}
-                  {{ item.address }}
+                  {{ item.prefecture_name }}{{ item.city_name }}{{ item.address }}
                 </dd>
               </dl>
               <dl class="main-boat-free-information-item row">
                 <dt class="col-3">釣り方</dt>
-                <dd class="col-9">{{ item.fishing_point }}</dd>
+                <dd class="col-9">{{ item.fishing_option_name }}</dd>
               </dl>
             </div>
           </div>
@@ -146,9 +146,11 @@
           >
         </h3>
         <!-- 都道府県選択中であれば都道府県コメントを表示 -->
-        <p v-if="copy_cityParam === 'all'" class="main-condition-explain">
+        <!-- eslint-disable vue/no-v-html -->
+        <p v-if="copy_cityParam === 'all'" class="main-condition-explain" v-html="prefectureDetail.comment">
           {{ prefectureDetail.comment }}
         </p>
+        <!--eslint-enable-->
         <!-- 市町村選択中であれば市町村コメントを表示 -->
         <p v-if="copy_cityParam !== 'all'" class="main-condition-explain">
           {{ cityDetail.comment }}
@@ -178,7 +180,7 @@
     <MFooter />
   </div>
 </template>
-
+<!-- eslint-disable -->
 <script>
 import moment from 'moment'
 
@@ -199,6 +201,7 @@ const cityRepository = RepositoryFactory.get('cities')
 const boatRepository = RepositoryFactory.get('boats')
 const prefectureRepository = RepositoryFactory.get('prefectures')
 const callRankingRepository = RepositoryFactory.get('calls')
+const portRepository = RepositoryFactory.get('ports')
 
 export default {
   components: {
@@ -244,6 +247,7 @@ export default {
     copy_portParam: '',
     port_param: '',
     boat_param: '',
+    isError: false,
   }),
 
   watch: {
@@ -312,6 +316,7 @@ export default {
           }
           this.paginationData = res.data
           this.boatIndexData = res.data.data
+          console.log(this.boatIndexData)
           this.boatIndexData.forEach(x => {
             if (x.created_at) x.created_at = moment(x.created_at).format('YYYY-MM-DD')
             if (x.updated_at) x.updated_at = moment(x.updated_at).format('YYYY-MM-DD')
@@ -405,10 +410,30 @@ export default {
           } else {
             this.port_param = `p${boatData.port_id.toString()}`
           }
-          window.location.href = `/boat/${boatData.prefecture_url_param}/${boatData.city_url_param}/${this.port_param}/${this.boat_param}`
+
+          this.fetchCityParmByPortId(boatData.port_id, boatData.prefecture_url_param)
           break
         }
       }
+    },
+
+    async fetchCityParmByPortId(portId, prefectureUrl) {
+      await portRepository
+        .fetchCityParmByPortId(portId)
+        .then(res => {
+          if (res.status !== HTTP_STATUS.OK) {
+            this.$toast.errorToast()
+            return
+          }
+          window.location.href = `/boat/${prefectureUrl}/${res.data.city_url_param}/${this.port_param}/${this.boat_param}`
+        })
+        .catch(async err => {
+          if (err.response) {
+            await this.$errHandling.adminCatch(err.response.status)
+            return
+          }
+          this.$toast.errorToast()
+        })
     },
     onSearchList(cityParam, isPort) {
       if (isPort) {
@@ -422,7 +447,12 @@ export default {
   },
 }
 </script>
-
+<style lang="scss" scoped>
+strong {
+  font-weight: bold;
+}
+</style>
 <style lang="scss" src="@/../sass/viewer/common.scss"></style>
 <style lang="scss" src="@/../sass/viewer/extra.scss"></style>
 <style lang="scss" src="@/../sass/viewer/boatList.scss"></style>
+

@@ -18,6 +18,9 @@ body  {
 //     min-height: 100vh;
 //     flex: 1;
 // }
+b, strong {
+    font-weight: bold !important;
+}
 
 .table-striped-green > tbody > tr:nth-of-type(odd) {
     background: $MainLight !important;

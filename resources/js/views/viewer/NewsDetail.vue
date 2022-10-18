@@ -17,7 +17,11 @@
             <dt class="main-tab-information-target-headline ex-headline">
               <span>ニュースコンテンツ</span>
             </dt>
-            <dd class="main-tab-information-comment-content">{{ newDetailIndex.news_content }}</dd>
+            <!-- eslint-disable vue/no-v-html -->
+            <dd class="main-tab-information-comment-content" v-html="newDetailIndex.news_content">
+              {{ newDetailIndex.news_content }}
+            </dd>
+            <!--eslint-enable-->
           </dl>
         </section>
       </div>

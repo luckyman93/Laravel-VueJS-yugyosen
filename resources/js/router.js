@@ -47,7 +47,7 @@ import NotFound from '@/views/error/NotFound.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '*', component: NotFound },
+  { path: '*', component: NotFound, name: 'error' },
   /*-------------------------------------------*/
   /*  VIEWER
   /*-------------------------------------------*/

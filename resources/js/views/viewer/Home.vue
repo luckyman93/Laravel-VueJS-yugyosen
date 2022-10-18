@@ -332,6 +332,7 @@ import { RepositoryFactory } from '@/repositories/repositoryFactory'
 
 const lenderPostRepository = RepositoryFactory.get('lenderPosts')
 const newsRepository = RepositoryFactory.get('news')
+const portRepository = RepositoryFactory.get('ports')
 
 export default {
   components: {
@@ -395,6 +396,8 @@ export default {
             return
           }
           this.postList = res.data
+          console.log(new Date())
+          console.log(Math.abs(new Date() - new Date()) / 36e5)
         })
         .catch(() => {
           this.$toast.errorToast()
@@ -415,7 +418,29 @@ export default {
       } else {
         this.boat_param = `p${boatId.toString()}`
       }
+      console.log(portId)
+      this.fetchCityParmByPortId(portId, prefectureUrlParam)
       window.location.href = `/boat/${prefectureUrlParam}/${cityUrlParam}/${this.port_param}/${this.boat_param}`
+    },
+
+    async fetchCityParmByPortId(portId, prefectureUrlParam) {
+      await portRepository
+        .fetchCityParmByPortId(portId)
+        .then(res => {
+          if (res.status !== HTTP_STATUS.OK) {
+            this.$toast.errorToast()
+            return
+          }
+          console.log(res)
+          window.location.href = `/boat/${prefectureUrlParam}/${res.data.url_param}/${this.port_param}/${this.boat_param}`
+        })
+        .catch(async err => {
+          if (err.response) {
+            await this.$errHandling.adminCatch(err.response.status)
+            return
+          }
+          this.$toast.errorToast()
+        })
     },
     /*-------------------------------------------*/
     /* ニュースリスト取得

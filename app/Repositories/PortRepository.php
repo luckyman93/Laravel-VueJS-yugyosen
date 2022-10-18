@@ -91,8 +91,16 @@ class PortRepository
     {
         return $this->model->deleteData($id);
     }
-    public function showPort($id)
+
+    public function fetchGetCityParm($id)
     {
-        //
+        return $this->model
+            -> leftJoin('cities', 'ports.city_id', 'cities.id')
+            -> leftJoin('prefectures', 'cities.prefecture_id', 'prefectures.id')
+            ->select(
+                'cities.city_name',
+                'cities.url_param as city_url_param',
+                'prefectures.url_param as prefecture_url_param',
+            )->find($id);
     }
 }
