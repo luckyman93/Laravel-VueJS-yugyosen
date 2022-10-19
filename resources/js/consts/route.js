@@ -23,13 +23,9 @@ export default {
         path: '/boat/:prefectureParam/:cityParam',
         name: 'BoatList2',
       },
-      LIST3: {
-        path: '/boat/:prefectureParam/:cityParam/:portParam',
-        name: 'BoatList3',
-      },
-      DETAIL: {
-        path: '/boat/:prefectureParam/:cityParam/:portParam/:boatId',
-        name: 'BoatDetail',
+      DETAILANDLIST3: {
+        path: '/boat/:prefectureParam/:cityParam/:param',
+        name: 'BoatDetailAndList',
       },
     },
     ABOUT: {

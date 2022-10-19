@@ -13,7 +13,8 @@ import HTTP_STATUS from '@/consts/httpStatus'
 import Viewer from '@/views/viewer/Viewer.vue'
 import Home from '@/views/viewer/Home.vue'
 import BoatList from '@/views/viewer/BoatList.vue'
-import BoatDetail from '@/views/viewer/BoatDetail.vue'
+// import BoatDetail from '@/views/viewer/BoatDetail.vue'
+import BoatDetailAndList from '@/views/viewer/BoatListAndDetail.vue'
 import About from '@/views/viewer/About.vue'
 import News from '@/views/viewer/NewsDetail.vue'
 
@@ -84,19 +85,26 @@ const routes = [
         props: true,
       },
       {
-        path: ROUTE.VIEWER.BOAT.LIST3.path,
-        component: BoatList,
-        name: ROUTE.VIEWER.BOAT.LIST3.name,
+        path: ROUTE.VIEWER.BOAT.DETAILANDLIST3.path,
+        component: BoatDetailAndList,
+        name: ROUTE.VIEWER.BOAT.DETAILANDLIST3.name,
         meta: { viewerAuth: true },
         props: true,
       },
-      {
-        path: ROUTE.VIEWER.BOAT.DETAIL.path,
-        component: BoatDetail,
-        name: ROUTE.VIEWER.BOAT.DETAIL.name,
-        meta: { viewerAuth: true },
-        props: true,
-      },
+      // {
+      //   path: ROUTE.VIEWER.BOAT.LIST3.path,
+      //   component: BoatList,
+      //   name: ROUTE.VIEWER.BOAT.LIST3.name,
+      //   meta: { viewerAuth: true },
+      //   props: true,
+      // },
+      // {
+      //   path: ROUTE.VIEWER.BOAT.DETAIL.path,
+      //   component: BoatDetail,
+      //   name: ROUTE.VIEWER.BOAT.DETAIL.name,
+      //   meta: { viewerAuth: true },
+      //   props: true,
+      // },
       {
         path: ROUTE.VIEWER.ABOUT.path,
         component: About,

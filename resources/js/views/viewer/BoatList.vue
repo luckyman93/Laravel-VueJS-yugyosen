@@ -267,7 +267,7 @@ export default {
     },
     portParam: {
       async handler() {
-        this.copy_portParam = this.portParam
+        this.copy_portParam = Number(this.portParam.slice(1))
         if (this.portParam === '') this.copy_portParam = 'all'
 
         if (this.copy_portParam !== 'all') {
@@ -281,7 +281,7 @@ export default {
 
   async created() {
     this.copy_cityParam = this.cityParam
-    this.copy_portParam = this.portParam
+    this.copy_portParam = Number(this.portParam.slice(1))
 
     if (this.cityParam === '') this.copy_cityParam = 'all'
     if (this.portParam === '') this.copy_portParam = 'all'
@@ -425,7 +425,7 @@ export default {
             this.$toast.errorToast()
             return
           }
-          window.location.href = `/boat/${prefectureUrl}/${res.data.city_url_param}/${this.port_param}/${this.boat_param}`
+          window.location.href = `/boat/${prefectureUrl}/${res.data.city_url_param}/${this.boat_param}`
         })
         .catch(async err => {
           if (err.response) {
@@ -437,9 +437,14 @@ export default {
     },
     onSearchList(cityParam, isPort) {
       if (isPort) {
-        window.location.href = `/boat/${this.prefectureParam}/${
-          this.copy_cityParam
-        }/${cityParam.toString()}`
+        if (cityParam.toString().length === 1) {
+          this.port_param = `p00${cityParam.toString()}`
+        } else if (cityParam.toString().length === 2) {
+          this.port_param = `p0${cityParam.toString()}`
+        } else {
+          this.port_param = `p${cityParam.toString()}`
+        }
+        window.location.href = `/boat/${this.prefectureParam}/${this.copy_cityParam}/${this.port_param}`
       } else {
         window.location.href = `/boat/${this.prefectureParam}/${cityParam}`
       }

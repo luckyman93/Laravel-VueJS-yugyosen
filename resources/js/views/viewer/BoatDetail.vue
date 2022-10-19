@@ -563,11 +563,6 @@ export default {
       required: true,
       default: null,
     },
-    portParam: {
-      type: null,
-      required: true,
-      default: null,
-    },
     boatId: {
       type: null,
       required: true,
@@ -585,7 +580,6 @@ export default {
       boatIndexData: [],
       boatIndexDataPaidMember: [],
       boatIndexDataFreeMember: [],
-      // boatIndexDataGeneral: [],
       fittedFacilitiesIds: [],
       boatDetail: {
         facilities: {},
@@ -814,7 +808,7 @@ export default {
             this.$toast.errorToast()
             return
           }
-          window.location.href = `/boat/${prefectureUrlParam}/${res.data.city_url_param}/${this.port_param}/${this.boatParam}`
+          window.location.href = `/boat/${prefectureUrlParam}/${res.data.city_url_param}/${this.boatParam}`
         })
         .catch(async err => {
           if (err.response) {

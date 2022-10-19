@@ -35,15 +35,16 @@ exit();
 }
 
 
-if (!isset($portParam)) {
+if (!isset($param)) {
 $title = $prefecture_name.$city_name.'の遊漁船/釣り船一覧|遊漁船サーチ';
 $description =
 $prefecture_name.$city_name.'の遊漁船/釣り船を一覧で掲載。'.$prefecture_name.$city_name.'で遊漁船/釣り船をお調べの際は、遊漁船サーチにお任せください。';
 $keyword = $prefecture_name.$city_name.',遊漁船,釣り船,遊漁船サーチ';
 $h1 = $prefecture_name.$city_name.'の遊漁船/釣り船のことなら遊漁船サーチ';
 } else {
-$port = \App\Models\Port::where('id', $portParam)->first();
-$is_num_portId = preg_match('/^[0-9]+$/', $portParam);
+$portId = substr($param, 1);
+$port = \App\Models\Port::where('id', $portId)->first();
+$is_num_portId = preg_match('/^[0-9]+$/', $portId);
 
 if ($port && $is_num_portId) {
 $port_name = $port['port_name'];

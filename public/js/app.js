@@ -17471,11 +17471,6 @@ var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_13
       required: true,
       "default": null
     },
-    portParam: {
-      type: null,
-      required: true,
-      "default": null
-    },
     boatId: {
       type: null,
       required: true,
@@ -17492,7 +17487,6 @@ var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_13
       boatIndexData: [],
       boatIndexDataPaidMember: [],
       boatIndexDataFreeMember: [],
-      // boatIndexDataGeneral: [],
       fittedFacilitiesIds: [],
       boatDetail: {
         facilities: {},
@@ -17873,7 +17867,7 @@ var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_13
                     return;
                   }
 
-                  window.location.href = "/boat/".concat(prefectureUrlParam, "/").concat(res.data.city_url_param, "/").concat(_this7.port_param, "/").concat(_this7.boatParam);
+                  window.location.href = "/boat/".concat(prefectureUrlParam, "/").concat(res.data.city_url_param, "/").concat(_this7.boatParam);
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
@@ -18285,7 +18279,7 @@ var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
-                  _this3.copy_portParam = _this3.portParam;
+                  _this3.copy_portParam = Number(_this3.portParam.slice(1));
                   if (_this3.portParam === '') _this3.copy_portParam = 'all';
 
                   if (_this3.copy_portParam !== 'all') {
@@ -18317,7 +18311,7 @@ var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10
           switch (_context4.prev = _context4.next) {
             case 0:
               _this4.copy_cityParam = _this4.cityParam;
-              _this4.copy_portParam = _this4.portParam;
+              _this4.copy_portParam = Number(_this4.portParam.slice(1));
               if (_this4.cityParam === '') _this4.copy_cityParam = 'all';
               if (_this4.portParam === '') _this4.copy_portParam = 'all';
 
@@ -18556,7 +18550,7 @@ var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10
                     return;
                   }
 
-                  window.location.href = "/boat/".concat(prefectureUrl, "/").concat(res.data.city_url_param, "/").concat(_this9.port_param, "/").concat(_this9.boat_param);
+                  window.location.href = "/boat/".concat(prefectureUrl, "/").concat(res.data.city_url_param, "/").concat(_this9.boat_param);
                 })["catch"]( /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(err) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
@@ -18600,11 +18594,111 @@ var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10
     },
     onSearchList: function onSearchList(cityParam, isPort) {
       if (isPort) {
-        window.location.href = "/boat/".concat(this.prefectureParam, "/").concat(this.copy_cityParam, "/").concat(cityParam.toString());
+        if (cityParam.toString().length === 1) {
+          this.port_param = "p00".concat(cityParam.toString());
+        } else if (cityParam.toString().length === 2) {
+          this.port_param = "p0".concat(cityParam.toString());
+        } else {
+          this.port_param = "p".concat(cityParam.toString());
+        }
+
+        window.location.href = "/boat/".concat(this.prefectureParam, "/").concat(this.copy_cityParam, "/").concat(this.port_param);
       } else {
         window.location.href = "/boat/".concat(this.prefectureParam, "/").concat(cityParam);
       }
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _views_viewer_BoatDetail_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/views/viewer/BoatDetail.vue */ "./resources/js/views/viewer/BoatDetail.vue");
+/* harmony import */ var _views_viewer_BoatList_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/views/viewer/BoatList.vue */ "./resources/js/views/viewer/BoatList.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    BoatDetail: _views_viewer_BoatDetail_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    BoatList: _views_viewer_BoatList_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  props: {
+    prefectureParam: {
+      type: null,
+      required: true,
+      "default": null
+    },
+    cityParam: {
+      type: null,
+      required: true,
+      "default": null
+    },
+    param: {
+      type: null,
+      required: true,
+      "default": null
+    }
+  },
+  data: function data() {
+    return {
+      isList: false
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (_this.param.charAt(0) === 'p') {
+                _this.isList = true;
+              } else {
+                _this.isList = false;
+              }
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   }
 });
 
@@ -70560,6 +70654,56 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=template&id=30aa694c&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=template&id=30aa694c& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.isList
+    ? _c(
+        "div",
+        [
+          _c("BoatList", {
+            attrs: {
+              prefectureParam: _vm.prefectureParam,
+              cityParam: _vm.cityParam,
+              portParam: _vm.param
+            }
+          })
+        ],
+        1
+      )
+    : _c(
+        "div",
+        [
+          _c("BoatDetail", {
+            attrs: {
+              prefectureParam: _vm.prefectureParam,
+              cityParam: _vm.cityParam,
+              boatId: _vm.param
+            }
+          })
+        ],
+        1
+      )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/viewer/Home.vue?vue&type=template&id=3b619cad&":
 /*!*********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/viewer/Home.vue?vue&type=template&id=3b619cad& ***!
@@ -89582,13 +89726,9 @@ var LENDER_PREFIX = 'lender';
         path: '/boat/:prefectureParam/:cityParam',
         name: 'BoatList2'
       },
-      LIST3: {
-        path: '/boat/:prefectureParam/:cityParam/:portParam',
-        name: 'BoatList3'
-      },
-      DETAIL: {
-        path: '/boat/:prefectureParam/:cityParam/:portParam/:boatId',
-        name: 'BoatDetail'
+      DETAILANDLIST3: {
+        path: '/boat/:prefectureParam/:cityParam/:param',
+        name: 'BoatDetailAndList'
       }
     },
     ABOUT: {
@@ -90823,7 +90963,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_viewer_Viewer_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/views/viewer/Viewer.vue */ "./resources/js/views/viewer/Viewer.vue");
 /* harmony import */ var _views_viewer_Home_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/views/viewer/Home.vue */ "./resources/js/views/viewer/Home.vue");
 /* harmony import */ var _views_viewer_BoatList_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/views/viewer/BoatList.vue */ "./resources/js/views/viewer/BoatList.vue");
-/* harmony import */ var _views_viewer_BoatDetail_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/views/viewer/BoatDetail.vue */ "./resources/js/views/viewer/BoatDetail.vue");
+/* harmony import */ var _views_viewer_BoatListAndDetail_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/views/viewer/BoatListAndDetail.vue */ "./resources/js/views/viewer/BoatListAndDetail.vue");
 /* harmony import */ var _views_viewer_About_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/views/viewer/About.vue */ "./resources/js/views/viewer/About.vue");
 /* harmony import */ var _views_viewer_NewsDetail_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/views/viewer/NewsDetail.vue */ "./resources/js/views/viewer/NewsDetail.vue");
 /* harmony import */ var _views_admin_Admin_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/views/admin/Admin.vue */ "./resources/js/views/admin/Admin.vue");
@@ -90864,6 +91004,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+ // import BoatDetail from '@/views/viewer/BoatDetail.vue'
 
 
 
@@ -90938,22 +91079,28 @@ var routes = [{
     },
     props: true
   }, {
-    path: _consts_route__WEBPACK_IMPORTED_MODULE_3__["default"].VIEWER.BOAT.LIST3.path,
-    component: _views_viewer_BoatList_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    name: _consts_route__WEBPACK_IMPORTED_MODULE_3__["default"].VIEWER.BOAT.LIST3.name,
+    path: _consts_route__WEBPACK_IMPORTED_MODULE_3__["default"].VIEWER.BOAT.DETAILANDLIST3.path,
+    component: _views_viewer_BoatListAndDetail_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    name: _consts_route__WEBPACK_IMPORTED_MODULE_3__["default"].VIEWER.BOAT.DETAILANDLIST3.name,
     meta: {
       viewerAuth: true
     },
     props: true
-  }, {
-    path: _consts_route__WEBPACK_IMPORTED_MODULE_3__["default"].VIEWER.BOAT.DETAIL.path,
-    component: _views_viewer_BoatDetail_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    name: _consts_route__WEBPACK_IMPORTED_MODULE_3__["default"].VIEWER.BOAT.DETAIL.name,
-    meta: {
-      viewerAuth: true
-    },
-    props: true
-  }, {
+  }, // {
+  //   path: ROUTE.VIEWER.BOAT.LIST3.path,
+  //   component: BoatList,
+  //   name: ROUTE.VIEWER.BOAT.LIST3.name,
+  //   meta: { viewerAuth: true },
+  //   props: true,
+  // },
+  // {
+  //   path: ROUTE.VIEWER.BOAT.DETAIL.path,
+  //   component: BoatDetail,
+  //   name: ROUTE.VIEWER.BOAT.DETAIL.name,
+  //   meta: { viewerAuth: true },
+  //   props: true,
+  // },
+  {
     path: _consts_route__WEBPACK_IMPORTED_MODULE_3__["default"].VIEWER.ABOUT.path,
     component: _views_viewer_About_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
     name: _consts_route__WEBPACK_IMPORTED_MODULE_3__["default"].VIEWER.ABOUT.name,
@@ -95093,14 +95240,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************!*\
   !*** ./resources/js/views/viewer/BoatDetail.vue ***!
   \**************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BoatDetail_vue_vue_type_template_id_2fb25bff___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BoatDetail.vue?vue&type=template&id=2fb25bff& */ "./resources/js/views/viewer/BoatDetail.vue?vue&type=template&id=2fb25bff&");
 /* harmony import */ var _BoatDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BoatDetail.vue?vue&type=script&lang=js& */ "./resources/js/views/viewer/BoatDetail.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _sass_viewer_common_scss_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/../sass/viewer/common.scss?vue&type=style&index=0&lang=scss& */ "./resources/sass/viewer/common.scss?vue&type=style&index=0&lang=scss&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _BoatDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _BoatDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _sass_viewer_common_scss_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/../sass/viewer/common.scss?vue&type=style&index=0&lang=scss& */ "./resources/sass/viewer/common.scss?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _sass_viewer_extra_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/../sass/viewer/extra.scss?vue&type=style&index=1&lang=scss& */ "./resources/sass/viewer/extra.scss?vue&type=style&index=1&lang=scss&");
 /* harmony import */ var _sass_viewer_boatDetail_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/../sass/viewer/boatDetail.scss?vue&type=style&index=2&lang=scss& */ "./resources/sass/viewer/boatDetail.scss?vue&type=style&index=2&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
@@ -95136,7 +95284,7 @@ component.options.__file = "resources/js/views/viewer/BoatDetail.vue"
 /*!***************************************************************************!*\
   !*** ./resources/js/views/viewer/BoatDetail.vue?vue&type=script&lang=js& ***!
   \***************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -95252,6 +95400,81 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_template_id_69591968_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatList_vue_vue_type_template_id_69591968_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/views/viewer/BoatListAndDetail.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/views/viewer/BoatListAndDetail.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BoatListAndDetail_vue_vue_type_template_id_30aa694c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BoatListAndDetail.vue?vue&type=template&id=30aa694c& */ "./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=template&id=30aa694c&");
+/* harmony import */ var _BoatListAndDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BoatListAndDetail.vue?vue&type=script&lang=js& */ "./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _sass_viewer_common_scss_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/../sass/viewer/common.scss?vue&type=style&index=0&lang=scss& */ "./resources/sass/viewer/common.scss?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _sass_viewer_extra_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/../sass/viewer/extra.scss?vue&type=style&index=1&lang=scss& */ "./resources/sass/viewer/extra.scss?vue&type=style&index=1&lang=scss&");
+/* harmony import */ var _sass_viewer_about_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/../sass/viewer/about.scss?vue&type=style&index=2&lang=scss& */ "./resources/sass/viewer/about.scss?vue&type=style&index=2&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_5__["default"])(
+  _BoatListAndDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BoatListAndDetail_vue_vue_type_template_id_30aa694c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BoatListAndDetail_vue_vue_type_template_id_30aa694c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/viewer/BoatListAndDetail.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatListAndDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./BoatListAndDetail.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatListAndDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=template&id=30aa694c&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=template&id=30aa694c& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatListAndDetail_vue_vue_type_template_id_30aa694c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./BoatListAndDetail.vue?vue&type=template&id=30aa694c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/viewer/BoatListAndDetail.vue?vue&type=template&id=30aa694c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatListAndDetail_vue_vue_type_template_id_30aa694c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BoatListAndDetail_vue_vue_type_template_id_30aa694c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
