@@ -287,7 +287,6 @@ export default {
           this.$toast.successToast(TOAST.SUCCESS.UPDATED)
         })
         .catch(async err => {
-          console.log(err.response)
           if (err.response) {
             await this.$errHandling.lenderCatch(err.response.status)
             this.errors = err.response.data.errors

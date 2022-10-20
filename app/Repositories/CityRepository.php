@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\City;
 use App\Enums\Util;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class CityRepository
 {
@@ -102,7 +103,27 @@ class CityRepository
     public function fetchCityByUrlParam($cityParam)
     {
         $city =  $this->model->where('url_param', $cityParam)->first();
-        return $this->model->with('ports')->find($city->id);
+        $query = DB::table('lenders')
+        ->leftJoin('ports', 'lenders.port_id', 'ports.id')
+        ->leftJoin('cities', 'ports.city_id', 'cities.id')
+        ->where('lenders.city_id', $city->id)
+        ->select(
+            'ports.port_name',
+            'ports.city_id',
+            'ports.comment',
+            'ports.created_at',
+            'ports.created_user_id',
+            'ports.deleted_at',
+            'ports.id',
+            'ports.port_name_kana',
+            'ports.updated_at',
+            'ports.updated_user_id',
+            'cities.url_param',
+        )
+        ->get();
+        $port = $this->model->with('ports')->find($city->id);
+        $port->lender_ports = $query;
+        return $port;
     }
 
     /**

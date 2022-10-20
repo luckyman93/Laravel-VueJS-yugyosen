@@ -58,7 +58,7 @@
           v-if="cityDetail.ports && copy_cityParam !== 'all'"
           :id="'AreaChoiceTop'"
           :label="`${prefectureDetail.prefecture_name} ${cityDetail.city_name}のエリアで絞り込む`"
-          :city-list="cityDetail.ports"
+          :city-list="ports"
           :is-port="true"
           @onList="onSearchList"
         />
@@ -171,7 +171,7 @@
           v-if="cityDetail.ports && copy_cityParam !== 'all'"
           :id="'AreaChoiceBottom'"
           :label="`${prefectureDetail.prefecture_name} ${cityDetail.city_name}のエリアで絞り込む`"
-          :city-list="cityDetail.ports"
+          :city-list="ports"
           :is-port="true"
           @onList="onSearchList"
         />
@@ -248,6 +248,7 @@ export default {
     port_param: '',
     boat_param: '',
     isError: false,
+    ports:[],
   }),
 
   watch: {
@@ -316,7 +317,6 @@ export default {
           }
           this.paginationData = res.data
           this.boatIndexData = res.data.data
-          console.log(this.boatIndexData)
           this.boatIndexData.forEach(x => {
             if (x.created_at) x.created_at = moment(x.created_at).format('YYYY-MM-DD')
             if (x.updated_at) x.updated_at = moment(x.updated_at).format('YYYY-MM-DD')
@@ -367,6 +367,14 @@ export default {
               return
             }
             this.cityDetail = res.data
+            var flags = {};
+            this.ports = this.cityDetail.ports.concat(this.cityDetail.lender_ports).filter(function(item) {
+                if (flags[item.id]) {
+                    return false;
+                }
+                flags[item.id] = true;
+                return true;
+            });
 
             if (this.copy_portParam !== 'all') {
               const arrayPorts = this.cityDetail.ports.filter(

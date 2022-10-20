@@ -3,6 +3,11 @@ $prefecture = \App\Models\Prefecture::where('url_param', $prefectureParam)->firs
 
 $city = \App\Models\City::where('url_param', $cityParam)->first();
 
+if (strlen($param) != 4 || substr($param, 0, 1) != 'b') {
+header("Location: localhost:8000");
+exit();
+}
+
 $boatId = substr($param, 1);
 $boat = \App\Models\Boat::where('id', $boatId)->first();
 $is_num_boatId = preg_match('/^[0-9]+$/', $boatId);

@@ -29,11 +29,11 @@ exit();
 }
 
 $selectedPrefecture = \App\Models\Prefecture :: where('id', $city['prefecture_id'])->first();
+
 if ($selectedPrefecture['url_param'] != $prefectureParam) {
 header("Location: localhost:8000");
 exit();
 }
-
 
 if (!isset($param)) {
 $title = $prefecture_name.$city_name.'の遊漁船/釣り船一覧|遊漁船サーチ';
@@ -42,6 +42,12 @@ $prefecture_name.$city_name.'の遊漁船/釣り船を一覧で掲載。'.$prefe
 $keyword = $prefecture_name.$city_name.',遊漁船,釣り船,遊漁船サーチ';
 $h1 = $prefecture_name.$city_name.'の遊漁船/釣り船のことなら遊漁船サーチ';
 } else {
+
+if (strlen($param) != 4 || substr($param, 0, 1) != 'p') {
+header("Location: localhost:8000");
+exit();
+}
+
 $portId = substr($param, 1);
 $port = \App\Models\Port::where('id', $portId)->first();
 $is_num_portId = preg_match('/^[0-9]+$/', $portId);

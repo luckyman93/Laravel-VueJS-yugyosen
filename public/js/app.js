@@ -16146,26 +16146,24 @@ var lenderPostRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MOD
                       while (1) {
                         switch (_context8.prev = _context8.next) {
                           case 0:
-                            console.log(err.response);
-
                             if (!err.response) {
-                              _context8.next = 6;
+                              _context8.next = 5;
                               break;
                             }
 
-                            _context8.next = 4;
+                            _context8.next = 3;
                             return _this5.$errHandling.lenderCatch(err.response.status);
 
-                          case 4:
+                          case 3:
                             _this5.errors = err.response.data.errors;
                             return _context8.abrupt("return");
 
-                          case 6:
+                          case 5:
                             _this5.deleteImageList = [];
 
                             _this5.$toast.errorToast();
 
-                          case 8:
+                          case 7:
                           case "end":
                             return _context8.stop();
                         }
@@ -18217,7 +18215,8 @@ var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10
       copy_portParam: '',
       port_param: '',
       boat_param: '',
-      isError: false
+      isError: false,
+      ports: []
     };
   },
   watch: {
@@ -18364,7 +18363,6 @@ var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10
 
                   _this5.paginationData = res.data;
                   _this5.boatIndexData = res.data.data;
-                  console.log(_this5.boatIndexData);
 
                   _this5.boatIndexData.forEach(function (x) {
                     if (x.created_at) x.created_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(x.created_at).format('YYYY-MM-DD');
@@ -18455,6 +18453,15 @@ var portRepository = _repositories_repositoryFactory__WEBPACK_IMPORTED_MODULE_10
                   }
 
                   _this7.cityDetail = res.data;
+                  var flags = {};
+                  _this7.ports = _this7.cityDetail.ports.concat(_this7.cityDetail.lender_ports).filter(function (item) {
+                    if (flags[item.id]) {
+                      return false;
+                    }
+
+                    flags[item.id] = true;
+                    return true;
+                  });
 
                   if (_this7.copy_portParam !== 'all') {
                     var arrayPorts = _this7.cityDetail.ports.filter(function (d) {
@@ -70358,7 +70365,7 @@ var render = function() {
                       " " +
                       _vm.cityDetail.city_name +
                       "のエリアで絞り込む",
-                    "city-list": _vm.cityDetail.ports,
+                    "city-list": _vm.ports,
                     "is-port": true
                   },
                   on: { onList: _vm.onSearchList }
@@ -70631,7 +70638,7 @@ var render = function() {
                       " " +
                       _vm.cityDetail.city_name +
                       "のエリアで絞り込む",
-                    "city-list": _vm.cityDetail.ports,
+                    "city-list": _vm.ports,
                     "is-port": true
                   },
                   on: { onList: _vm.onSearchList }
@@ -95240,15 +95247,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************!*\
   !*** ./resources/js/views/viewer/BoatDetail.vue ***!
   \**************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BoatDetail_vue_vue_type_template_id_2fb25bff___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BoatDetail.vue?vue&type=template&id=2fb25bff& */ "./resources/js/views/viewer/BoatDetail.vue?vue&type=template&id=2fb25bff&");
 /* harmony import */ var _BoatDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BoatDetail.vue?vue&type=script&lang=js& */ "./resources/js/views/viewer/BoatDetail.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _BoatDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _BoatDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _sass_viewer_common_scss_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/../sass/viewer/common.scss?vue&type=style&index=0&lang=scss& */ "./resources/sass/viewer/common.scss?vue&type=style&index=0&lang=scss&");
+/* empty/unused harmony star reexport *//* harmony import */ var _sass_viewer_common_scss_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/../sass/viewer/common.scss?vue&type=style&index=0&lang=scss& */ "./resources/sass/viewer/common.scss?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _sass_viewer_extra_scss_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/../sass/viewer/extra.scss?vue&type=style&index=1&lang=scss& */ "./resources/sass/viewer/extra.scss?vue&type=style&index=1&lang=scss&");
 /* harmony import */ var _sass_viewer_boatDetail_scss_vue_type_style_index_2_lang_scss___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/../sass/viewer/boatDetail.scss?vue&type=style&index=2&lang=scss& */ "./resources/sass/viewer/boatDetail.scss?vue&type=style&index=2&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
@@ -95284,7 +95290,7 @@ component.options.__file = "resources/js/views/viewer/BoatDetail.vue"
 /*!***************************************************************************!*\
   !*** ./resources/js/views/viewer/BoatDetail.vue?vue&type=script&lang=js& ***!
   \***************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
