@@ -73,11 +73,11 @@ class BoatRepository
         }
 
         if ($cityParam !== "null" && $cityParam !== "all") {
-            $query->where('cities.url_param', $cityParam);
-        }
-
-        if ($portId !== "null" && $portId !== "all") {
-            $query->where('ports.id', $portId);
+            if ($portId !== "null" && $portId !== "all") {
+                $query->where('ports.id', $portId);
+            } else {
+                $query->where('cities.url_param', $cityParam);
+            }
         }
 
         return $query->groupBy('boats.id')->paginate(Util::PAGINATE_COUNT_BOAT);

@@ -247,7 +247,6 @@ export default {
     copy_portParam: '',
     port_param: '',
     boat_param: '',
-    isError: false,
     ports:[],
   }),
 
@@ -317,6 +316,7 @@ export default {
           }
           this.paginationData = res.data
           this.boatIndexData = res.data.data
+          console.log(this.boatIndexData)
           this.boatIndexData.forEach(x => {
             if (x.created_at) x.created_at = moment(x.created_at).format('YYYY-MM-DD')
             if (x.updated_at) x.updated_at = moment(x.updated_at).format('YYYY-MM-DD')
@@ -452,7 +452,13 @@ export default {
         } else {
           this.port_param = `p${cityParam.toString()}`
         }
-        window.location.href = `/boat/${this.prefectureParam}/${this.copy_cityParam}/${this.port_param}`
+        this.ports.forEach((port) => {
+          if (port.url_param === undefined && port.id === Number(this.port_param.slice(1))) {
+            window.location.href = `/boat/${this.prefectureParam}/${this.copy_cityParam}/${this.port_param}`
+          } else if (port.url_param !== undefined && port.id === Number(this.port_param.slice(1))){
+            window.location.href = `/boat/${this.prefectureParam}/${port.url_param}/${this.port_param}`
+          }
+        })
       } else {
         window.location.href = `/boat/${this.prefectureParam}/${cityParam}`
       }
